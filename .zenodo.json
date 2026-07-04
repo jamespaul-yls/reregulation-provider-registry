@@ -1,0 +1,35 @@
+{
+  "title": "U.S. Legal Services Reregulation Provider Registry",
+  "description": "<p>An open, reproducible, longitudinal dataset of every authorized provider (entity or individual) operating under a U.S. legal-services reregulation program: Alternative Business Structures (ABS), regulatory sandboxes, and allied-legal-professional / paraprofessional licenses.</p><p>v1.0.0 covers 11 programs across 7 states and the District of Columbia, with 708 providers, 748 entry/exit/status events, and 100% provenance coverage. Every row carries <code>source_url</code>, <code>retrieved_at</code>, and <code>scraper_version</code>; raw HTML/PDF captures are content-hashed and immutable; all derived tables are fully re-derivable from them (<code>make reproduce</code>, no network required).</p><p>This is a provider census with entry/exit tracking, not an outcomes dataset. It does not include harm measures, complaint/discipline outcomes, rates, or litigation linkage in v1 &mdash; see the methodology documentation for what is explicitly deferred to later releases.</p>",
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "CC-BY-4.0",
+  "creators": [
+    {
+      "name": "Paul, James",
+      "affiliation": "Yale Law School"
+    }
+  ],
+  "keywords": [
+    "legal services",
+    "reregulation",
+    "alternative business structures",
+    "legal paraprofessional",
+    "regulatory sandbox",
+    "access to justice",
+    "unauthorized practice of law",
+    "legal innovation",
+    "longitudinal data",
+    "open data"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/jamespaul/reregulation-registry",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "version": "1.0.0",
+  "language": "eng",
+  "notes": "Code is MIT licensed; the dataset (data/release/) is CC BY 4.0. See LICENSE and data/release/LICENSE respectively."
+}

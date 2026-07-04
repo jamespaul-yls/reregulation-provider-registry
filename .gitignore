@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.env
+
+# Ruff / mypy
+.ruff_cache/
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Raw snapshots — content-hashed blobs; manage via git-lfs or external store
+data/raw/*
+!data/raw/.gitkeep
+
+# Dev database — derived, never commit
+data/db/*
+!data/db/.gitkeep
+
+# Release files — derived on every export, not committed; regenerate with `make export`
+data/release/*
+!data/release/.gitkeep
+
+# Playwright browsers
+playwright/.local-browsers/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
