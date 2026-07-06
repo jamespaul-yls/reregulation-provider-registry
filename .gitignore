@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+.env
+
+# Ruff / mypy
+.ruff_cache/
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Raw snapshots — content-hashed, immutable blobs. Committed directly at this
+# repo's current size (~10MB as of v1.0.0). If data/raw/ grows past a size
+# where plain git is uncomfortable, migrate to git-lfs (`git lfs track
+# "data/raw/*"`) rather than gitignoring it again — golden rule 2 requires
+# these to actually ship with the repo, not just exist on one laptop.
+# See docs/audit/adversarial_review.md B1.
+
+# Dev database — fully derived from data/raw/ + scripts/seed_programs.py via
+# `make reproduce`; never commit (golden rule 5: raw/ -> dev DB -> release/,
+# only the two ends of that chain are published/committed).
+data/db/*
+!data/db/.gitkeep
+data/db/*.bak
+
+# Release files ARE the published dataset (README: "All files are in
+# data/release/") and must be committed. Re-run `make export` and commit the
+# diff whenever data/db/registry.duckdb changes; do not hand-edit these files.
+
+# Playwright browsers
+playwright/.local-browsers/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp

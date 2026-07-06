@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  test:
+    name: ruff + pytest
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.x"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --dev
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Test (pytest)
+        run: uv run pytest -v --tb=short
+
+      # ── Reproducibility gate ────────────────────────────────────────────────
+      # Rebuilds data/db/registry.duckdb and data/release/ entirely from the
+      # committed data/raw/ snapshots — no network calls. pipeline.reproduce
+      # runs the full provenance audit (pipeline.audit) internally and exits
+      # non-zero on any violation, so this step covers both "reproduce" and
+      # "audit" in one gate. This is what actually enforces golden rule 2
+      # ("all derived tables fully re-derivable from data/raw/") on every push;
+      # previously this only ran when a human typed `make reproduce` locally,
+      # which is how storage_path being an absolute, machine-specific path
+      # went unnoticed (docs/audit/adversarial_review.md B2/B3).
+      - name: Reproduce (rebuild DB + release/ from data/raw/, no network)
+        run: uv run python -m pipeline.reproduce
+
+      # ── Drift gate ──────────────────────────────────────────────────────────
+      # The reproduce step above regenerates data/release/ in place. If the
+      # regenerated files differ from what's committed, the checked-in
+      # release/ is out of sync with data/raw/ — someone re-exported without
+      # committing the result, or hand-edited a release file (never do this —
+      # see CLAUDE.md golden rule 5).
+      - name: Verify data/release/ matches what data/raw/ reproduces
+        run: |
+          if ! git diff --exit-code -- data/release/; then
+            echo "::error::data/release/ does not match a fresh reproduce from data/raw/." \
+                 "Run 'make reproduce' locally and commit the result."
+            exit 1
+          fi

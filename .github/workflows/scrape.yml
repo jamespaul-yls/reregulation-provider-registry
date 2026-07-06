@@ -1,0 +1,95 @@
+name: Roster scrape
+
+on:
+  schedule:
+    # Weekly: Monday 06:00 UTC — off-peak for government sites
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run — fetch + diff preview, write nothing to DB or release/'
+        type: boolean
+        default: false
+
+jobs:
+  scrape:
+    name: Scrape → diff → export
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push release/ data commits
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so git push has context
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.x"
+          enable-cache: true
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Install Playwright browsers
+        run: uv run playwright install --with-deps chromium
+
+      # ── Restore persistent store ──────────────────────────────────────────
+      # DuckDB file + content-addressed raw blobs persist between weekly runs.
+      # Restore key matches branch + any previous run; save key is unique per run
+      # so the latest cache always wins on restore.
+      - name: Restore data cache
+        id: cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/db/
+            data/raw/
+          key: registry-data-${{ github.ref_name }}-run-${{ github.run_id }}
+          restore-keys: |
+            registry-data-${{ github.ref_name }}-run-
+            registry-data-
+
+      - name: Log cache status
+        run: |
+          echo "cache-hit: ${{ steps.cache-restore.outputs.cache-hit }}"
+          echo "snapshots in DB: $(ls data/raw/ 2>/dev/null | wc -l) blobs"
+
+      # ── Main pipeline ─────────────────────────────────────────────────────
+      - name: Run orchestrator${{ inputs.dry_run && ' (dry run)' || '' }}
+        run: |
+          uv run python -m pipeline.orchestrate ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          # Playwright needs a writable home for browser state
+          PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
+
+      # ── Persist updated store (skip on dry run — nothing changed) ─────────
+      - name: Save data cache
+        if: ${{ !inputs.dry_run }}
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/db/
+            data/raw/
+          key: registry-data-${{ github.ref_name }}-run-${{ github.run_id }}
+
+      # ── Commit release/ if changed (skip on dry run) ──────────────────────
+      # Only data/release/ is committed to git.  The DB and raw blobs live in
+      # the Actions cache and are never committed (too large, binary, redundant
+      # given raw/ reproducibility).
+      - name: Commit release/ changes
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/release/
+          if git diff --cached --quiet; then
+            echo "No release/ changes — nothing to commit."
+          else
+            git commit -m "data: automated roster scrape $(date -u +%Y-%m-%dT%H:%M)Z [skip ci]"
+            git push
+          fi
