@@ -3,7 +3,7 @@
 **Author:** James Paul, Yale Law School  
 **Contact:** james.paul@yale.edu  
 **Date:** July 4, 2026  
-**Version:** 1.0.0 · Data: `data/release/` · Code: `github.com/jamespaul/reregulation-registry`  
+**Version:** 1.0.0 · Data: `data/release/` · Code: `github.com/jamespaul-yls/reregulation-provider-registry`  
 **Intended audience:** IAALS, the Deborah L. Rhode Center on the Legal Profession, and other
 researchers evaluating U.S. legal-services reregulation programs
 
@@ -20,8 +20,11 @@ deliver legal services under a program that relaxes standard UPL or Rule 5.4 res
 The registry tracks **who was authorized, when, and for how long**. It does not make
 harm or benefit determinations. Column names are deliberately neutral proxies
 (`formal_complaint_count` is planned; `harm` is not a column name). The intent is a
-reproducible spine that other evaluations — including those already underway at IAALS and
-the Rhode Center — can link to their own outcome data.
+reproducible spine that IAALS, the Rhode Center, and other researchers evaluating these
+programs can link their own outcome data to — we are not aware of the current state of
+IAALS's or the Rhode Center's own project pipelines and don't mean to imply otherwise;
+this is an offer of a shared foundation, not a claim about what anyone else is already
+doing with it.
 
 Every row carries `source_url`, `retrieved_at`, and `scraper_version`. Raw HTML and PDF
 captures are content-hashed (SHA-256) and stored in `data/raw/`. All derived tables
@@ -123,30 +126,38 @@ per-source tables.
 
 ### Arizona ABS
 
-Arizona is the only program with multiple comparable public snapshots in the registry at
-v1.0.0. A Wayback Machine capture dated 2024-11-08 yielded 77 authorized entities. The
-own scrape on 2026-06-28 yielded 167 entities. A dry-run against an April 4, 2025 Wayback
-capture produced 128 entities.
+Arizona has two **persisted, reproducible** snapshots at v1.0.0: a Wayback Machine capture
+dated 2024-11-08 (77 authorized entities, `snap_a6e3d292014fceaf`) and the own scrape on
+2026-06-28 (167 entities, `snap_9f99d17bf219186a`). Both are content-hashed in `data/raw/`
+and diffing them is what actually produced the entry/exit events below — this comparison
+is fully re-derivable from committed data via `make reproduce`.
 
-**Comparison against IAALS / AZ Supreme Court benchmarks:**
+**Context only — not reproducible from committed data.** During v1.0.0 close-out we also
+ran an exploratory Wayback CDX scan covering 2025-04-04, 2025-12-15, and 2026-06-16. That
+scan was a dry run: Internet Archive access was intermittent that session, and the
+resulting captures were never persisted to `source_snapshot` (see
+`validation/longitudinal_validity.md §3`, which discloses this explicitly). The counts
+below are narrative context for the shape of the trajectory, not verified registry
+output — there is no snapshot in `data/raw/` to check them against, so treat any
+divergence computed from them as illustrative, not a validated reconciliation:
 
-| Date | Registry count | Published benchmark | Divergence |
+| Date | Registry count | Status | Published benchmark |
 |---|---|---|---|
-| 2024-11-08 | 77 | — | — |
-| 2025-04-04 | 128 | ~136 active (AZ SC, Apr 2025) | −8 (5.9%) |
-| 2026-06-28 | 167 | — | — |
+| 2024-11-08 | 77 | **persisted** | — |
+| 2025-04-04 | 128 | *dry run, unpersisted* | ~136 active (AZ SC, Apr 2025) — if the 128 count is accurate, this is consistent with the public-roster-vs-administrative-record lag described in `docs/methodology.md §12b`, but the comparison itself cannot be independently reproduced |
+| 2025-12-15 | 157 | *dry run, unpersisted* | — |
+| 2026-06-16 | 163 | *dry run, unpersisted* | — |
+| 2026-06-28 | 167 | **persisted** | — |
 
-The 5.9% divergence at April 2025 is attributable to a known lag between the AZ Supreme
-Court's internal approval date and the entity's appearance on the public roster. Our
-scraper counts only entities listed on the public-facing directory; entities approved but
-not yet posted account for the gap. There is no evidence of a scraper defect: all 17
-sampled rows from the 2026 snapshot show 0 errors on identity fields, and the
-Wayback-to-own-scrape trajectory (+4 entities in 12 days from 2026-06-16 to 2026-06-28)
-is internally consistent.
+The claim this dataset actually verifies for AZ ABS accuracy is the stratified sample in
+`validation/arizona_abs.md`: 17 of 167 rows (10.2%), 0 field-level errors on identity
+fields. That result stands on its own and does not depend on the unpersisted dry-run
+numbers above.
 
-From the diff between the 2024 and 2026 snapshots: **36 entities present in November 2024
-had disappeared from the roster by June 2026**, and **126 new entities were authorized**
-in that period. These entry and exit events are now recorded in `provider_status_event`.
+From the diff between the two **persisted** 2024 and 2026 snapshots: **36 entities present
+in November 2024 had disappeared from the roster by June 2026**, and **126 new entities
+were authorized** in that period. These entry and exit events are recorded in
+`provider_status_event` and reproduce exactly from `data/raw/`.
 
 ### Utah Sandbox
 
@@ -161,8 +172,15 @@ cohort.
 ### Washington LLLT
 
 LLLT is a sunset program (effective July 31, 2021; no new applicants). The June 2026
-snapshot captures the credential population mid-decay: 68 active, 10 voluntarily resigned,
-4 suspended, 13 inactive (status unknown under the registry's `unknown` enum). A Wayback
+snapshot captures the credential population mid-decay: 68 active, 10 exited (9
+Voluntarily Resigned + 1 Retired — see `validation/washington_lllt.md` for the full
+per-status breakdown), 4 suspended, and 13 mapped to `unknown` (WSBA's own "Inactive"
+label). Read `unknown` here as "deliberately neither active nor exited" rather than "not
+yet classified": an inactive WSBA member has not resigned and could return to active
+status, so the registry doesn't call that `exited` — a documented judgment call, not an
+oversight (see `validation/washington_lllt.md §3` — "'Inactive' maps to `unknown`" — for
+the full reasoning and the note that this should be revisited if WSBA ever clarifies the
+distinction). A Wayback
 backfill to reconstruct the pre-sunset peak roster is planned; the `_wayback_parse()`
 override is implemented and tested but not yet loaded into the DB.
 
@@ -184,9 +202,11 @@ one snapshot at v1.0.0. Entry and exit tracking becomes meaningful as successive
 accumulate. The AZ ABS and UT Sandbox longitudinal comparisons are the only mature examples.
 
 **4. Authorization-date sparsity.** Most rosters do not publish the date a provider was
-first authorized. The `authorization_date` field is populated for Minnesota LP (dates in
-the PDF) and partially for some other programs; it is NULL for the majority of providers.
-Entry dates are instead inferred from the first snapshot in which a provider appears.
+first authorized. The `authorization_date` field is populated for Minnesota LP only (42/42
+rows, 100%, dates taken from the PDF); every other program is 0% populated (AZ ABS, AZ LP,
+CO LLP, UT LPP, UT Sandbox, WA LLLT all have `authorization_date = NULL` for every row) —
+this is an all-or-nothing split per program, not a partial one. Entry dates are instead
+inferred from the first snapshot in which a provider appears.
 
 **5. Practice-area sparsity.** Most individual-practitioner rosters (AZ LP, CO LLP, MN
 LP, UT LPP) do not publish practice areas per provider. The `practice_areas_raw` column is
@@ -236,7 +256,7 @@ are specifically looking for:
   downstream analysis.
 
 Corrections can be submitted via GitHub issue at
-`github.com/jamespaul/reregulation-registry/issues` or by email to
+`github.com/jamespaul-yls/reregulation-provider-registry/issues` or by email to
 james.paul@yale.edu. We will document the source of every correction in the
 `provider_alias` or `provider_status_event` tables with your name or organization as
 `scraper_version` (e.g., `manual-iaals-2026-07`), so the provenance of corrections is
@@ -253,7 +273,7 @@ share will be incorporated with attribution.
 
 ```
 Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.0)
-[Data set]. Yale Law School. https://github.com/jamespaul/reregulation-registry
+[Data set]. Yale Law School. https://github.com/jamespaul-yls/reregulation-provider-registry
 ```
 
 Data license: CC BY 4.0. Code license: MIT.

@@ -33,6 +33,23 @@ _TABLES = [
     "crosswalk_courtlistener",
 ]
 
+# Deterministic row order for each exported table, keyed on primary key column(s).
+# Without this, `SELECT * FROM table` returns DuckDB's current physical row order,
+# which follows insertion order — and insertion order is not guaranteed stable across
+# runs (e.g. pipeline/diff.py used to iterate a set of provider_ids; see its comment).
+# Sorting by primary key here means data/release/ is byte-for-byte reproducible from
+# the same data/raw/ snapshots regardless of any such upstream nondeterminism, which is
+# what actually makes the CI drift gate (.github/workflows/ci.yml) reliable rather than
+# flaky. See docs/audit/adversarial_review.md B3.
+_ORDER_BY = {
+    "program": ["program_id"],
+    "source_snapshot": ["snapshot_id"],
+    "provider": ["provider_id"],
+    "provider_status_event": ["event_id"],
+    "provider_alias": ["provider_id", "alias_name"],
+    "crosswalk_courtlistener": ["provider_id", "cl_docket_id"],
+}
+
 
 def export(
     db_path: Path = _DEFAULT_DB,
@@ -49,7 +66,10 @@ def export(
         counts: dict[str, int] = {}
 
         for table in _TABLES:
-            df: pl.DataFrame = conn.execute(f"SELECT * FROM {table}").pl()  # noqa: S608
+            order_by = ", ".join(_ORDER_BY[table])
+            df: pl.DataFrame = conn.execute(
+                f"SELECT * FROM {table} ORDER BY {order_by}"  # noqa: S608
+            ).pl()
             n = len(df)
             counts[table] = n
 

@@ -63,11 +63,15 @@ list (all 4, including their "Under Review" status) is preserved in the raw snap
 pipeline as of this date is captured even though nothing is loaded as a `provider` row.
 
 This scraper should be re-run periodically (`uv run python scripts/run_wa_entity_pilot.py`)
-to detect the first authorization — at which point `_AUTHORIZED_STATUSES` in
+to detect the first authorization — at which point `_AUTHORIZED_TOKENS` in
 `scrapers/washington_entity_pilot.py` should be checked against whatever status label the
 WSBA actually prints for an authorized entity (not yet observed on the live page; the current
-set — `authorized`, `approved`, `participating`, `active` — is a reasonable guess, not a
-confirmed label).
+token set — `authorized`, `approved`, `participating`, `active`, matched per-word rather than
+as an exact string so a plausible real label still matches — is a reasonable guess, not a
+confirmed label). As of 2026-07-05, any status that doesn't match a known token and isn't the
+observed "Under Review" label also logs a warning (`_is_unrecognized_status()`), so a
+genuinely new label is surfaced rather than silently misclassified either way — see
+`docs/audit/adversarial_review.md` S4.
 
 ---
 

@@ -82,7 +82,7 @@ Roster URL: `https://www.azcourts.gov/admissions/Alternative-Business-Structures
 
 3. **Coverage gap:** The public roster is paginated (we capture all pages in our own scraper, but Wayback captures only page 1 for the Wayback backfill — however AZ ABS is not headless/paginated in the same way as WA LLLT, so this should not apply here).
 
-**Target accuracy status:** 5.9% divergence at Apr 2025. Within tolerance for a public roster vs. administrative record comparison. **No indication of a scraper bug.** Zero errors on identity fields in the AZ ABS accuracy sample (see `validation/arizona_abs.md`).
+**Target accuracy status:** the 5.9% divergence figure itself is **not independently verifiable** — it depends on the 2025-04-04 dry-run capture, which (per the notice at the top of this document) was never persisted to `source_snapshot`. Treat it as context for why a gap of this size is plausible, not as a validated reconciliation; there is no snapshot in `data/raw/` to check it against. What *is* verified, and what actually supports "no indication of a scraper bug," is the AZ ABS accuracy sample: zero errors on identity fields across 17 sampled rows (see `validation/arizona_abs.md`) — that conclusion rests on the accuracy sample, not on the unpersisted trajectory numbers above.
 
 ### AZ ABS: coverage gap assessment
 

@@ -27,6 +27,8 @@ from models.schema import SourceSnapshot
 from scrapers.washington_entity_pilot import (
     ApplicantRow,
     WashingtonEntityPilotScraper,
+    _is_authorized_status,
+    _is_unrecognized_status,
     parse_applicants,
 )
 
@@ -173,3 +175,115 @@ def test_scraper_source_url(tmp_path):
 def test_scraper_version(tmp_path):
     scraper = WashingtonEntityPilotScraper(raw_dir=tmp_path)
     assert scraper.version == "0.1.0"
+
+
+# ── _is_authorized_status(): token-based classification (adversarial_review.md S4) ──
+#
+# _AUTHORIZED_STATUSES used to be an exact-string set, so any real label WSBA might
+# actually print other than the four guessed words ("authorized", "approved",
+# "participating", "active") would go undetected even though it obviously means
+# "authorized." These tests cover plausible real-world variants, and the negative-override
+# guard that stops a token match from misfiring on the opposite meaning.
+
+
+@pytest.mark.parametrize(
+    "status",
+    [
+        "Authorized",
+        "Approved",
+        "Board Approved",
+        "Authorized — Active",
+        "Active/Authorized",
+        "Participating",
+    ],
+)
+def test_is_authorized_status_matches_plausible_variants(status: str) -> None:
+    assert _is_authorized_status(status) is True
+
+
+@pytest.mark.parametrize(
+    "status",
+    [
+        "Under Review",
+        "Not Authorized",
+        "Application Denied",
+        "Inactive",
+        "Withdrawn",
+        "Pending Board Review",
+    ],
+)
+def test_is_authorized_status_rejects_negative_and_pending_variants(status: str) -> None:
+    """The negative-override tokens must win even when an authorized-token substring/word
+    is also present (e.g. "Not Authorized" contains "authorized")."""
+    assert _is_authorized_status(status) is False
+
+
+def test_is_unrecognized_status_true_for_novel_label() -> None:
+    """A label that's neither the known 'Under Review' nor an authorized-token match
+    should be flagged for human attention, not silently absorbed either way."""
+    assert _is_unrecognized_status("Conditionally Certified") is True
+
+
+def test_is_unrecognized_status_false_for_known_pending_label() -> None:
+    assert _is_unrecognized_status("Under Review") is False
+
+
+def test_is_unrecognized_status_false_for_authorized_label() -> None:
+    assert _is_unrecognized_status("Authorized") is False
+
+
+def test_parse_logs_warning_for_unrecognized_status(tmp_path, caplog) -> None:
+    """An entity with a status that's neither 'Under Review' nor an authorized-token
+    match should produce a warning log, per the S4 fix — silence is exactly what let the
+    original exact-match set go untested against real-world label drift."""
+    synthetic_html = b"""
+    <table>
+      <tr><td>Date Received</td><td>Entity Name</td><td>Status</td><td>Application</td></tr>
+      <tr>
+        <td>Jan. 8, 2026</td><td>Mystery Legal, LLC</td>
+        <td>Conditionally Certified</td><td>x</td>
+      </tr>
+    </table>
+    """
+    snap = SourceSnapshot(
+        snapshot_id="snap_synthetic0001",
+        program_id="prog_wa_entity_pilot",
+        source_url=_SOURCE_URL,
+        retrieved_at=_RETRIEVED_AT,
+        content_sha256="0" * 64,
+        storage_path="synthetic",
+        media_type=MediaType.html,
+        scraper_version="0.1.0",
+    )
+    scraper = WashingtonEntityPilotScraper(raw_dir=tmp_path)
+    with caplog.at_level("WARNING"):
+        providers = scraper.parse(snap, synthetic_html)
+
+    assert providers == []  # "Conditionally Certified" doesn't match an authorized token
+    assert any("unrecognized applicant status" in r.message for r in caplog.records)
+    assert any("Mystery Legal, LLC" in r.message for r in caplog.records)
+
+
+def test_parse_does_not_warn_for_known_under_review_status(tmp_path, caplog) -> None:
+    synthetic_html = b"""
+    <table>
+      <tr><td>Date Received</td><td>Entity Name</td><td>Status</td><td>Application</td></tr>
+      <tr><td>Jan. 8, 2026</td><td>Ordinary Co.</td><td>Under Review</td><td>x</td></tr>
+    </table>
+    """
+    snap = SourceSnapshot(
+        snapshot_id="snap_synthetic0002",
+        program_id="prog_wa_entity_pilot",
+        source_url=_SOURCE_URL,
+        retrieved_at=_RETRIEVED_AT,
+        content_sha256="0" * 64,
+        storage_path="synthetic",
+        media_type=MediaType.html,
+        scraper_version="0.1.0",
+    )
+    scraper = WashingtonEntityPilotScraper(raw_dir=tmp_path)
+    with caplog.at_level("WARNING"):
+        providers = scraper.parse(snap, synthetic_html)
+
+    assert providers == []
+    assert not any("unrecognized applicant status" in r.message for r in caplog.records)

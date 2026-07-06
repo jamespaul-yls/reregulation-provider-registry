@@ -38,6 +38,33 @@ from models.schema import (
     SourceSnapshot,
 )
 
+# Repo root — used only to normalize storage_path to a portable, repo-relative
+# string before it's persisted. ingest() (pipeline/snapshot.py) is a generic
+# content-addressed store and doesn't know about the repo layout (it's tested
+# against tmp_path fixtures outside the repo), so it always returns an absolute
+# blob_path. This is the single point where an absolute path under the repo
+# root gets rewritten to a relative one before it ever reaches the DB or a
+# published CSV/Parquet row. See docs/audit/adversarial_review.md B2.
+_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _normalize_storage_path(path_str: str) -> str:
+    """Rewrite an absolute path under the repo root to a repo-relative POSIX string.
+
+    Leaves the value untouched if it's already relative, or if it's absolute
+    but not under this repo (e.g. a fixture string in a test, or a raw_dir
+    that lives outside the repo entirely) — normalization is a best-effort
+    portability improvement, not a hard requirement on every caller.
+    """
+    path = Path(path_str)
+    if not path.is_absolute():
+        return path_str
+    try:
+        return path.resolve().relative_to(_ROOT).as_posix()
+    except ValueError:
+        return path_str
+
+
 # ── DDL ───────────────────────────────────────────────────────────────────────
 # Tables in FK-dependency order: program → source_snapshot → provider
 # → provider_status_event, provider_alias, crosswalk_courtlistener.
@@ -290,7 +317,7 @@ class RegistryStore:
                 s.source_url,
                 s.retrieved_at,
                 s.content_sha256,
-                s.storage_path,
+                _normalize_storage_path(s.storage_path),
                 str(s.media_type),
                 s.scraper_version,
             ],

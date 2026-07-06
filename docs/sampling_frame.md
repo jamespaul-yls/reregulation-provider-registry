@@ -54,6 +54,37 @@ Four programs are correctly in-frame but contribute zero `provider` rows. Each h
 | `prog_tx_alp` | Temporal — program not yet effective | Rules received preliminary approval (2024-08-06) but the effective date was indefinitely delayed (2024-11-04, Misc. Docket 24-9095). No roster exists because the licensing category is not yet live. The Texas Bar program page is snapshotted; re-run `scripts/run_tx_alp.py` when a new effective date is set. |
 | `prog_wa_entity_pilot` | Temporal — no applicant authorized yet | 4 entities have applied under WA Supreme Court Order 25700-B-721; all 4 are "Under Review" as of 2026-07-04. The full applicant list (with status) is snapshotted; re-run `scripts/run_wa_entity_pilot.py` periodically to detect the first authorization. See `validation/washington_entity_pilot.md` for the flagged v2 decision on tracking pre-authorization applicant status (our `current_status` enum has no "pending" value). |
 
+## 3a. A candidate program researched and deferred — no program row at all
+
+The four programs in §3 at least have a `program` row (zero providers, but the program's own
+authorizing source is captured). One candidate program doesn't even get that: **Oregon
+Licensed Paralegal Program (OR, `alp_license`)**, named as a source to verify in `CLAUDE.md`
+and `reregulation-registry-v1-spec.md`, was researched on 2026-06-29
+(`validation/oregon_lp.md`) and found to have issued **zero licenses** — the Rules for
+Licensing Paralegals took effect 2025-01-01, but the first subject-matter exams aren't until
+2026-08-28 (Family Law) and 2026-10-24 (Landlord-Tenant), and no roster or consumer-facing
+directory exists yet. No `prog_or_lp` row was created for v1.
+
+This section exists because that decision previously lived only in `validation/oregon_lp.md`
+— absent from this document, which `docs/methodology.md §1` calls "the authoritative
+statement of exactly which programs are in scope for v1." It's now also
+recorded in the same ledger as every other scope decision:
+`validation/residual_gaps.csv` (`detected_by=manual-oregon-research`, distinct from the
+automated `frame_reconcile` rows below, since `alp_license` programs are outside that
+check's scope — see §6 and `docs/methodology.md §10e`).
+
+**Why this isn't in §3 alongside TX ALP:** TX ALP already has a formally-adopted rule with
+a docket number pausing it (Misc. Docket 24-9095) and an authorizing regulator actively
+administering a paused program — enough of an institutional footprint to warrant a
+`program` row documenting that legal basis even at zero providers. Oregon's rule is newer
+and has issued literally nothing yet — no applicants, no pending roster, no rejected
+applications — so there's no comparable "authorizing instrument in active administration"
+to document with a stub row. This is a judgment call, revisit-able the same way TX ALP is;
+flagging the reasoning explicitly here rather than leaving it implicit.
+
+**Revisit:** after the first exam cohort is licensed (expected September 2026 or later) —
+see `validation/oregon_lp.md` "What to do when revisiting" for the specific re-check steps.
+
 ## 4. Excluded from the frame, by design
 
 - **Traditional law firms and traditional bar licensees.** The frame is reregulation
@@ -79,7 +110,7 @@ program there); it is deferred to v2 (§6). Guam, American Samoa, the Northern M
 Islands, and the U.S. Virgin Islands were not checked against any external inventory in
 v1 — this is a known residual gap, not a finding of "no programs exist" there.
 
-## 6. Completeness-audit residual gaps (14 items, 100% resolved)
+## 6. Completeness-audit residual gaps (15 items in the ledger, 100% resolved)
 
 `make completeness` (`completeness/frame_reconcile.py`) cross-checks the `program` table
 against the IAALS Unlocking Legal Regulation knowledge center — the closest thing to an
@@ -96,15 +127,24 @@ resolved:
 | `deferred_to_v2` — new-program backlog | 3 | IN sandbox, MN sandbox (distinct from the existing `prog_mn_lp` paraprofessional pilot) — both IAALS "Programs Being Implemented" (pre-launch by the source's own classification, so no roster can exist yet); PR ABS — IAALS "Implemented Programs" (unlike IN/MN, a program plausibly already operates — the open question is whether a public registry exists to scrape, not whether it has launched) |
 | `deferred_to_v2` — CJW taxonomy gap | 8 | Community-Based Justice Worker Models in AK, AZ, DC, DE, HI, IL, MT, and UT (via its sandbox) — `community_justice_worker` exists in the v1 `program_type` enum for forward compatibility, but no v1 scraper covers any CJW program |
 
-**None of the 14 are open.** The WA rows were resolved 2026-07-04 by building
-`prog_wa_entity_pilot`; the rest were resolved 2026-07-04 by James Paul as an
-explicit v1 scope decision, not a default of the audit tool (`completeness/frame_reconcile.py`
-always writes new candidates as `unresolved` — it proposes, it does not decide; see the
-module docstring and `completeness/ledger.py`).
+That's 14 rows, all surfaced by the automated IAALS cross-check (`detected_by=frame_reconcile`).
+The ledger carries a **15th row** the automated check cannot see at all: Oregon LP
+(`deferred_to_v2`, `detected_by=manual-oregon-research`) — `alp_license` programs are
+outside this check's scope by design (bullet 2 of `docs/methodology.md §10e`), so this row
+was added from direct manual research instead. See §3a above and `validation/oregon_lp.md`.
 
-Re-running `make completeness` will not re-open these: the ledger merge is keyed on
+**None of the 15 are open.** The WA rows were resolved 2026-07-04 by building
+`prog_wa_entity_pilot`; the CJW/new-program-backlog rows were resolved 2026-07-04 by James
+Paul as an explicit v1 scope decision, not a default of the audit tool
+(`completeness/frame_reconcile.py` always writes new candidates as `unresolved` — it
+proposes, it does not decide; see the module docstring and `completeness/ledger.py`); the
+Oregon row was resolved 2026-06-29, the date of the research in `validation/oregon_lp.md`.
+
+Re-running `make completeness` will not re-open any of these: the ledger merge is keyed on
 `(item, jurisdiction, detected_by)` and never overwrites a row that already exists,
-mirroring the `crosswalk_courtlistener` "verified rows are immutable" rule.
+mirroring the `crosswalk_courtlistener` "verified rows are immutable" rule. Oregon's row
+uses a `detected_by` the automated tool never writes (`manual-oregon-research`), so it can
+never collide with — or be silently regenerated by — a future `frame_reconcile` run either.
 
 ---
 

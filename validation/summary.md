@@ -54,13 +54,22 @@ divergence diagnosis, is in `validation/longitudinal_validity.md §3–§4`.
 
 | Program | Earliest known count | Current count | Direction | Published benchmark match |
 |---|---|---|---|---|
-| AZ ABS | ~19 active (2022, AZ SC annual report) | **160 active** (2026-06-28; 203 total incl. 43 exited) | Growth | Apr-2025 benchmark ~136 active vs. our 128 (Wayback capture from that period) — 5.9% divergence, within tolerance for public-roster-vs-administrative-record lag (`docs/methodology.md §12b`) |
-| UT Sandbox | ~39 cumulative (2022, published) | **8 active** (2026-06-29; 70 total incl. 62 exited) | Decline | Apr-2025 benchmark ~11 active vs. our 8 (14 months later) — consistent with the sandbox's defined per-entity pilot duration, not a coverage gap |
+| AZ ABS | ~19 active (2022, AZ SC annual report) | **160 active** (2026-06-28; 203 total incl. 43 exited) | Growth | Apr-2025 benchmark ~136 active vs. an **unpersisted dry-run** count of 128 from that period — not reproducible from committed data, see caveat below |
+| UT Sandbox | ~39 cumulative (2022, published) | **8 active** (2026-06-29; 70 total incl. 62 exited) | Decline | Apr-2025 benchmark ~11 active vs. our 8 (14 months later, both endpoints from persisted snapshots) — consistent with the sandbox's defined per-entity pilot duration, not a coverage gap |
 
 Both trajectories move in the direction the underlying program design predicts (AZ ABS
 keeps admitting new entities; the UT Sandbox's fixed-duration pilot structure means early
-cohorts cycle out over time) and neither divergence from a published benchmark exceeds the
-10% investigation threshold in `docs/methodology.md §10d`.
+cohorts cycle out over time). The UT Sandbox comparison is fully reproducible from
+persisted snapshots and stays within the 10% investigation threshold in
+`docs/methodology.md §10d`.
+
+**The AZ ABS Apr-2025 comparison is not reproducible and should not be read as validated.**
+The 128-count came from a Wayback CDX scan that was a dry run and was never persisted to
+`source_snapshot` (`validation/longitudinal_validity.md §3` discloses this explicitly) —
+there is no snapshot in `data/raw/` to check the "5.9% divergence" figure against, so treat
+it as narrative context, not a verified reconciliation. The only AZ ABS accuracy claim this
+dataset actually verifies is the stratified sample in `validation/arizona_abs.md` (17/167
+rows, 0% field-level error on identity fields).
 
 Deeper Wayback reconstruction (the full 2021–2024 capture chain for both programs, plus a
 first WA LLLT backfill) is deferred to v2 — see `validation/longitudinal_validity.md §6`.
@@ -97,6 +106,13 @@ against the IAALS external inventory, **14/14 resolved** (0 open):
   Community-Based Justice Worker Model jurisdictions — `community_justice_worker` exists
   in the v1 taxonomy but no v1 scraper covers it)
 
+Plus **1 more row added by hand, outside this automated check's reach**: Oregon LP
+(`alp_license`, `detected_by=manual-oregon-research`) — the IAALS cross-check above is
+scoped to sandbox/abs/community_justice_worker only, so it can never surface an
+`alp_license` gap on its own. Oregon was identified and deferred via direct research
+instead (`validation/oregon_lp.md`, `docs/sampling_frame.md §3a`). **15 rows total in the
+ledger, 15/15 resolved, 0 open.**
+
 Full disposition table and reasoning: `docs/sampling_frame.md §6`. Raw ledger:
 `validation/residual_gaps.csv`. Narrative report: `validation/completeness.md`.
 
@@ -115,5 +131,5 @@ make reproduce
 
 ## 6. Residual gaps
 
-See §4 above and `validation/residual_gaps.csv` — all 14 rows resolved, none open. No
+See §4 above and `validation/residual_gaps.csv` — all 15 rows resolved, none open. No
 outstanding coverage or scope question remains unresolved for v1.0.0.

@@ -145,7 +145,7 @@ events |>
 
 ```
 Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.0)
-[Data set]. Yale Law School. https://github.com/jamespaul/reregulation-registry
+[Data set]. Yale Law School. https://github.com/jamespaul-yls/reregulation-provider-registry
 ```
 
 BibTeX:
@@ -156,7 +156,7 @@ BibTeX:
   year      = {2026},
   version   = {1.0.0},
   publisher = {Yale Law School},
-  url       = {https://github.com/jamespaul/reregulation-registry},
+  url       = {https://github.com/jamespaul-yls/reregulation-provider-registry},
 }
 ```
 

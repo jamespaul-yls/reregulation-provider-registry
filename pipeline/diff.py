@@ -108,8 +108,14 @@ def diff_snapshots(
                 )
             )
 
-    # Status changes — present in both, but current_status differs
-    for pid in old_by_id.keys() & new_by_id.keys():
+    # Status changes — present in both, but current_status differs.
+    # sorted(): dict_keys & dict_keys returns a set, whose iteration order depends on
+    # Python's per-process hash randomization (PYTHONHASHSEED). Without sorting, two
+    # otherwise-identical `make reproduce` runs from the same data/raw/ snapshots can
+    # emit these events in a different order, which then shows up as spurious row-order
+    # "drift" in data/release/ even though every row's content is identical — see
+    # docs/audit/adversarial_review.md B3 / the CI drift gate in .github/workflows/ci.yml.
+    for pid in sorted(old_by_id.keys() & new_by_id.keys()):
         old_status = old_by_id[pid].current_status
         new_status = new_by_id[pid].current_status
         if old_status != new_status:

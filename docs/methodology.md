@@ -42,8 +42,9 @@ Column names measure proxies (`formal_complaint_count`, not `harm`); analysts ap
 own harm definitions to the spine.
 
 **Frame document:** `docs/sampling_frame.md` is the authoritative statement of exactly
-which 10 programs are in scope for v1, why three of them are correctly zero-provider, the
-territory-scope decision, and the disposition of every residual gap surfaced by the
+which 11 programs are in scope for v1, why four of them are correctly zero-provider, the
+territory-scope decision, the one candidate program researched and deferred with no
+`program` row at all (§3a), and the disposition of every residual gap surfaced by the
 completeness audit (§10e). This section states the scope in prose; `sampling_frame.md`
 states it as an enumerated, reconciled list.
 
@@ -100,7 +101,7 @@ Every program's primary source, canonical fetch strategy, and scraper module. Se
 | MN LP | Roster only exists inside PDFs; OCR/layout errors possible |
 | CA LDA | County-level filings; highly fragmented; no statewide consolidated roster (see §1) |
 | DC Rule 5.4(b) | No roster exists at all — structural, not a scraping gap (see §1) |
-| WA Entity Pilot | No applicant authorized yet as of 2026-07-04 (see §1); `_AUTHORIZED_STATUSES` in the scraper is an educated guess since no authorized-status label has ever appeared on the live page |
+| WA Entity Pilot | No applicant authorized yet as of 2026-07-04 (see §1); `_AUTHORIZED_TOKENS` (token-based match) in the scraper is an educated guess since no authorized-status label has ever appeared on the live page; an unrecognized status now logs a warning instead of failing silently (`docs/audit/adversarial_review.md` S4) |
 | TX ALP | No roster exists yet — program not effective as of 2026-07 (see §1) |
 
 ---
@@ -165,6 +166,20 @@ status values are computed by diffing, potentially overwriting the bootstrap val
 
 For programs whose rosters carry no explicit status field (e.g., CO LLP roster lists only
 active providers), all first-snapshot providers are seeded as `active`.
+
+**How much of v1.0.0 this actually applies to — stated plainly.** This is not a rare edge
+case; as of v1.0.0 it is where most `current_status` values in the release come from.
+Querying `provider_status_event` by `(program_id, event_type)`: only `prog_az_abs` (36
+`disappeared_from_roster` events) and `prog_ut_sandbox` (1 `disappeared_from_roster` + 3
+`status_change`) have *any* event that came from an actual cross-snapshot diff. The other
+five populated programs — AZ LP, CO LLP, MN LP, UT LPP, WA LLLT — have event histories
+that are 100% `authorized` events, meaning every status value on every row (WA LLLT's
+active/exited/suspended/unknown four-way split included) was seeded once at first insert
+from the source's own status column and has never been cross-checked against a second
+snapshot. This will change as more snapshots accumulate (`docs/methodology.md §12c`); until
+then, `docs/data_dictionary.md`'s "computed, not scraped" framing for `current_status`
+should be read with this caveat attached, not as a blanket guarantee. See
+`docs/audit/adversarial_review.md` S3.
 
 ### 4c. `disappeared_from_roster` vs. `revoked` — a critical distinction
 
@@ -526,6 +541,15 @@ Sample selection is stratified by status (active / inactive) and, where applicab
 practice area. Document the sample IDs and verification date. Samples are not re-verified
 on subsequent scrapes unless the scraper logic changes.
 
+**Which "total" for multi-snapshot programs:** for a program with more than one snapshot
+(v1.0.0: AZ ABS, UT Sandbox), "the total" for the ≥15-or-10% rule means the **latest
+roster snapshot's row count** — the population the source itself stated at the time you
+sampled it — not the cumulative all-time provider count carried in the DB (which includes
+providers who have since exited and are no longer on any live roster to hand-verify
+against). AZ ABS's accuracy sample (`validation/arizona_abs.md`) already follows this
+convention (17 rows against the 167-row latest roster, 10.2%, not the 203-row cumulative
+total); this paragraph makes that convention explicit for the next multi-snapshot source.
+
 ### 10d. Longitudinal validity
 
 When Wayback backfill is available, reconcile our computed historical counts against
@@ -572,14 +596,22 @@ versa?"
    re-run (keyed on `(item, jurisdiction, detected_by)`) — the same immutability rule as
    `crosswalk_courtlistener` verified rows.
 
-**v1.0.0 result:** 14 candidate gaps surfaced, all 14 resolved. 2 `intentionally_excluded`
-(Utah ABS — covered by `prog_ut_sandbox`; Washington ABS — covered by
-`prog_wa_entity_pilot`, built 2026-07-04); 1 `resolved_built` (Washington sandbox — the
+**v1.0.0 result:** 14 candidate gaps surfaced by this automated check, all 14 resolved. 2
+`intentionally_excluded` (Utah ABS — covered by `prog_ut_sandbox`; Washington ABS — covered
+by `prog_wa_entity_pilot`, built 2026-07-04); 1 `resolved_built` (Washington sandbox — the
 same `prog_wa_entity_pilot` build resolves this listing directly); 11 `deferred_to_v2` (3
 candidate programs not yet built — IN sandbox, MN sandbox, PR ABS — and 8
 Community-Based Justice Worker Model jurisdictions, since `community_justice_worker` exists
-in the v1 `program_type` enum for forward compatibility but no v1 scraper covers it). Full
-disposition table and reasoning: `docs/sampling_frame.md §6`. The territory-scope decision
+in the v1 `program_type` enum for forward compatibility but no v1 scraper covers it).
+
+`validation/residual_gaps.csv` carries one further row (15 total) beyond what this automated
+check can surface: Oregon LP (`alp_license`), which is out of scope for the check above (it
+only covers sandbox/abs/community_justice_worker — bullet 2 of this section) and was
+identified and deferred by direct manual research instead
+(`detected_by=manual-oregon-research`; see `docs/sampling_frame.md §3a` and
+`validation/oregon_lp.md`).
+
+Full disposition table and reasoning: `docs/sampling_frame.md §6`. The territory-scope decision
 (v1 does not independently survey U.S. territories beyond what IAALS surfaced) is in
 `docs/sampling_frame.md §5`.
 

@@ -1,0 +1,3848 @@
+<!DOCTYPE html><html lang="en"><head>
+	<title> Licensed Lawyer</title>
+	<meta charset="ISO-8859-1">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- CSS -->
+	<link href="../../css/bootstrap.css" rel="stylesheet">
+	<link href="../../css/jasny-bootstrap.min.css" rel="stylesheet">
+	<link href="../../CSS/font-awesome.min.css" rel="stylesheet">
+	<link href="../../CSS/cvweb.css" rel="stylesheet">
+	<link href="../../CSS/help-system.css" rel="stylesheet">
+	<!-- JS -->
+	<!--[if lt IE 9]>
+    <script src="../../js/jquery-1.11.2.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]>-->
+    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-S5J8DFJ88P&amp;cx=c&amp;_slc=1"></script><script type="text/javascript" async="" charset="utf-8" src="https://www.gstatic.com/recaptcha/releases/TnA7HacJFoBWt9hnlunBlYfK/recaptcha__en.js" crossorigin="anonymous" integrity="sha384-r0+0DCYB9Tdq4Rpy9IvL6ouvcnluWOWNg9jAIO3yJA2C6v7nklWcHe/NE5zIDHbA"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../../js/jquery-2.1.3.min.js"></script>
+    <!--<![endif]-->
+    <script src="../../js/bootstrap.min.js"></script><style></style>
+    <script src="../../js/cvweb.js"></script>
+    <script src="../../js/jquery.validity.js"></script>
+    <script src="../../js/VerificationLib.js"></script>
+    <script src="../../js/help-system.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+    <script>
+	//GLOBAL VARIABLES FOR LOGGED IN USER
+	var CUSTOMERCD = "";
+	var ISMEMBERFLG = "";
+	var ORGCD = "";
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-38684683-3', 'auto');
+  ga('send', 'pageview');
+</script>
+</head>
+<body onload="PreparePageDisplay()">
+<div id="nqDebug"></div>
+	<div class="container" id="content">
+		<!--div class="row">
+			<div class="col-xs-12 visible-lg">
+				<LEFTNAV>
+			</div>
+		</div-->
+		<div class="row">
+			<div class="col-xs-12">
+				<style>
+	dt {
+		margin-top: 6px;
+	}
+
+	ul {
+		list-style-position: outside;
+		padding-left: 18px;
+	}
+
+	.thumb {
+		width: 60px;
+		height: 60px;
+		overflow: hidden;
+		border: 1px solid #F0F0F0;
+	}
+
+	.thumb img {
+		width: 60px;
+	}
+
+	.thumb img.landscape {
+		height: 60px;
+		width: auto !important;
+	}
+
+	input[type=radio].css-checkbox {
+		position: absolute;
+		z-index: -1000;
+		left: -1000px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		height: 1px;
+		width: 1px;
+		margin: -1px;
+		padding: 0;
+		border: 0;
+	}
+
+	input[type=radio].css-checkbox+label.css-radio-label {
+		padding-left: 26px;
+		min-height: 21px;
+		display: inline-block;
+		line-height: 30px;
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		font-size: 21px;
+		vertical-align: middle;
+		cursor: pointer;
+
+	}
+
+	input[type=radio].css-checkbox:checked+label.css-radio-label {
+		background-image: url('../../images/nqRadioChecked.png');
+	}
+
+	label.css-radio-label {
+		background-image: url('../../images/nqRadioUnchecked.png');
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+
+
+	input[type=checkbox].css-checkbox {
+		position: absolute;
+		z-index: -1000;
+		left: -1000px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		height: 1px;
+		width: 1px;
+		margin: -1px;
+		padding: 0;
+		border: 0;
+	}
+
+	input[type=checkbox].css-checkbox+label.css-label {
+		padding-left: 40px;
+		min-height: 35px;
+		display: inline-block;
+		line-height: 35px;
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		font-size: 16px;
+		vertical-align: middle;
+		cursor: pointer;
+
+	}
+
+	input[type=checkbox].css-checkbox:checked+label.css-label {
+		background-image: url('../../images/nqCheckboxChecked.png');
+	}
+
+	label.css-label {
+		background-image: url('../../images/nqCheckboxUnchecked.png');
+		background-repeat: no-repeat;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	.showIfEmpty {
+		display: block !important;
+	}
+
+	.hideIfEmpty {
+		display: none !important;
+	}
+
+	.rating_bar {
+		margin: 0px;
+		opacity: 0.6;
+	}
+
+	.rating_bar_none {
+		margin: 0px;
+		opacity: 0.3;
+	}
+</style>
+<link href="../../css/lawyer.css" rel="stylesheet" type="text/css">
+
+<style>
+	.nqRemoveFilter {
+		cursor: default;
+	}
+
+	.accordion_6 .panel-default>.panel-heading a {
+		color: #494949;
+		display: block;
+		font-size: 14px;
+		font-weight: normal;
+		padding: 15px;
+	}
+
+
+
+
+
+
+	.accordion_6 .panel-default {
+		background-color: transparent;
+		border: 1px solid #d6d6d6;
+		border-radius: 0px;
+		-moz-border-radius: 0px;
+		-webkit-border-radius: 0px;
+	}
+
+	.accordion_6 .panel-default>.panel-heading {
+		background-color: transparent;
+		border-bottom: 1px solid #d6d6d6;
+		padding: 0px;
+		margin-bottom: -1px;
+	}
+
+	.accordion_6 .panel-heading+.panel-collapse .panel-body {
+		border: none;
+		border-top: 1px solid #d8d8d8;
+		background-color: #efefef;
+		padding: 15px 50px 15px 15px;
+	}
+
+	.accordion_6 .panel-default>.panel-heading a {
+		font-size: 14px;
+		font-weight: normal;
+		padding: 15px;
+		color: #494949;
+		display: block;
+	}
+
+	.accordion_6 .panel-default>.panel-heading a.collapsed {
+		color: #494949;
+		background-color: transparent;
+	}
+
+	.accordion_6 .panel-default>.panel-heading a:hover {
+		text-decoration: none;
+	}
+
+	.accordion_6 .panel-default .panel-title {
+		position: relative;
+		padding-right: 46px;
+	}
+
+	.accordion_6 .panel-default .accordion_icon {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		background-color: #3cceda;
+		width: 46px;
+		height: 100%;
+		margin: 0px 0 0 0;
+		float: left;
+		font-family: 'FontAwesome';
+		-webkit-font-smoothing: antialiased;
+	}
+
+	.accordion_6 .panel-default .collapsed .accordion_icon {
+		background-color: #7d7d7d;
+	}
+
+	.accordion_6 .panel-default .accordion_icon:before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -9px 0 0 -7px;
+		content: "\f068";
+		color: #FFF;
+		font-size: 13px;
+	}
+
+	.accordion_6 .panel-default .collapsed .accordion_icon:before {
+		content: "\f067";
+		color: #FFF;
+	}
+
+	.ddbtn {
+		color: #ffffff;
+		margin: 2px;
+		padding: 5px 10px;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #357ebd #357ebd #24537c;
+		background-color: #428bca;
+	}
+
+
+
+	.chip {
+		display: inline-block;
+		padding: 0 15px;
+		height: 30px;
+		line-height: 30px;
+		border-radius: 15px;
+		background-color: #f1f1f1;
+	}
+
+	.closebtn {
+		padding-left: 10px;
+		color: #888;
+		font-weight: bold;
+		float: right;
+		font-size: 20px;
+		cursor: pointer;
+	}
+
+	.closebtn:hover {
+		color: #000;
+	}
+
+	.nq-Compare-List-Container {
+		padding: 10px;
+		border-radius: 10px;
+		border: 1px solid #eee;
+	}
+</style>
+
+
+
+
+<div class="row">
+	<div class="col-md-8" style="padding-left:0px;">
+
+		<div id="searchCri" class="panel-group accordion_6" role="tablist" aria-multiselectable="true" style="margin-top:18px">
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							<span class="accordion_icon"></span>
+							Search Criteria
+							<span id="nqSearchCount"></span>
+
+						</a>
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+					<div class="panel-body">
+						<ul id="nqUserSelections" class="list-unstyled" style="margin-bottom: 9px; list-style-type: none;">
+
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<a class="btn btn-lg btn-primary hide" id="searchMM" href="../utilities.dll/openpage?MMSEARCH=1&amp;WRP=lawyerMenuPower.htm#STATECD=UT|Y=1|Y=1|" style="margin-top:20px;">Search Modest Means Attorneys</a>
+
+	</div>
+	<div class="col-md-4">
+
+		<div class="panel-group accordion_6" role="tablist" aria-multiselectable="true" style="margin-top:18px" id="accordSort">
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingSort">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordSort" href="#collapseSort" aria-expanded="true" aria-controls="collapseSort">
+							<span class="accordion_icon"></span>
+							Sort Results By
+
+						</a>
+					</h4>
+				</div>
+				<div id="collapseSort" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSort">
+					<div class="panel-body">
+						<ul id="" class="list-unstyled" style="margin-bottom: 9px; list-style-type: none;">
+							<li>
+								<div class="btn btn-primary ddbtn" onclick="set_sort('LASTNAME,FIRSTNAME');">Name</div>
+							</li>
+							<li>
+								<div class="btn btn-primary ddbtn" onclick="set_sort('case when ORGNAME is null then 1 else 0 end,ORGNAME,LASTNAME,FIRSTNAME');">Organization</div>
+							</li>
+							<!--<li><div class="btn btn-primary ddbtn" onclick="set_sort('UDEF2QTY DESC');">User Rating</div></li>-->
+							<!--<li><div class="btn btn-primary ddbtn" onclick="set_sort('UDEF1QTY DESC');">Fee Level</div></li>-->
+							<li class="distCol hide">
+								<div class="btn btn-primary ddbtn" onclick="set_sort('DISTANCE');">Distance</div>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+<p>&nbsp;</p>
+
+<input type="hidden" id="nqSiteFormData" value="">
+
+<form name="searchForm" id="searchForm" class="form-horizontal" action="/Lawyers/DoSearch" method="POST" target="_top">
+	<input type="hidden" name="SQLNAME" id="SQLNAME" value="GETDIRSEARCH">
+	<input type="hidden" name="SRCHOPT" id="SRCHOPT" value="I|POLITICALPARTY|LPPActive|=^I|CHAPTERID|UT-BAR|=">
+	<input type="hidden" name="SORTOPT" id="SORTOPT" value="LASTNAME">
+	<input type="hidden" name="GETCOUNT" id="GETCOUNT" value="0">
+	<input type="hidden" name="GETSIM" id="GETSIM" value="0">
+	<input type="hidden" name="RANGE" id="RANGE" value="1/10">
+</form>
+
+<script>
+
+	function set_sort(which) {
+		$("#SORTOPT").val(which);
+		loadLawyers();
+	}
+
+	var sParams = [];
+
+	$("#SRCHOPT").val(decodeURIComponent(getURLValue("SRCHOPT")));
+	$("#SORTOPT").val(decodeURIComponent(getURLValue("SORTOPT")));
+	$("#GETSIM").val(decodeURIComponent(getURLValue("GETSIM")));
+
+	console.log($("#SRCHOPT").val());
+	console.log($("#SORTOPT").val());
+
+
+	if (GetCookieValue("sParams") != "") {
+
+		sParams = JSON.parse(GetCookieValue("sParams"));
+
+		console.log(sParams);
+		console.log(prep_sParams());
+
+		var nqListArray = new Array();
+		var nqFilterCount = 0;
+
+		$(sParams).each(function (i, val) {
+
+			var nqDataItem = this.dsp.split(",");
+			var nqListItem = '<li style="margin-bottom:10px">' + this.dsc + ": ";
+			var nqFld = this.fld;
+			var nqVals = this.val.split(",");
+			
+			console.log(nqFld);
+
+			$(nqDataItem).each(function (k, valTwo) {
+				nqListItem += '<button class="btn btn-sm btn-primary nqRemoveFilter" style="color: #ffffff; margin: 2px; padding: 5px 10px; border-width: 1px; border-style: solid; border-color: #357ebd #357ebd #24537c; background-color: #428bca;" onclick="remove_sParam(\'' + nqFld + '\',\'' + nqVals[k] + '\');"><i class="fa fa-minus-circle"></i> ' + valTwo + '</button>';
+				if ((nqFld != "HASPETSFLG") && (nqFld != "NOWEBFLG") && (nqFld != "ISMEMBERFLG") && (nqFld != "CHAPTERID")) {
+					nqFilterCount++;
+				}
+			});
+
+			nqListItem += '</li>';
+
+			if ((nqFld != "HASPETSFLG") && (nqFld != "NOWEBFLG") && (nqFld != "ISMEMBERFLG") && (nqFld != "CHAPTERID")) {
+				nqListArray.push(nqListItem);
+			}
+
+		});
+
+		$(nqListArray).each(function (i, val) {
+			$("#nqUserSelections").append("" + val);
+			$("#nqSearchCount").text("(" + nqFilterCount + ")");
+		});
+
+	}
+
+	function remove_sParam(whichParam, whichVal) {
+
+		//console.log(sParams);
+		//console.log(whichParam);
+		//console.log(whichVal);
+
+		$(sParams).each(function (i, val) {
+			if (this.fld == whichParam) {
+				var vals = this.val.split(",");
+				var dsps = this.dsp.split(",");
+				var index = vals.indexOf(whichVal);
+				vals.splice(index, 1);
+				dsps.splice(index, 1);
+				this.val = vals.join(",");
+				this.dsp = dsps.join(",");
+			}
+		});
+
+		var indicesToSplice = [];
+		$(sParams).each(function (i, val) {
+			if (this.val == "") {
+				indicesToSplice.push(i);
+			}
+		});
+		for (var i = indicesToSplice.length - 1; i > -1; i--) {
+			sParams.splice(indicesToSplice[i], 1);
+		}
+
+		//console.log(indicesToSplice);
+		//console.log(sParams);
+
+		// save cookie
+		Set_Cookie("sParams", JSON.stringify(sParams), true, "/");
+
+		// reload search
+		loadLawyers();
+
+	}
+
+	function prep_sParams() {
+		var paramsStr = "";
+		for (var i = 0; i <sParams.length; i++) {
+			var obj = sParams[i];
+
+			if (paramsStr != "") { paramsStr = paramsStr + "^"; }
+
+			var useTyp = obj.typ;
+			if (useTyp == "<>") { useTyp = "!="; }
+
+			paramsStr = paramsStr + obj.ent + "|" + obj.fld + "|" + obj.val + "|" + useTyp;
+
+		}
+		return paramsStr;
+	}
+
+	function loadLawyers() {
+
+		$("#SRCHOPT").val(prep_sParams());
+
+		// STUB: set sort
+
+		$("#searchForm").submit();
+
+	}
+
+</script>
+
+<div class="row">
+	<div class="col1 col-xs-12">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<h3>
+					53 Licensed <span id="recTyp">Paralegal Practitioners</span></h3>
+			</div>
+		</div>
+
+		<div class="row text-center">
+			<div class="pagination-holder hide">
+				<ul class="pagination pagination-sm pagination-cust"></ul>
+			</div>&nbsp;
+		</div>
+
+		<table class="table table-hover responsive">
+			<thead>
+				<tr>
+					<th class="sorter-false"></th>
+					<th class="text-left">Name</th>
+					<th class="distCol hide">Distance</th>
+					<th class="text-center hide">Rating</th>
+					<th>Organization</th>
+					<th>Payment Options</th>
+					<th class="hide">Fee Level</th>
+					<th>Job Title</th>
+					<th class="sorter-false">Compare</th>
+
+				</tr>
+			</thead>
+			<tbody id="tbodyResults">
+			<tr alt="1501720" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501720', $('#custname1501720').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501720" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501720', $('#custname1501720').val());">Adams, Michelle</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501720" value="Michelle-Adams">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Michelle Adams&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyN.png" height="32" width="28" data-toggle="tooltip" title="Hourly Rate" data-active="N">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Adams, Michelle" value="1501720" id="custCd1501720" class="compareControl css-checkbox"><label for="custCd1501720" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502784" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502784', $('#custname1502784').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502784" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502784', $('#custname1502784').val());">Alas Servellon, Francesca</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502784" value="Francesca-Alas Servellon">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">NA&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Alas Servellon, Francesca" value="1502784" id="custCd1502784" class="compareControl css-checkbox"><label for="custCd1502784" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500201" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500201', $('#custname1500201').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500201" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500201', $('#custname1500201').val());">Alleman, Amber</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500201" value="Amber-Alleman">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Ray Quinney &amp; Nebeker&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Alleman, Amber" value="1500201" id="custCd1500201" class="compareControl css-checkbox"><label for="custCd1500201" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502319" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502319', $('#custname1502319').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502319" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502319', $('#custname1502319').val());">Allsop, Jessika</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502319" value="Jessika-Allsop">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Dolowitz Hunnicutt &amp; Gibbs, PLLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Allsop, Jessika" value="1502319" id="custCd1502319" class="compareControl css-checkbox"><label for="custCd1502319" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501943" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501943', $('#custname1501943').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501943" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501943', $('#custname1501943').val());">Alvarado, Veronica</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501943" value="Veronica-Alvarado">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Lonazco Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Alvarado, Veronica" value="1501943" id="custCd1501943" class="compareControl css-checkbox"><label for="custCd1501943" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502438" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502438', $('#custname1502438').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502438" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502438', $('#custname1502438').val());">Anderberg, Kirstyn</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502438" value="Kirstyn-Anderberg">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">API Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Anderberg, Kirstyn" value="1502438" id="custCd1502438" class="compareControl css-checkbox"><label for="custCd1502438" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500676" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500676', $('#custname1500676').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500676" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500676', $('#custname1500676').val());">Arganbright, Jennifer</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500676" value="Jennifer-Arganbright">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Snow Caldwell Beckstrom &amp; Wilbanks, LLP&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Arganbright, Jennifer" value="1500676" id="custCd1500676" class="compareControl css-checkbox"><label for="custCd1500676" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501186" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501186', $('#custname1501186').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501186" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501186', $('#custname1501186').val());">Astle, Susan</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501186" value="Susan-Astle">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Astle Family Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Astle, Susan" value="1501186" id="custCd1501186" class="compareControl css-checkbox"><label for="custCd1501186" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502144" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502144', $('#custname1502144').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502144" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502144', $('#custname1502144').val());">Bird, Christina</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502144" value="Christina-Bird">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Hyde Loubet Law, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Bird, Christina" value="1502144" id="custCd1502144" class="compareControl css-checkbox"><label for="custCd1502144" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1504096" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1504096', $('#custname1504096').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1504096" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1504096', $('#custname1504096').val());">Bohn, Jill</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1504096" value="Jill-Bohn">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Schriever Law Firm&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Bohn, Jill" value="1504096" id="custCd1504096" class="compareControl css-checkbox"><label for="custCd1504096" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501377" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501377', $('#custname1501377').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501377" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501377', $('#custname1501377').val());">Brandt, Lindsey</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501377" value="Lindsey-Brandt">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Brandt Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Brandt, Lindsey" value="1501377" id="custCd1501377" class="compareControl css-checkbox"><label for="custCd1501377" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501709" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501709', $('#custname1501709').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501709" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501709', $('#custname1501709').val());">Brewer, Paula </a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501709" value="Paula -Brewer">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Douglas L. Neeley&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">License Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Brewer, Paula " value="1501709" id="custCd1501709" class="compareControl css-checkbox"><label for="custCd1501709" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502426" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502426', $('#custname1502426').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502426" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502426', $('#custname1502426').val());">Buck, Rebecca</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502426" value="Rebecca-Buck">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Ammon Nelson Law, PLLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Buck, Rebecca" value="1502426" id="custCd1502426" class="compareControl css-checkbox"><label for="custCd1502426" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503657" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503657', $('#custname1503657').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503657" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503657', $('#custname1503657').val());">Buervenich, Melanie</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503657" value="Melanie-Buervenich">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Pia Hoyt LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Buervenich, Melanie" value="1503657" id="custCd1503657" class="compareControl css-checkbox"><label for="custCd1503657" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501378" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501378', $('#custname1501378').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501378" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501378', $('#custname1501378').val());">Byall, Brooke</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501378" value="Brooke-Byall">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Celeste C. Canning PLLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">LPP </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Byall, Brooke" value="1501378" id="custCd1501378" class="compareControl css-checkbox"><label for="custCd1501378" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502768" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502768', $('#custname1502768').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502768" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502768', $('#custname1502768').val());">Carpenter, Sandra</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502768" value="Sandra-Carpenter">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Blue Bee Bankruptcy Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyN.png" height="32" width="28" data-toggle="tooltip" title="Hourly Rate" data-active="N">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Carpenter, Sandra" value="1502768" id="custCd1502768" class="compareControl css-checkbox"><label for="custCd1502768" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500677" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500677', $('#custname1500677').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500677" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500677', $('#custname1500677').val());">Deaton, Jacqueline</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500677" value="Jacqueline-Deaton">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Schriever Law Firm&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">LPP </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Deaton, Jacqueline" value="1500677" id="custCd1500677" class="compareControl css-checkbox"><label for="custCd1500677" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503951" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503951', $('#custname1503951').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503951" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503951', $('#custname1503951').val());">Erickson, Shandi</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503951" value="Shandi-Erickson">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Alpine Peak Family Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Erickson, Shandi" value="1503951" id="custCd1503951" class="compareControl css-checkbox"><label for="custCd1503951" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1504092" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1504092', $('#custname1504092').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1504092" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1504092', $('#custname1504092').val());">Escajeda, Rosa</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1504092" value="Rosa-Escajeda">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Law Office of Asa E. Kelley&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Escajeda, Rosa" value="1504092" id="custCd1504092" class="compareControl css-checkbox"><label for="custCd1504092" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501187" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501187', $('#custname1501187').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501187" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501187', $('#custname1501187').val());">Farrell, Meredith</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501187" value="Meredith-Farrell">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Anderson | Hinkins&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Farrell, Meredith" value="1501187" id="custCd1501187" class="compareControl css-checkbox"><label for="custCd1501187" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1504093" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1504093', $('#custname1504093').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1504093" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1504093', $('#custname1504093').val());">Feinstein, Sharnae</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1504093" value="Sharnae-Feinstein">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">LJ Law, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Feinstein, Sharnae" value="1504093" id="custCd1504093" class="compareControl css-checkbox"><label for="custCd1504093" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501710" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501710', $('#custname1501710').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501710" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501710', $('#custname1501710').val());">George, Denise</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501710" value="Denise-George">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Quill Fox LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="George, Denise" value="1501710" id="custCd1501710" class="compareControl css-checkbox"><label for="custCd1501710" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503744" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503744', $('#custname1503744').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503744" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503744', $('#custname1503744').val());">Goddard, Grace</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503744" value="Grace-Goddard">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Fabian VanCott&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Goddard, Grace" value="1503744" id="custCd1503744" class="compareControl css-checkbox"><label for="custCd1503744" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503658" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503658', $('#custname1503658').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503658" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503658', $('#custname1503658').val());">Gracie, Nicole</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503658" value="Nicole-Gracie">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Moody Brown Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Gracie, Nicole" value="1503658" id="custCd1503658" class="compareControl css-checkbox"><label for="custCd1503658" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503659" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503659', $('#custname1503659').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503659" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503659', $('#custname1503659').val());">Huamani, Sol</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503659" value="Sol-Huamani">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Premier Paralegal Solutions, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Huamani, Sol" value="1503659" id="custCd1503659" class="compareControl css-checkbox"><label for="custCd1503659" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502990" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502990', $('#custname1502990').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502990" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502990', $('#custname1502990').val());">Johnson, Marina</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502990" value="Marina-Johnson">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">MJ Legal&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Johnson, Marina" value="1502990" id="custCd1502990" class="compareControl css-checkbox"><label for="custCd1502990" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501208" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501208', $('#custname1501208').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501208" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501208', $('#custname1501208').val());">Jordan, Molly</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501208" value="Molly-Jordan">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Moody Brown Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Jordan, Molly" value="1501208" id="custCd1501208" class="compareControl css-checkbox"><label for="custCd1501208" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501188" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501188', $('#custname1501188').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501188" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501188', $('#custname1501188').val());">Moody, Jessica</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501188" value="Jessica-Moody">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Moody Brown Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Moody, Jessica" value="1501188" id="custCd1501188" class="compareControl css-checkbox"><label for="custCd1501188" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500203" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500203', $('#custname1500203').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500203" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500203', $('#custname1500203').val());">Morandy, Susan</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500203" value="Susan-Morandy">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Hawkes Quam&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Morandy, Susan" value="1500203" id="custCd1500203" class="compareControl css-checkbox"><label for="custCd1500203" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1504094" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1504094', $('#custname1504094').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1504094" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1504094', $('#custname1504094').val());">Morris, Elise</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1504094" value="Elise-Morris">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Salcido Law Firm Pllc&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Morris, Elise" value="1504094" id="custCd1504094" class="compareControl css-checkbox"><label for="custCd1504094" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501379" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501379', $('#custname1501379').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501379" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501379', $('#custname1501379').val());">Morriss, Bonnie</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501379" value="Bonnie-Morriss">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Morriss Legal Services&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Morriss, Bonnie" value="1501379" id="custCd1501379" class="compareControl css-checkbox"><label for="custCd1501379" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500678" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500678', $('#custname1500678').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500678" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500678', $('#custname1500678').val());">Mumm, Rheane</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500678" value="Rheane-Mumm">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Licensed Paralegal Practitioner Legal Services, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Mumm, Rheane" value="1500678" id="custCd1500678" class="compareControl css-checkbox"><label for="custCd1500678" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503660" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503660', $('#custname1503660').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503660" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503660', $('#custname1503660').val());">Pace, Celia</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503660" value="Celia-Pace">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Celia Pace Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Pace, Celia" value="1503660" id="custCd1503660" class="compareControl css-checkbox"><label for="custCd1503660" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501189" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501189', $('#custname1501189').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501189" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501189', $('#custname1501189').val());">Parache, Melissa</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501189" value="Melissa-Parache">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">LPP Legal Solutions&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Parache, Melissa" value="1501189" id="custCd1501189" class="compareControl css-checkbox"><label for="custCd1501189" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503329" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503329', $('#custname1503329').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503329" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503329', $('#custname1503329').val());">Pence, Riley</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503329" value="Riley-Pence">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">MacArthur Heder &amp; Metler&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Pence, Riley" value="1503329" id="custCd1503329" class="compareControl css-checkbox"><label for="custCd1503329" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500204" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500204', $('#custname1500204').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500204" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500204', $('#custname1500204').val());">Pennock, Laura</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500204" value="Laura-Pennock">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Penn Legal, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">LPP </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Pennock, Laura" value="1500204" id="custCd1500204" class="compareControl css-checkbox"><label for="custCd1500204" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502318" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502318', $('#custname1502318').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502318" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502318', $('#custname1502318').val());">Quackenbush, Kurt</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502318" value="Kurt-Quackenbush">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Quackenbush Legal, PLLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Quackenbush, Kurt" value="1502318" id="custCd1502318" class="compareControl css-checkbox"><label for="custCd1502318" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1504095" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1504095', $('#custname1504095').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1504095" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1504095', $('#custname1504095').val());">Rasmussen, Joy </a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1504095" value="Joy -Rasmussen">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Millar Legal&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Rasmussen, Joy " value="1504095" id="custCd1504095" class="compareControl css-checkbox"><label for="custCd1504095" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500738" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500738', $('#custname1500738').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500738" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500738', $('#custname1500738').val());">Riter, Amanda</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500738" value="Amanda-Riter">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">NA&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Riter, Amanda" value="1500738" id="custCd1500738" class="compareControl css-checkbox"><label for="custCd1500738" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503300" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503300', $('#custname1503300').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503300" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503300', $('#custname1503300').val());">Rojas, Haydee</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503300" value="Haydee-Rojas">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Douglas L. Neeley Attorney at Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Rojas, Haydee" value="1503300" id="custCd1503300" class="compareControl css-checkbox"><label for="custCd1503300" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1503239" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1503239', $('#custname1503239').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1503239" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1503239', $('#custname1503239').val());">Sanchez, Dianna</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1503239" value="Dianna-Sanchez">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Beehive Paralegal&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Sanchez, Dianna" value="1503239" id="custCd1503239" class="compareControl css-checkbox"><label for="custCd1503239" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502427" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502427', $('#custname1502427').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502427" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502427', $('#custname1502427').val());">Seegrist, John</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502427" value="John-Seegrist">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Stillwater Family Law LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Seegrist, John" value="1502427" id="custCd1502427" class="compareControl css-checkbox"><label for="custCd1502427" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502349" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502349', $('#custname1502349').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502349" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502349', $('#custname1502349').val());">Short, Monica</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502349" value="Monica-Short">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">LOTUSLEGAL&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Short, Monica" value="1502349" id="custCd1502349" class="compareControl css-checkbox"><label for="custCd1502349" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500698" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500698', $('#custname1500698').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500698" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500698', $('#custname1500698').val());">Staples, Leslie</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500698" value="Leslie-Staples">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Miller Law Group&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Staples, Leslie" value="1500698" id="custCd1500698" class="compareControl css-checkbox"><label for="custCd1500698" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502735" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502735', $('#custname1502735').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502735" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502735', $('#custname1502735').val());">Stroh, Marsha</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502735" value="Marsha-Stroh">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Salt Lake Family Law&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Stroh, Marsha" value="1502735" id="custCd1502735" class="compareControl css-checkbox"><label for="custCd1502735" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1504099" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1504099', $('#custname1504099').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1504099" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1504099', $('#custname1504099').val());">Testacct, LPP</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1504099" value="LPP-Testacct">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Testacct, LPP" value="1504099" id="custCd1504099" class="compareControl css-checkbox"><label for="custCd1504099" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502475" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502475', $('#custname1502475').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502475" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502475', $('#custname1502475').val());">Thomas, Amanda</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502475" value="Amanda-Thomas">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Amanda Thomas Legal and Mediation LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Thomas, Amanda" value="1502475" id="custCd1502475" class="compareControl css-checkbox"><label for="custCd1502475" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500679" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500679', $('#custname1500679').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500679" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500679', $('#custname1500679').val());">Vanderhooft, Peter</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500679" value="Peter-Vanderhooft">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Vanderhooft Legal&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Vanderhooft, Peter" value="1500679" id="custCd1500679" class="compareControl css-checkbox"><label for="custCd1500679" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1501944" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1501944', $('#custname1501944').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1501944" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1501944', $('#custname1501944').val());">White, Sydney</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1501944" value="Sydney-White">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Miller Harrison LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level"> </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="White, Sydney" value="1501944" id="custCd1501944" class="compareControl css-checkbox"><label for="custCd1501944" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1502530" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1502530', $('#custname1502530').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1502530" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1502530', $('#custname1502530').val());">White, Randalee</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1502530" value="Randalee-White">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Jason White &amp; Associates&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="White, Randalee" value="1502530" id="custCd1502530" class="compareControl css-checkbox"><label for="custCd1502530" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500680" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500680', $('#custname1500680').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500680" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500680', $('#custname1500680').val());">Willoughby, Angela</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500680" value="Angela-Willoughby">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Oasis Legal Services, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Sliding Scale Based on Income">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Willoughby, Angela" value="1500680" id="custCd1500680" class="compareControl css-checkbox"><label for="custCd1500680" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500681" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500681', $('#custname1500681').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500681" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500681', $('#custname1500681').val());">Wright, Tonya</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500681" value="Tonya-Wright">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Peck Baxter Watkins &amp; Bailey, LLC&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatN.png" height="32" width="28" data-toggle="tooltip" title="Flat Fee" data-active="N">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Retainer for Ongoing Services">
+		<img src="/cv/images/FeeUnbundledY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Unbundled Services">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Wright, Tonya" value="1500681" id="custCd1500681" class="compareControl css-checkbox"><label for="custCd1500681" class="css-label">&nbsp;</label></td>
+</tr>
+<tr alt="1500793" class="nqCustContainer">
+	<td data-label="">
+		<div class="thumb">
+			
+			<a href="#" onclick="getCVPageLink('lawyerProfile', '1500793', $('#custname1500793').val());">
+			<img src="../cvimage.dll/view?ENTITY=MEM&amp;ENTITYCD=1500793" onload="calcLs(this);">
+			</a>
+		</div>
+	</td>
+	<td data-label="Name" style="font-size:16px;">
+		
+		<a href="#" onclick="getCVPageLink('lawyerProfile', '1500793', $('#custname1500793').val());">Zamora, Heather</a>  
+		<script>
+			 if ('Y'=='N') {document.write('(Non-Member)')};
+
+		</script>
+		<script>
+		Set_Cookie("lastSearchKeynum","2588783", true, "/");
+		</script>
+		<input type="hidden" id="custname1500793" value="Heather-Zamora">
+	</td>
+	<td data-label="Distance" class="distCol hide">
+		 mi.
+	
+	</td><td data-label="Rating" class="text-center hide">
+		<div class="hideIfEmpty">
+			<h4 class="rating_bar"><div style="width:%"></div></h4><div> reviews</div>
+		</div>
+		<div class="showIfEmpty hide">
+			<h4 class="rating_bar rating_bar_none"><div style="width:100%"></div></h4><div>0 reviews</div>
+		</div>
+	</td>
+	<td data-label="Organization">Heather Zamora&nbsp;</td>
+	
+
+	<td data-label="Payment Options">
+		<img src="/cv/images/FeeSlideN.png" height="32" width="28" data-toggle="tooltip" title="Sliding Scale Based on Income" data-active="N">
+		<img src="/cv/images/FeeFlatY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Flat Fee">
+		<img src="/cv/images/FeeHourlyY.png" height="32" width="28" data-toggle="tooltip" title="" data-active="Y" data-original-title="Hourly Rate">
+		<img src="/cv/images/FeeBlendedN.png" height="32" width="28" data-toggle="tooltip" title="Blended Rate" data-active="N">
+		<img src="/cv/images/FeeContingN.png" height="32" width="28" data-toggle="tooltip" title="Contingent Fee" data-active="N">
+		<img src="/cv/images/FeeRetainN.png" height="32" width="28" data-toggle="tooltip" title="Retainer for Ongoing Services" data-active="N">
+		<img src="/cv/images/FeeUnbundledN.png" height="32" width="28" data-toggle="tooltip" title="Unbundled Services" data-active="N">
+	</td>
+	<td data-label="Fee Level" class="hide">
+		<div style="width:80px;height:16px;border:1px solid #CCC;">
+			<div style="width:calc(px * 16);height:14px;background-color:#9FF9F8;"></div>
+		</div>
+	</td>
+	<td data-label="Level">Licensed Paralegal Practitioner </td>
+	<td data-label="">
+		
+		<input type="checkbox" onclick="checkCompare(this)" alt="Zamora, Heather" value="1500793" id="custCd1500793" class="compareControl css-checkbox"><label for="custCd1500793" class="css-label">&nbsp;</label></td>
+</tr>
+			</tbody>
+		</table>
+
+		<div class="row text-center">
+			<div class="pagination-holder hide">
+				<ul class="pagination pagination-sm pagination-cust"></ul>
+			</div>
+		</div>
+
+		<div class="spacer-double"></div>
+
+		<div class="cartnav hide">
+			<span class="nav1">&nbsp;&nbsp;&nbsp;</span>
+			<span class="nav2"></span>
+			<span class="nav3">&nbsp;&nbsp;&nbsp;</span>
+		</div>
+
+		<p class="clearfix">&nbsp;</p>
+
+		<div class="row text-center nq-Compare-Item" id="compareButton" style="display:none">
+			<div class="col-md-12">
+
+			</div>
+
+			<div class="col-sm-6 col-sm-offset-3 nq-Compare-List-Container">
+				<div>
+					<button onclick="nqCompare()" class="btn btn-lg btn-info">
+						<span id="nqCompareLoading" style="display:none">
+							<i class="fa fa-spinner fa-spin"></i>
+						</span> Compare Selected Lawyers
+					</button>
+
+				</div>
+				<div class="chips-Container">
+
+				</div>
+				<div style="margin-top:15px">
+					<button onclick="nqUncompareAll()" class="btn btn-sm btn-default">
+						Clear all comparisons
+					</button>
+
+				</div>
+
+			</div>
+		</div>
+
+		<p class="clearfix">&nbsp;</p>
+
+		<div class="row text-center" style="color:#666;margin-bottom:6px;font-size:15px;">Payment Options Legend
+			<span class="help-system" id="HLP_PMTOPTIONS" data-helpcd="HLP_PMTOPTIONS" data-helpstyle="icon"><a href="#" onclick="top.eModal.iframe('/cv/cgi-bin/utilities.dll/customList?WHP=none&amp;WBP=helpSystem.htm&amp;SQLNAME=GETHELPTOPIC&amp;TITLETXT=HLP_PMTOPTIONS', '&nbsp;');return false;" class="help-system-icon"><i class="fa fa-info-circle"></i></a></span>
+		</div>
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<div class="row" style="border:1px solid #DDD;padding:8px;vertical-align:top;">
+					<!--
+					<div class="col-md-2 text-center">
+						<img src="/cv/images/FeeSlideY.png" height="32" width="28" />
+						<br /> Sliding Scale</div>
+					<div class="col-md-2 text-center">
+						<img src="/cv/images/FeeFlatY.png" height="32" width="28" />
+						<br /> Flat Fee</div>
+					<div class="col-md-2 text-center">
+						<img src="/cv/images/FeeHourlyY.png" height="32" width="28" />
+						<br /> Hourly Rate</div>
+					<div class="col-md-2 text-center">
+						<img src="/cv/images/FeeBlendedY.png" height="32" width="28" />
+						<br /> Blended Rate</div>
+					<div class="col-md-2 text-center">
+						<img src="/cv/images/FeeContingY.png" height="32" width="28" />
+						<br /> Contingent Fee</div>
+					<div class="col-md-2 text-center">
+						<img src="/cv/images/FeeRetainY.png" height="32" width="28" />
+						<br /> Retainer</div>
+					-->
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeSlideY.png" height="32" width="28">
+						<br> Sliding Scale
+					</span>
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeFlatY.png" height="32" width="28">
+						<br> Flat Fee
+					</span>
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeHourlyY.png" height="32" width="28">
+						<br> Hourly Rate
+					</span>
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeBlendedY.png" height="32" width="28">
+						<br> Blended Rate
+					</span>
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeContingY.png" height="32" width="28">
+						<br> Contingent Fee
+					</span>
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeRetainY.png" height="32" width="28">
+						<br> Retainer
+					</span>
+					<span style="display:inline-block;text-align:center;width:80px;vertical-align:top;">
+						<img src="/cv/images/FeeUnbundledY.png" height="32" width="28">
+						<br> Unbundled Services
+					</span>
+				</div>
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+
+	</div>
+	<!-- col -->
+	<div class="col2 col-xs-3 hide">
+		<!-- modest means -->
+	</div>
+	<!-- col -->
+</div>
+<!-- row -->
+
+<form name="nqCompareForm" id="nqCompareForm" class="form-horizontal" action="/Lawyers/Compare-Lawyers" method="post" target="_top">
+	<input type="hidden" name="CUSTOMERCD" id="nqCompareCustCd" value="">
+	<input type="hidden" name="COLUMNS" id="nqCompareColumns" value="">
+</form>
+<form name="nqContactLawyerForm" id="nqContactLawyerForm" class="form-horizontal" action="/Lawyers/Contact-Lawyer" method="post" target="_top">
+	<input type="hidden" name="CUSTOMERCD" id="nqContactCustCd" value="">
+</form>
+<form name="nqContactOrgForm" id="nqContactOrgForm" class="form-horizontal" action="/Organizations/Contact-Organization" method="post" target="_top">
+	<input type="hidden" name="ORGCD" id="nqContactOrgCd" value="">
+</form>
+
+<script>
+
+	var hasDist = false;
+
+	// Modest Means: begin
+	
+	if ((GetCookieValue("LLSTATECD") == "UT") || (GetCookieValue("LLSTATECD") == "")) {
+
+		$(sParams).each(function (index, value) {
+			if (this.fld == "RADIUS") {
+				hasDist = true;
+			}
+			if (this.fld == "SCHOOLATTENDED") {
+				var vals = this.val;
+				vals = vals.split(",");
+				if (vals.indexOf("218") > -1) {
+					console.log("showMM");
+					$(".col1").removeClass("col-xs-12").addClass("col-xs-9");
+					$(".col2").show();
+					//$(".col2").load("../organizationdll.dll/list?WMT=none&WHP=orgList_hdr.htm&WBP=orgList_mm.htm&ISMEMBERFLG=Y&RANGE=1/5",function() {
+					$(".col2").load("../utilities.dll/openPage?WMT=none&WRP=orgList_hdr.htm", function () {
+						console.log('loaded');
+						$(".replaceTax").each(function (index, value) {
+							var val = $(this).html();
+							val = val.split(",");
+							for (var v = 0; v <val.length; v++) {
+								val[v] = $("li[id=" + val[v] + "]").html()
+							}
+							//val = val.join("<br />");
+							val = "<ul><li>" + val.join("</li><li>") + "</li></ul>";
+							$(this).html(val);
+
+						});
+					});
+				}
+			}
+		});
+	
+	}
+
+	// Modest Means: end
+	
+	// First Placement: begin
+	if ((GetCookieValue("LLSTATECD") == "CO") && (decodeURIComponent(getURLValue("RANGE")) == "1/10")) {
+		var fpSopt = decodeURIComponent(getURLValue("SRCHOPT")).split("^");
+		var fpTTids = "";
+		var forChkResp = "-1";
+		for (var f=0;f<fpSopt.length;f++) {
+			if (fpSopt[f].indexOf("TAX_TERM_ID") > -1) {
+				fpTTids = "," + fpSopt[f].split("|")[2] + ",";
+			}
+			if (fpSopt[f].indexOf("CHECKRESPONSE") > -1) {
+				forChkResp = "," + fpSopt[f].split("|")[2] + ",";
+			}
+		}
+		// AI 109592: Moved to live for testing 11/18/20
+		// if (getURLValue("showFirstPlacement") != "") {	// DEBUG, remove for production
+			$.ajax({url:'../utilities.dll/CustomList?SQLNAME=GETFIRSTPLACEMENT&WMT=none&WHP=none&WBP=lawyers_list_fp.htm&WNR=none&WEM=none&SORT=SORTKEYNUM&TTIDS=' + fpTTids +'&CHKR='+ forChkResp, type:"GET", dataType:'text', success:function(data)
+				{
+					if($.trim(data) !== ""){
+						$("#tbodyResults").prepend(data);
+					}
+				}
+			});
+		// }
+	}
+	// First Placement: end
+	
+	// COBAR AI 112584
+	if (GetCookieValue("LLSTATECD") == "CO") {
+		$("#HLP_PMTOPTIONS").data("helpcd", "HLP_PMTOPTIONS_CO");
+	}
+	
+
+	if (hasDist) {
+		$(".distCol").show();
+	}
+
+	function calcLs(which) {
+		if ($(which).width() > $(which).height()) {
+			$(which).addClass('landscape');
+			console.log('ls');
+		}
+	}
+
+	nqCompareList = [];
+	function checkCompare(nqPersonToCompare) {
+		//console.log($(nqPersonToCompare).prop('checked'));
+		if (!$(nqPersonToCompare).prop('checked')) {
+			nqUncompare($(nqPersonToCompare).val());
+		} else {
+			nqCompareList.push({ 'Name': $(nqPersonToCompare).attr('alt'), 'CustCd': $(nqPersonToCompare).val() });
+		}
+		nqCreateChips();
+	}
+
+	var nqCookieCompareList = GetCookieValue("LLCompareList");
+	if (nqCookieCompareList != '') {
+		nqCompareList = JSON.parse(nqCookieCompareList);
+		nqCreateChips();
+
+	}
+
+	function nqCreateChips() {
+		$(".nq-Compare-Item").hide();
+		$(".chips-Container .chip").remove();
+		$(".compareControl ").prop('checked', false);
+		$(nqCompareList).each(function (i, val) {
+			$(".chips-Container").append(`
+				<div class="chip" style = "margin-top:10px" id="nq-Compare-Chip-` + val.CustCd + `" > ` + val.Name + `
+					<span class="closebtn" onclick="nqUncompare('`+ val.CustCd + `');this.parentElement.style.display='none'" >&times;</span>
+				</div>
+			`);
+			$("#custCd" + val.CustCd).prop('checked', true);
+			$(".nq-Compare-Item").show();
+			Set_Cookie("LLCompareList", JSON.stringify(nqCompareList), true, "/");
+		});
+
+		if (nqCompareList.length == 0) {
+			Set_Cookie("LLCompareList", '', true, "/");
+		}
+	}
+
+	function nqUncompare(toPop) {
+		var newCompareList = [];
+		$(nqCompareList).each(function (i, val) {
+			console.log(val.CustCd + '---' + toPop);
+			if (val.CustCd != toPop)
+				newCompareList.push(val);
+		});
+		console.log('new list:')
+		console.log(newCompareList)
+		nqCompareList = newCompareList;
+		console.log(nqCompareList);
+		nqCreateChips();
+	}
+
+
+	function nqUncompareAll(){
+		nqCompareList=[];
+		nqCreateChips();
+	}
+
+
+
+	function nqCompare() {
+		var compareListCustCdsOnly = new Array();
+		$(nqCompareList).each(function (i, val) {
+			compareListCustCdsOnly.push(val.CustCd);
+		});
+
+		$(".compareControl:checked").each(function () { compareListCustCdsOnly.push($(this).val()); });
+		$("#nqCompareCustCd").val("|IN|" + compareListCustCdsOnly);
+		$("#nqCompareColumns").val("" + compareListCustCdsOnly.length);
+		document.nqCompareForm.submit();
+
+	}
+
+	function nqContactOrg(which) {
+		$("#nqContactOrgCd").val(which);
+		document.nqContactOrgForm.submit();
+	}
+	                               
+	
+	if (getURLValue("SRCHOPT").toLowerCase() == "I%7cPOLITICALPARTY%7cLPPActive%7c%3d%5eI%7cCHAPTERID%7cUT-BAR%7c%3d".toLowerCase()) {
+		$("#recTyp").html("Paralegal Practitioners");
+	} else if (getURLValue("SRCHOPT").toLowerCase().includes("%5EI%7CREGIONCD1%7CY%7C%3D".toLowerCase())) {
+		$("#recTyp").html("Modest Means Attorneys");
+		$("#searchMM").show();
+		$("#searchCri").hide();
+	}
+
+
+
+</script>
+			</div>
+		</div>
+		<div id="timeStamp" style="display:none">094316</div>
+	
+
+	
+	<script src="../../js/jquery.tablesorter.min.js"></script>
+	<script src="../../js/urllinks.js?t=20221004.1"></script>
+	<script>
+		var oldHeight094316 = 0;
+
+		function updateHeight094316() {
+
+				var heightStr = $('#content').outerHeight(true);
+				if (heightStr === 0) {heightStr = $('html').outerHeight(true)}
+				if ((heightStr != 0) && (heightStr != oldHeight094316 )) {
+						//FOR CMS AND BOOTBOX
+						if (parseInt(heightStr) <175 ) {heightStr = 175}
+						//
+						var finalHeight = (parseInt(heightStr) + 25) + 'px';
+
+						$("iframe", parent.document).each(function(key, val) {
+								if( $(this).attr("src") != undefined && $(this).attr("src").indexOf('/cv/') > -1) {
+									if (decodeURIComponent($(this).get(0).contentWindow.document.location.href) == decodeURIComponent(location.href)) {
+										if ($("#timeStamp").text() == $(this).contents().find("#timeStamp").text()) {
+														$(this).css("height", finalHeight).css("min-height",finalHeight);
+										}
+									}
+								}
+						});
+				}
+
+				oldHeight094316 = heightStr;
+
+				setTimeout(function() { updateHeight094316(); }, 250);
+		}
+		
+		var translatePaginationOnce = true;
+		$(function() {
+		
+			translatePagination();
+			$('[data-toggle="tooltip"][data-active="Y"]').tooltip(); 
+		
+			$(".validity-summary-container").hide();
+			$("#myTable").tablesorter();
+
+			$("input,select").focus(function() {
+				$(this).parents(".form-group").removeClass("has-error");
+			});
+
+			$("fieldset, .panel-default, div").on("hidden.bs.collapse", function() {
+				$(this).children("legend, .legend").children(".fa-minus").addClass("fa-plus").removeClass("fa-minus");
+				$(this).find(".panel-title").find(".fa-minus").addClass("fa-plus").removeClass("fa-minus");
+			});
+
+			$("fieldset, .panel-default, div").on("shown.bs.collapse", function() {
+				$(this).children("legend, .legend").children(".fa-plus").addClass("fa-minus").removeClass("fa-plus")
+				$(this).find(".panel-title").find(".fa-plus").addClass("fa-minus").removeClass("fa-plus");
+			});
+		});
+
+		function PreparePageDisplay() {
+			updateHeight094316();
+			window.top.scroll(0, 0);
+		}
+		
+		$("body").on("shown.bs.modal", ".modal", function() {
+			console.log($(parent.window.document).scrollTop());
+			var offset = 200;
+			if ($(parent.window.document).scrollTop() > 1000) {
+				$(this).find('div.modal-dialog').animate({top:$(parent.window.document).scrollTop()-offset},200); //css("top",$(parent.window.document).scrollTop()-offset); //
+			}
+		});
+		
+		function translatePagination() {
+	
+			/*
+			 Translate cvweb pagination to use bootstrap pagination component	
+			 */
+
+			var newPagination = "";
+			
+			// handle ...
+			if (translatePaginationOnce) {
+				if ($(".nav2 a, .nav2 span").length > 0) {
+					$(".nav2").html($(".nav2").html().replace("...","<span>...</span>"));
+					translatePaginationOnce = false;
+				}
+			}
+
+			// handle prevnav
+			if ($(".nav1 a").length > 0) {
+				var href = $($(".nav1 a")[0]).attr("href");
+				newPagination += '<li><a href="'+ href +'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>';
+			}
+			
+			// handle listnav
+			if ($(".nav2 a, .nav2 span").length > 0) {
+				$(".nav2 a, .nav2 span").each(function() {
+					if ($(this).attr("href")) {
+						newPagination += '<li><a href="'+ $(this).attr("href") +'">'+ $(this).html() +'</a></li>';
+					} else {
+						if ($(this).html() == "...") {
+							newPagination += '<li><a>'+ $(this).html() +'</a></li>';
+						} else {
+							newPagination += '<li class="active"><a>'+ $(this).html() +'</a></li>';
+						}
+					}
+				});
+			}
+			
+			// handle nextnav
+			if ($(".nav3 a").length > 0) {
+				var href = $($(".nav3 a")[0]).attr("href").replace("%&", "%25&");
+				newPagination += '<li><a href="'+ href +'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>';
+			}
+			
+			if (newPagination != "") {
+				$(".pagination-holder").show();
+			}
+			$(".pagination-cust").html(newPagination);
+
+		}
+
+		
+	</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a135b3d98d821435',t:'MTc4Mjc0NDE5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; visibility: hidden;"></iframe><script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;a135b3d98d821435&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;30a0dada586643c9bdb81c14fd4b7e05&quot;}" crossorigin="anonymous"></script>
+
+
+</body></html>

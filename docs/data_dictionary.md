@@ -88,8 +88,12 @@ Whether the provider row represents an organization or a licensed individual.
 
 ### `CurrentStatus`
 
-Point-in-time authorization state of a provider. **Computed** from the event log — never
-scraped directly.
+Point-in-time authorization state of a provider. **Computed** from the event log, not
+re-derived by re-reading a source's status column on every scrape — but see the bootstrap
+exception in `docs/methodology.md §4b`: a program's first snapshot has nothing to diff
+against, so its seed status *is* copied from the source's own status column. This is the
+origin of most non-`active` values in v1.0.0 (see table below and `§4b`), not a rare
+edge case.
 
 | Value | Meaning |
 |---|---|
@@ -238,7 +242,7 @@ live in `provider_status_event`, not here. This table holds the latest observed 
 | `normalized_name` | `NonEmptyStr` | `VARCHAR` | no | Deterministic normalized form for entity resolution. See `docs/methodology.md §3`. |
 | `jurisdiction` | `JurisdictionStr` | `VARCHAR` | no | USPS code; `CHECK (length(jurisdiction) = 2)`. |
 | `authorization_date` | `date \| None` | `DATE` | yes | First date the provider was authorized, from the roster if available. |
-| `current_status` | `CurrentStatus` | `VARCHAR` | no | **Computed** from `provider_status_event` via `_recompute_statuses()`. Default `unknown`. Never scraped directly. |
+| `current_status` | `CurrentStatus` | `VARCHAR` | no | **Computed** from `provider_status_event` via `_recompute_statuses()`. Default `unknown`. Never re-derived by re-reading a source's status column after the first insert — but on a program's *first* snapshot (no prior snapshot to diff), the seed value for that first `authorized` event's `new_status` is copied from whatever status the source published (`docs/methodology.md §4b`). As of v1.0.0 this bootstrap path, not cross-snapshot diffing, is where most non-`active` status values in the release actually come from — see `docs/methodology.md §4b` for exactly which programs/rows this applies to. |
 | `practice_areas_raw` | `list[str]` | `VARCHAR[]` | yes | Practice areas in the source's own terminology. E.g. `["family law", "landlord-tenant"]`. Stored as a native DuckDB array; not updated on re-scrape (DuckDB 1.5.x `VARCHAR[]` bug — see note). Published CSV: JSON-array string (`""` if empty); published Parquet: native list. |
 | `practice_areas_list` | `list[str] \| None` | `VARCHAR[]` | yes | JusticeBench LIST taxonomy codes. `NULL` until the mapping step runs. Not updated on re-scrape for the same reason. Same CSV/Parquet representation split as `practice_areas_raw`. |
 | `ownership_structure` | `dict \| None` | `VARCHAR` | yes | Entities only: JSON blob recording lawyer/non-lawyer ownership percentages and capital source when the source publishes them. |

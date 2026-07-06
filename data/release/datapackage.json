@@ -1,0 +1,814 @@
+{
+  "name": "reregulation-registry",
+  "id": "https://github.com/jamespaul-yls/reregulation-provider-registry",
+  "title": "U.S. Legal Services Reregulation Provider Registry",
+  "version": "1.0.0",
+  "created": "2026-06-30T00:00:00Z",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "title": "Creative Commons Attribution 4.0 International",
+      "path": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "contributors": [
+    {
+      "title": "James Paul",
+      "email": "james.paul@yale.edu",
+      "role": "author"
+    }
+  ],
+  "keywords": [
+    "legal services",
+    "reregulation",
+    "alternative business structures",
+    "legal paraprofessional",
+    "regulatory sandbox",
+    "access to justice",
+    "UPL",
+    "legal innovation",
+    "longitudinal",
+    "open data"
+  ],
+  "description": "Open, reproducible, longitudinal registry of every authorized provider operating under a U.S. legal-services reregulation program: Alternative Business Structures (ABS), regulatory sandboxes, and allied-legal-professional / paraprofessional licenses. v1.0.0 covers 11 programs across 7 states + DC with 708 providers, entry/exit event tracking, and full provenance. No harm analysis — just the spine.",
+  "sources": [
+    {
+      "title": "Arizona Supreme Court — ABS/LP rosters",
+      "path": "https://www.azcourts.gov/cld/Alternative-Business-Structure"
+    },
+    {
+      "title": "Utah Office of Legal Services Innovation — Sandbox roster",
+      "path": "https://utahinnovationoffice.org/"
+    },
+    {
+      "title": "WSBA — LLLT directory (sunset program; Wayback archive)",
+      "path": "https://www.wsba.org/"
+    },
+    {
+      "title": "Colorado Office of Attorney Regulation Counsel — LLP roster",
+      "path": "https://coloradolegalregulation.com/"
+    },
+    {
+      "title": "Minnesota Judicial Branch — LP pilot",
+      "path": "https://www.mncourts.gov/"
+    },
+    {
+      "title": "Utah Courts — Licensed Paralegal Practitioner directory",
+      "path": "https://www.utcourts.gov/"
+    }
+  ],
+  "resources": [
+    {
+      "name": "program",
+      "path": "program.csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "rowcount": 11,
+      "parquet": "program.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "program_id",
+            "type": "string",
+            "description": "Stable opaque primary key, e.g. prog_az_abs.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "type": "string",
+            "description": "USPS two-letter state/territory code, uppercase.",
+            "constraints": {
+              "required": true,
+              "pattern": "^[A-Z]{2}$"
+            }
+          },
+          {
+            "name": "program_name",
+            "type": "string",
+            "description": "Full human-readable program name.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "program_type",
+            "type": "string",
+            "description": "Kind of reregulation program.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "abs",
+                "sandbox",
+                "alp_license",
+                "paraprofessional_pilot",
+                "community_justice_worker",
+                "document_preparer"
+              ]
+            }
+          },
+          {
+            "name": "regulator",
+            "type": "string",
+            "description": "Name of the regulating body.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "regulator_url",
+            "type": "string",
+            "description": "Landing page URL of the regulator.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "authorizing_rule",
+            "type": "string",
+            "description": "Canonical citation, e.g. ACJA §7-210 or APR 28.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "launch_date",
+            "type": "date",
+            "description": "Date the program first issued authorizations. NULL if unknown.",
+            "format": "any"
+          },
+          {
+            "name": "program_status",
+            "type": "string",
+            "description": "Operational state of the program itself (not individual providers).",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "active",
+                "sunset",
+                "proposed",
+                "paused"
+              ]
+            }
+          },
+          {
+            "name": "sunset_date",
+            "type": "date",
+            "description": "Effective end date for sunset programs; anticipated launch for proposed programs.",
+            "format": "any"
+          },
+          {
+            "name": "allows_nonlawyer_ownership",
+            "type": "boolean",
+            "description": "True if non-lawyers may hold equity in a licensed entity (Rule 5.4 relief).",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "allows_upl_waiver",
+            "type": "boolean",
+            "description": "True if providers may engage in acts that would otherwise constitute UPL.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "allows_software_provider",
+            "type": "boolean",
+            "description": "True if software platforms may be licensed as providers (AI-relevant).",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "description": "URL of the source document for this row.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "retrieved_at",
+            "type": "datetime",
+            "description": "UTC timestamp of the scrape that produced this row.",
+            "format": "any",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "scraper_version",
+            "type": "string",
+            "description": "Semantic version of the scraper.",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "primaryKey": [
+          "program_id"
+        ]
+      }
+    },
+    {
+      "name": "source_snapshot",
+      "path": "source_snapshot.csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "rowcount": 20,
+      "parquet": "source_snapshot.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "snapshot_id",
+            "type": "string",
+            "description": "Content-addressed PK: snap_<sha256[:16]>.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "program_id",
+            "type": "string",
+            "description": "FK → program.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "description": "Canonical URL that was fetched.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "retrieved_at",
+            "type": "datetime",
+            "description": "UTC fetch time. For Wayback captures, the archive timestamp.",
+            "format": "any",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "content_sha256",
+            "type": "string",
+            "description": "SHA-256 of raw bytes (lowercase hex). Dedup key.",
+            "constraints": {
+              "required": true,
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          {
+            "name": "storage_path",
+            "type": "string",
+            "description": "Relative path to blob in data/raw/.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "media_type",
+            "type": "string",
+            "description": "Format of the raw capture.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "html",
+                "pdf",
+                "json",
+                "xlsx"
+              ]
+            }
+          },
+          {
+            "name": "scraper_version",
+            "type": "string",
+            "description": "Scraper version; wayback-* for archive captures.",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "primaryKey": [
+          "snapshot_id"
+        ],
+        "foreignKeys": [
+          {
+            "fields": [
+              "program_id"
+            ],
+            "reference": {
+              "resource": "program",
+              "fields": [
+                "program_id"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "provider",
+      "path": "provider.csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "rowcount": 708,
+      "parquet": "provider.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "provider_id",
+            "type": "string",
+            "description": "Deterministic PK: prov_{program_slug}_{sha256(program_id+legal_name)[:12]}.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "program_id",
+            "type": "string",
+            "description": "FK → program.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "provider_type",
+            "type": "string",
+            "description": "Entity (organization) or individual practitioner.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "entity",
+                "individual"
+              ]
+            }
+          },
+          {
+            "name": "legal_name",
+            "type": "string",
+            "description": "Legal name exactly as it appears on the regulatory roster.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "normalized_name",
+            "type": "string",
+            "description": "Deterministic normalized form for entity resolution (see methodology.md §3).",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "type": "string",
+            "description": "USPS two-letter state code where the provider is licensed.",
+            "constraints": {
+              "required": true,
+              "pattern": "^[A-Z]{2}$"
+            }
+          },
+          {
+            "name": "authorization_date",
+            "type": "date",
+            "description": "First authorized date from the roster, if published.",
+            "format": "any"
+          },
+          {
+            "name": "current_status",
+            "type": "string",
+            "description": "COMPUTED from provider_status_event log. Never scraped directly.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "active",
+                "exited",
+                "suspended",
+                "revoked",
+                "unknown"
+              ]
+            }
+          },
+          {
+            "name": "practice_areas_raw",
+            "type": "string",
+            "description": "JSON array of practice areas in the source's own terminology, e.g. [\"family law\",\"civil\"]. Empty string if none published."
+          },
+          {
+            "name": "practice_areas_list",
+            "type": "string",
+            "description": "JSON array of JusticeBench LIST taxonomy codes. Empty string if mapping not yet applied."
+          },
+          {
+            "name": "ownership_structure",
+            "type": "string",
+            "description": "JSON object with lawyer/non-lawyer ownership percentages and capital source. Entities only; null for individuals."
+          },
+          {
+            "name": "uses_technology",
+            "type": "boolean",
+            "description": "True if provider describes technology-assisted service delivery. Null if unknown."
+          },
+          {
+            "name": "uses_ai",
+            "type": "boolean",
+            "description": "True if provider describes AI or LLM use. Null if unknown. The column connecting to the UPL/AI policy question."
+          },
+          {
+            "name": "website",
+            "type": "string",
+            "description": "Provider public website URL. Null if unknown."
+          },
+          {
+            "name": "first_seen_snapshot_id",
+            "type": "string",
+            "description": "FK → source_snapshot. Earliest snapshot in which this provider appeared."
+          },
+          {
+            "name": "last_seen_snapshot_id",
+            "type": "string",
+            "description": "FK → source_snapshot. Most recent snapshot in which this provider appeared."
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "description": "URL of the snapshot that last updated this row.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "retrieved_at",
+            "type": "datetime",
+            "description": "retrieved_at of the snapshot that last updated this row.",
+            "format": "any",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "scraper_version",
+            "type": "string",
+            "description": "Scraper version that last wrote this row.",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "primaryKey": [
+          "provider_id"
+        ],
+        "foreignKeys": [
+          {
+            "fields": [
+              "program_id"
+            ],
+            "reference": {
+              "resource": "program",
+              "fields": [
+                "program_id"
+              ]
+            }
+          },
+          {
+            "fields": [
+              "first_seen_snapshot_id"
+            ],
+            "reference": {
+              "resource": "source_snapshot",
+              "fields": [
+                "snapshot_id"
+              ]
+            }
+          },
+          {
+            "fields": [
+              "last_seen_snapshot_id"
+            ],
+            "reference": {
+              "resource": "source_snapshot",
+              "fields": [
+                "snapshot_id"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "provider_status_event",
+      "path": "provider_status_event.csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "rowcount": 748,
+      "parquet": "provider_status_event.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string",
+            "description": "Deterministic PK: evt_+sha256(provider_id:snapshot_id:event_type)[:24]. Idempotent across re-runs.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "provider_id",
+            "type": "string",
+            "description": "FK → provider.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "event_date",
+            "type": "date",
+            "description": "Date the change was first OBSERVED (snapshot date), not when it occurred.",
+            "format": "any",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "event_type",
+            "type": "string",
+            "description": "What kind of change this event documents. disappeared_from_roster ≠ revoked — see methodology.md §4c.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "authorized",
+                "status_change",
+                "disappeared_from_roster",
+                "disciplined",
+                "reinstated"
+              ]
+            }
+          },
+          {
+            "name": "new_status",
+            "type": "string",
+            "description": "Provider current_status after this event.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "active",
+                "exited",
+                "suspended",
+                "revoked",
+                "unknown"
+              ]
+            }
+          },
+          {
+            "name": "detail",
+            "type": "string",
+            "description": "Free text. For status_change: 'old → new'. For disciplined/reinstated: description from discipline source."
+          },
+          {
+            "name": "source_snapshot_id",
+            "type": "string",
+            "description": "FK → source_snapshot. The capture that revealed this change.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "description": "Provenance URL.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "retrieved_at",
+            "type": "datetime",
+            "description": "Provenance timestamp (UTC).",
+            "format": "any",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "scraper_version",
+            "type": "string",
+            "description": "Scraper version.",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "primaryKey": [
+          "event_id"
+        ],
+        "foreignKeys": [
+          {
+            "fields": [
+              "provider_id"
+            ],
+            "reference": {
+              "resource": "provider",
+              "fields": [
+                "provider_id"
+              ]
+            }
+          },
+          {
+            "fields": [
+              "source_snapshot_id"
+            ],
+            "reference": {
+              "resource": "source_snapshot",
+              "fields": [
+                "snapshot_id"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "provider_alias",
+      "path": "provider_alias.csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "rowcount": 0,
+      "parquet": "provider_alias.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "provider_id",
+            "type": "string",
+            "description": "FK → provider.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "alias_name",
+            "type": "string",
+            "description": "DBA name, former legal name, or brand name.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "alias_source",
+            "type": "string",
+            "description": "Where the alias was found.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "roster",
+                "website",
+                "litigation",
+                "manual"
+              ]
+            }
+          },
+          {
+            "name": "source_url",
+            "type": "string",
+            "description": "Provenance.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "retrieved_at",
+            "type": "datetime",
+            "description": "Provenance (UTC).",
+            "format": "any",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "scraper_version",
+            "type": "string",
+            "description": "Provenance.",
+            "constraints": {
+              "required": true
+            }
+          }
+        ],
+        "primaryKey": [
+          "provider_id",
+          "alias_name"
+        ],
+        "foreignKeys": [
+          {
+            "fields": [
+              "provider_id"
+            ],
+            "reference": {
+              "resource": "provider",
+              "fields": [
+                "provider_id"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "crosswalk_courtlistener",
+      "path": "crosswalk_courtlistener.csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "rowcount": 0,
+      "parquet": "crosswalk_courtlistener.parquet",
+      "schema": {
+        "fields": [
+          {
+            "name": "provider_id",
+            "type": "string",
+            "description": "FK → provider.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "cl_docket_id",
+            "type": "integer",
+            "description": "CourtListener docket ID.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "cl_party_id",
+            "type": "integer",
+            "description": "CourtListener party ID. Null if not resolved."
+          },
+          {
+            "name": "match_score",
+            "type": "number",
+            "description": "Composite match confidence 0.0–1.0.",
+            "constraints": {
+              "required": true,
+              "minimum": 0.0,
+              "maximum": 1.0
+            }
+          },
+          {
+            "name": "match_method",
+            "type": "string",
+            "description": "How the match was produced.",
+            "constraints": {
+              "required": true,
+              "enum": [
+                "exact",
+                "fuzzy",
+                "manual"
+              ]
+            }
+          },
+          {
+            "name": "verified",
+            "type": "boolean",
+            "description": "True if a human confirmed the match. Verified rows are never overwritten by automated pipeline runs.",
+            "constraints": {
+              "required": true
+            }
+          },
+          {
+            "name": "reviewer",
+            "type": "string",
+            "description": "Identifier of the reviewer. Null if unverified."
+          },
+          {
+            "name": "reviewed_at",
+            "type": "datetime",
+            "description": "When verification was recorded (UTC).",
+            "format": "any"
+          }
+        ],
+        "primaryKey": [
+          "provider_id",
+          "cl_docket_id"
+        ],
+        "foreignKeys": [
+          {
+            "fields": [
+              "provider_id"
+            ],
+            "reference": {
+              "resource": "provider",
+              "fields": [
+                "provider_id"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

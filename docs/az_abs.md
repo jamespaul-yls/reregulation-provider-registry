@@ -118,10 +118,22 @@ cadence. Recommend scraping **weekly** once M3 (longitudinal) is active.
 
 ## Backfill
 
-No Wayback Machine backfill has been attempted for AZ ABS. The program launched
-2021-01-01. Historical captures exist on the Wayback Machine at
-`https://web.archive.org/web/*/https://www.azcourts.gov/cld/Alternative-Business-Structure/Directory`.
-Backfill is deferred to M3.
+**Updated 2026-07-05 — this section was stale; see `docs/audit/adversarial_review.md` S1.**
+
+One Wayback Machine capture has been backfilled and is persisted for AZ ABS:
+`snap_a6e3d292014fceaf`, dated 2024-11-08, 77 authorized entities (`scraper_version =
+wayback-0.1.0`). It's the earlier half of the two-snapshot diff behind the AZ ABS
+entry/exit events in `provider_status_event` — see `docs/data_note.md` "Arizona ABS" and
+`validation/longitudinal_validity.md §3`.
+
+The program launched 2021-01-01, and a fuller historical CDX chain (2022, 2025-04,
+2025-12, 2026-06-16) was explored in a later session but was a **dry run only** — those
+captures were never persisted to `source_snapshot` (IA access was intermittent that
+session). Deepening the backfill to cover 2021–2024 and persisting that fuller chain
+remains deferred to v2 (`validation/longitudinal_validity.md §6`). Historical captures
+exist on the Wayback Machine at
+`https://web.archive.org/web/*/https://www.azcourts.gov/cld/Alternative-Business-Structure/Directory`
+for that future pass.
 
 ---
 

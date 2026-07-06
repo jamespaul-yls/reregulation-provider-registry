@@ -187,15 +187,23 @@ def _check_alias_provider_fk(con: duckdb.DuckDBPyConnection) -> list[str]:
 
 
 def _check_blobs(con: duckdb.DuckDBPyConnection) -> list[str]:
-    """Every source_snapshot blob must exist on disk with matching sha256."""
+    """Every source_snapshot blob must exist on disk with matching sha256.
+
+    storage_path is stored repo-relative (pipeline/db.py::_normalize_storage_path),
+    so a relative value is resolved against _ROOT rather than the process's
+    current working directory — this must pass regardless of where the repo
+    is cloned or which directory `make audit` is invoked from.
+    """
     rows = con.execute(
         "SELECT snapshot_id, storage_path, content_sha256 FROM source_snapshot"
     ).fetchall()
     errors: list[str] = []
     for snap_id, storage_path, expected_sha in rows:
         blob = Path(storage_path)
+        if not blob.is_absolute():
+            blob = _ROOT / blob
         if not blob.exists():
-            errors.append(f"snapshot {snap_id}: blob missing at {storage_path}")
+            errors.append(f"snapshot {snap_id}: blob missing at {storage_path} (resolved: {blob})")
             continue
         actual_sha = hashlib.sha256(blob.read_bytes()).hexdigest()
         if actual_sha != expected_sha:

@@ -515,7 +515,7 @@ def build(release_dir: Path = _RELEASE) -> dict:
 
     pkg = {
         "name": "reregulation-registry",
-        "id": "https://github.com/jamespaul/reregulation-registry",
+        "id": "https://github.com/jamespaul-yls/reregulation-provider-registry",
         "title": "U.S. Legal Services Reregulation Provider Registry",
         "version": "1.0.0",
         "created": "2026-06-30T00:00:00Z",

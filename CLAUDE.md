@@ -20,7 +20,15 @@ accordingly.
    exactly as fetched, content-hashed (`sha256`). All tables are *derived from* snapshots
    and must be fully re-derivable from them. Never parse a live response without snapshotting it first.
 3. **Longitudinal by diffing snapshots — never trust a scraped "status" field.** Entries and
-   exits are *computed* by comparing successive roster snapshots.
+   exits are *computed* by comparing successive roster snapshots. **Documented exception:**
+   a program's *first* snapshot has no prior snapshot to diff against, so its status is
+   seeded from the source's own status column at insert time (`docs/methodology.md §4b`).
+   This is real and heavily used — as of v1.0.0 it's the origin of most non-`active` status
+   values in the dataset, not just an edge case — so treat it as part of this rule, not an
+   exception nobody needs to know about: any doc or column description claiming
+   `current_status` is "never scraped directly" must carry this caveat, and a future
+   snapshot should still supersede a bootstrap-seeded value via a real diff the moment one
+   is available.
 4. **Neutral naming.** Name columns for the proxy they measure (`formal_complaint_count`,
    not `harm`). We build the spine others test harm definitions against.
 5. **Three-layer separation:** `raw/` (immutable snapshots) → dev DB (normalized) →

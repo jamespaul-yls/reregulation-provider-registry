@@ -21,7 +21,7 @@ from models.schema import (
     ProviderStatusEvent,
     SourceSnapshot,
 )
-from pipeline.db import RegistryStore
+from pipeline.db import _ROOT, RegistryStore, _normalize_storage_path
 from pipeline.export import export
 
 # ── UTC constant ──────────────────────────────────────────────────────────────
@@ -349,3 +349,51 @@ def test_all_tables_exist(store: RegistryStore) -> None:
         "provider_alias",
         "crosswalk_courtlistener",
     }.issubset(tables)
+
+
+# ── storage_path normalization (docs/audit/adversarial_review.md, finding B2) ──
+#
+# pipeline.snapshot.ingest() always returns an absolute blob_path (it's a
+# generic content-addressed store, tested against tmp_path fixtures outside
+# the repo — see tests/test_snapshot.py — so it can't assume a repo root).
+# RegistryStore.upsert_snapshot() is the single point where that absolute path
+# gets rewritten to a repo-relative string before it's persisted, so the
+# published source_snapshot.csv/.parquet and `make reproduce`/`make audit`
+# work regardless of where the repo is cloned.
+
+
+def test_normalize_storage_path_rewrites_absolute_path_under_root() -> None:
+    absolute = _ROOT / "data" / "raw" / "deadbeef.html"
+    assert _normalize_storage_path(str(absolute)) == "data/raw/deadbeef.html"
+
+
+def test_normalize_storage_path_leaves_relative_path_untouched() -> None:
+    assert _normalize_storage_path("data/raw/deadbeef.html") == "data/raw/deadbeef.html"
+
+
+def test_normalize_storage_path_leaves_absolute_path_outside_root_untouched() -> None:
+    # e.g. a raw_dir passed in from outside the repo (tmp_path in a test, or a
+    # custom --raw location) — normalization is a portability improvement, not
+    # something that should ever raise or silently corrupt an unrelated path.
+    outside = "/some/other/machine/scratch/deadbeef.html"
+    assert _normalize_storage_path(outside) == outside
+
+
+def test_upsert_snapshot_normalizes_absolute_storage_path_under_root(
+    store: RegistryStore,
+) -> None:
+    """An absolute, repo-rooted storage_path is stored (and read back) relative."""
+    store.upsert_program(_make_program())
+    absolute_path = _ROOT / "data" / "raw" / "deadbeef.html"
+    store.upsert_snapshot(_make_snapshot(storage_path=str(absolute_path)))
+
+    row = store.conn.execute(
+        "SELECT storage_path FROM source_snapshot WHERE snapshot_id = ?",
+        ["snap_abc123abc123abc1"],
+    ).fetchone()
+    assert row[0] == "data/raw/deadbeef.html"
+
+    # get_first_snapshot() reads it back unchanged (still relative).
+    snap = store.get_first_snapshot("prog_az_abs")
+    assert snap is not None
+    assert snap.storage_path == "data/raw/deadbeef.html"

@@ -120,10 +120,18 @@ def _seed_programs(store: RegistryStore) -> int:
 
 
 def _verify_blob(storage_path: str, expected_sha: str) -> bytes:
-    """Read raw bytes from storage_path; raise if missing or sha256 mismatches."""
+    """Read raw bytes from storage_path; raise if missing or sha256 mismatches.
+
+    storage_path is stored repo-relative (see pipeline/db.py::_normalize_storage_path)
+    so this resolves against _ROOT rather than the process's current working
+    directory — reproduce works regardless of where the repo is cloned or which
+    directory `make reproduce` is invoked from.
+    """
     blob = Path(storage_path)
+    if not blob.is_absolute():
+        blob = _ROOT / blob
     if not blob.exists():
-        raise FileNotFoundError(f"Raw blob missing: {storage_path}")
+        raise FileNotFoundError(f"Raw blob missing: {storage_path} (resolved: {blob})")
     raw = blob.read_bytes()
     actual_sha = hashlib.sha256(raw).hexdigest()
     if actual_sha != expected_sha:

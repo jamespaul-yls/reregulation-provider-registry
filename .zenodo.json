@@ -24,7 +24,7 @@
   ],
   "related_identifiers": [
     {
-      "identifier": "https://github.com/jamespaul/reregulation-registry",
+      "identifier": "https://github.com/jamespaul-yls/reregulation-provider-registry",
       "relation": "isSupplementTo",
       "scheme": "url"
     }

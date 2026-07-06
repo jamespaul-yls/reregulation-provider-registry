@@ -24,15 +24,21 @@ Applicant list vs. provider table:
     1. parse_applicants() parses the FULL table (date received, entity name, status) —
        this is what gets captured in the raw snapshot, regardless of review status.
     2. parse() loads AS PROVIDERS only the subset whose status indicates the entity has
-       actually been authorized to participate (_AUTHORIZED_STATUSES). As of this
-       scraper's first run, zero applicants meet that bar — all four listed applicants
-       are "Under Review". This is a documented zero (see validation doc), not a gap.
+       actually been authorized to participate (_is_authorized_status(), token-based on
+       _AUTHORIZED_TOKENS). As of this scraper's first run, zero applicants meet that
+       bar — all four listed applicants are "Under Review". This is a documented zero
+       (see validation doc), not a gap. Any status that's neither a recognized
+       authorized-token match nor the one known pre-authorization label ("Under Review")
+       is logged as a warning rather than silently treated as not-authorized — see
+       _is_unrecognized_status().
 """
 
 from __future__ import annotations
 
 import datetime
 import hashlib
+import logging
+import re
 from dataclasses import dataclass
 
 from selectolax.parser import HTMLParser
@@ -43,17 +49,65 @@ from resolve.normalize import normalize_name
 from scrapers.base import BaseScraper
 from scrapers.fetchers import StaticFetcher
 
+logger = logging.getLogger(__name__)
+
 _URL = "https://www.wsba.org/about-wsba/entity-regulation-pilot/applicants"
 
-# Status strings (case-insensitive, exact match after stripping) that indicate the WSBA
-# Board / Court has actually authorized the entity to participate in the pilot. None of
-# these have been observed on the live page yet — every applicant so far is "Under
-# Review". Extend this set if/when the WSBA starts publishing an authorized status label;
-# confirm the exact wording against the live page before relying on it, since the source
-# has not yet demonstrated what it prints for an authorized entity.
-_AUTHORIZED_STATUSES = {"authorized", "approved", "participating", "active"}
+# Token-based (not exact-string) classification of whether a WSBA applicant status
+# indicates the Board/Court has actually authorized the entity to participate. None of
+# _AUTHORIZED_TOKENS have been observed on the live page yet — the only status seen so far
+# is "Under Review" (_KNOWN_PRE_AUTHORIZATION_STATUSES). This is necessarily an educated
+# guess (see docs/methodology.md "Known source limitations by program" -> WA Entity
+# Pilot); confirm the exact wording against the live page once WSBA actually authorizes
+# an entity. Token-based rather than exact-match so a plausible real label like "Board
+# Approved" or "Authorized — Active" still matches without needing to predict the exact
+# string. _NEGATIVE_OVERRIDE_TOKENS exists specifically so a status containing a
+# substring/token of _AUTHORIZED_TOKENS but meaning the opposite (e.g. "Not Authorized",
+# "Inactive") is never misclassified as authorized.
+_AUTHORIZED_TOKENS = {"authorized", "approved", "participating", "active"}
+_NEGATIVE_OVERRIDE_TOKENS = {
+    "not",
+    "under",
+    "pending",
+    "review",
+    "denied",
+    "rejected",
+    "revoked",
+    "withdrawn",
+    "declined",
+    "closed",
+    "inactive",
+    "suspended",
+}
+_KNOWN_PRE_AUTHORIZATION_STATUSES = {"under review"}
 
 _DATE_FORMATS = ("%b. %d, %Y", "%B %d, %Y", "%b %d, %Y")
+
+
+def _status_tokens(status: str) -> set[str]:
+    return set(re.findall(r"[a-z]+", status.lower()))
+
+
+def _is_authorized_status(status: str) -> bool:
+    """Best-effort: does *status* indicate the entity is authorized to participate?"""
+    tokens = _status_tokens(status)
+    if tokens & _NEGATIVE_OVERRIDE_TOKENS:
+        return False
+    return bool(tokens & _AUTHORIZED_TOKENS)
+
+
+def _is_unrecognized_status(status: str) -> bool:
+    """True if *status* is neither the one known pre-authorization label nor authorized.
+
+    This is the safety net for the fact that _AUTHORIZED_TOKENS is a guess (see comment
+    above): a genuinely new status label — whatever it turns out to mean — should produce
+    a loud log line, not a silent classification either way. See
+    docs/audit/adversarial_review.md S4.
+    """
+    normalized = status.strip().lower()
+    if normalized in _KNOWN_PRE_AUTHORIZATION_STATUSES:
+        return False
+    return not _is_authorized_status(status)
 
 
 @dataclass(frozen=True)
@@ -137,7 +191,19 @@ class WashingtonEntityPilotScraper(BaseScraper):
 
         providers: list[Provider] = []
         for a in applicants:
-            if a.status.strip().lower() not in _AUTHORIZED_STATUSES:
+            if _is_unrecognized_status(a.status):
+                logger.warning(
+                    "WA Entity Pilot: unrecognized applicant status %r for %r — not the "
+                    "known pre-authorization label %r and not matched by "
+                    "_AUTHORIZED_TOKENS %r. This may be a new status WSBA started "
+                    "publishing; verify by hand whether it means the entity is now "
+                    "authorized (scrapers/washington_entity_pilot.py).",
+                    a.status,
+                    a.entity_name,
+                    next(iter(_KNOWN_PRE_AUTHORIZATION_STATUSES)),
+                    sorted(_AUTHORIZED_TOKENS),
+                )
+            if not _is_authorized_status(a.status):
                 continue
             providers.append(
                 Provider(
