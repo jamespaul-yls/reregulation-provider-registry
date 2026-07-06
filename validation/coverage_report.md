@@ -1,7 +1,7 @@
 # Coverage Report — Reregulation Provider Registry
 
-**Generated:** 2026-06-29 · **Refreshed:** 2026-07-04
-**Programs in scope:** 11
+**Generated:** 2026-06-29 · **Refreshed:** 2026-07-06
+**Programs in scope:** 10 (`prog_dc_rule54` removed 2026-07-06 — see `docs/sampling_frame.md §4`)
 **Total provider rows in DB:** 708
 **DB path:** `data/db/registry.duckdb`
 
@@ -22,7 +22,6 @@ they answer different questions. See `docs/methodology.md §10b` for the coverag
 | prog\_az\_lp | [AZ LP Directory][az-lp] | HTML (headless) | **120** | not stated | — | 2026-06-29 | ⚠️ no\_source\_total |
 | prog\_ca\_lda | [CA BPC § 6400][ca-lda] | HTML (statute) | 0 | N/A | N/A | 2026-06-29 | ✅ zero\_documented |
 | prog\_co\_llp | [CO LLP Roster PDF][co-llp] | PDF | **126** | 126 ¹ | **100 %** | 2026-06-29 | ✅ full ¹ |
-| prog\_dc\_rule54 | [DC RPC Rule 5.4][dc-r54] | HTML (rule page) | 0 | N/A | N/A | 2026-07-04 | ✅ zero\_documented |
 | prog\_mn\_lp | [MN LP Roster PDF][mn-lp] | PDF | **42** | 42 | **100 %** | 2026-06-29 | ✅ full |
 | prog\_tx\_alp | [TX Bar Paraprofessionals][tx-alp] | HTML (status page) | 0 | 0 | N/A | 2026-07-04 | ✅ zero\_documented |
 | prog\_ut\_lpp | [UT LPP Directory][ut-lpp] | HTML (static) | **52** | not stated ² | — | 2026-06-29 | ⚠️ opt\_in\_dir |
@@ -34,7 +33,6 @@ they answer different questions. See `docs/methodology.md §10b` for the coverag
 [az-lp]: https://www.azcourts.gov/cld/Legal-Paraprofessional/Directory
 [ca-lda]: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=6400.&lawCode=BPC
 [co-llp]: https://www.coloradolegalregulation.com/PDF/LLP/Admitted%20LLP%20Roster.pdf
-[dc-r54]: https://www.dcbar.org/For-Lawyers/Legal-Ethics/Rules-of-Professional-Conduct/Law-Firms-and-Associations/Professional-Independence-of-a-Lawyer
 [mn-lp]: https://mncourts.gov/_media/migration/appellate/supreme-court/Roster-of-Approved-Legal-Paraprofessionals.pdf
 [tx-alp]: https://www.texasbar.com/paraprofessionals/
 [ut-lpp]: https://www.licensedlawyer.org/Find-a-Lawyer/Licensed-Paralegal-Practitioners
@@ -70,7 +68,6 @@ does not publish a separate authoritative total. Parsed count is a lower bound.
 | prog\_az\_lp | 120 | 113 | 7 | 0 | 0 |
 | prog\_ca\_lda | 0 | — | — | — | — |
 | prog\_co\_llp | 126 | 126 | 0 | 0 | 0 |
-| prog\_dc\_rule54 | 0 | — | — | — | — |
 | prog\_mn\_lp | 42 | 42 | 0 | 0 | 0 |
 | prog\_tx\_alp | 0 | — | — | — | — |
 | prog\_ut\_lpp | 52 | 52 | 0 | 0 | 0 |
@@ -121,11 +118,14 @@ confirming 126 entries are all entries in the PDF. Note: the PDF is updated peri
 the fetch date (2026-06-29) does not mean the PDF reflects that date. Re-fetch to detect
 new LLPs added after February 2026.
 
-### prog\_dc\_rule54 — D.C. Rule 5.4(b) (✅ zero\_documented)
+### prog\_dc\_rule54 — removed 2026-07-06
 
-Permissive ethics rule with no registration requirement. No roster is maintained by the
-D.C. Court of Appeals or the D.C. Bar. Source snapshotted is the DC Bar's Rule 5.4 page
-(loaded to DB 2026-07-04). See `validation/dc_rule54.md`.
+Was documented here through v1.0.1 as ✅ `zero_documented` (permissive ethics rule, no
+registration requirement, no roster maintained by the D.C. Court of Appeals or the D.C.
+Bar). Removed from scope entirely 2026-07-06 rather than kept as a documented zero: unlike
+every other zero-provider program in this table, there is no roster that could ever come
+to exist for a self-executing rule with no application step. See `docs/sampling_frame.md
+§4` and `validation/dc_rule54.md` for the full reasoning.
 
 ### prog\_mn\_lp — Minnesota LP (✅ full)
 
@@ -182,7 +182,6 @@ Retired), 13 unknown (Inactive), 4 suspended.
 | prog\_az\_lp | No source-stated total | Monitor for AZ ACS annual report (published Dec each year) to cross-check count |
 | prog\_ut\_lpp | Opt-in directory; total unknown | Request Utah State Bar official LPP count via records request |
 | prog\_ca\_lda | 58-county fragmentation | Implement county-level scrapers in v2, starting with LA/SF/SD |
-| prog\_dc\_rule54 | No registration roster | Explore secondary enumeration (DCRA records, NALP, press) in v2 |
 | prog\_tx\_alp | Program paused | Re-run when TX Sup. Ct. sets new effective date |
 | prog\_co\_llp | PDF as-of date lags fetch | Re-fetch after each CO OARC PDF update |
 | prog\_wa\_entity\_pilot | No applicant authorized yet | Re-run `scripts/run_wa_entity_pilot.py` periodically to detect the first authorization |

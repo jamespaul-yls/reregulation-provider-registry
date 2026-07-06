@@ -517,7 +517,7 @@ def build(release_dir: Path = _RELEASE) -> dict:
         "name": "reregulation-registry",
         "id": "https://github.com/jamespaul-yls/reregulation-provider-registry",
         "title": "U.S. Legal Services Reregulation Provider Registry",
-        "version": "1.0.0",
+        "version": "1.0.2",
         "created": "2026-06-30T00:00:00Z",
         "licenses": [
             {
@@ -549,7 +549,7 @@ def build(release_dir: Path = _RELEASE) -> dict:
             "Open, reproducible, longitudinal registry of every authorized provider "
             "operating under a U.S. legal-services reregulation program: Alternative "
             "Business Structures (ABS), regulatory sandboxes, and allied-legal-professional "
-            f"/ paraprofessional licenses. v1.0.0 covers {n_programs} programs across "
+            f"/ paraprofessional licenses. v1.0.2 covers {n_programs} programs across "
             f"{n_states} states{dc_suffix} with {n_providers} providers, entry/exit event "
             "tracking, and full provenance. No harm analysis — just the spine."
         ),

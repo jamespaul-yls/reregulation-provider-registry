@@ -78,7 +78,6 @@ _REGISTERED: list[str] = [
     "scrapers.washington_lllt.WashingtonLlltScraper",
     "scrapers.texas_alp.TexasAlpScraper",
     "scrapers.california_lda.CaliforniaLdaScraper",
-    "scrapers.dc_rule54.DcRule54Scraper",
 ]
 
 

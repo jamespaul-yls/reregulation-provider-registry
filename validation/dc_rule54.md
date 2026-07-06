@@ -1,11 +1,20 @@
 # Validation: D.C. Rules of Professional Conduct Rule 5.4(b) — Nonlawyer Ownership
 
+> **Removed from v1 scope 2026-07-06.** `prog_dc_rule54`, its scraper
+> (`scrapers/dc_rule54.py`), its raw snapshot, and its `program`/`source_snapshot` rows have
+> all been deleted. This document is kept as the research record for *why* — the reasoning
+> below is what justified building this program in the first place, and it's exactly the
+> reasoning that later justified un-building it (see the last section, added 2026-07-06).
+> Everything else on this page describes v1.0.0/v1.0.1 state and is otherwise unchanged.
+> See `docs/sampling_frame.md §4`, `validation/residual_gaps.csv`
+> (`detected_by=manual-dc-rule54-removal`), and `CHANGELOG.md [1.0.2]`.
+
 **Source:** https://www.dcbar.org/For-Lawyers/Legal-Ethics/Rules-of-Professional-Conduct/Law-Firms-and-Associations/Professional-Independence-of-a-Lawyer
-**Scraper:** `scrapers/dc_rule54.py` v0.1.0
-**Fixture:** `tests/fixtures/dc_rule54_snap1.html`
+**Scraper:** `scrapers/dc_rule54.py` v0.1.0 (removed 2026-07-06)
+**Fixture:** `tests/fixtures/dc_rule54_snap1.html` (removed 2026-07-06)
 **Fixture sha256:** `73fe40c243259476dd16c3bb0a79782dc653fe65580d7ab9da6c50eee49d9519`
 **Scrape date:** 2026-06-29
-**DB snapshot:** not yet loaded (run `scripts/run_dc_rule54.py` when created)
+**DB snapshot:** was `snap_d33cf3651a436a7b` (removed 2026-07-06; raw blob deleted)
 
 ---
 
@@ -111,3 +120,32 @@ The DC Bar website has undergone multiple URL restructurings. The source URL
 (`/For-Lawyers/Legal-Ethics/Rules-of-Professional-Conduct/Law-Firms-and-Associations/
 Professional-Independence-of-a-Lawyer`) is case-insensitive (DC Bar CMS accepts either
 case) and as of 2026-06-29 returns 200. Monitor for future URL changes.
+
+---
+
+## Why this program was removed 2026-07-06
+
+Section 1 above ("Why provider count is zero") already contains everything needed to see
+this in hindsight: "no authorization is required, no application is filed, and no
+regulator is notified." That's true of Rule 5.4(b) *by design*, permanently — it isn't
+true of any other zero-provider program in this dataset, all of which are zero for
+reasons that could resolve (CA LDA: county scrapers could be built; TX ALP: an effective
+date could be set; WA Entity Pilot: an applicant could be authorized). Keeping
+`prog_dc_rule54` as a `program` row implied it belonged in the same bucket as those three,
+and it doesn't: there is no future scraper run, however sophisticated, that could ever
+turn this row's provider count above zero, because there is no administrative record for
+any scraper to observe.
+
+This also means our own `program` table no longer matches IAALS's "Alternative Business
+Structures — Washington, D.C." listing (their knowledge center lists it under "Implemented
+Programs" — confirmed directly against the real captured snapshot,
+`data/raw/completeness/cbcc0b44684a06e1df32c8be84af04580ea4e4c66db45387ca4dc68f68706ba1.html`).
+That's tracked as an `intentionally_excluded` row in `validation/residual_gaps.csv`
+(`detected_by=manual-dc-rule54-removal`) rather than left as a silent, undocumented gap.
+
+The academic-literature enumeration path sketched in "Why provider count is zero" above
+(DCRA registration records, NALP directory, litigation records) remains a legitimate
+future research project — it's just a *different* kind of project than this registry's
+roster-diffing method, since there would never be a regulator-published list to diff
+against. If someone builds that enumeration later, it would be a new, independent data
+source, not a revival of `prog_dc_rule54`.

@@ -150,7 +150,7 @@ regulator URLs move; the landing pages below are stable anchors.
 |---|---|---|---|
 | **Utah sandbox** | Office of Legal Services Innovation — entity roster + periodic activity/data reports | **[S]** roster, **[P]** reports | `utahinnovationoffice.org`. Roster is the gold standard; reports carry services-delivered counts you'll want for v4 denominators. Backfill historical rosters via **[X]**. |
 | **Arizona ABS** | AZ Supreme Court / Certification & Licensing Division — ABS roster; State Bar of AZ — discipline | **[S]** roster, **[H]/[S]** discipline search | `azcourts.gov`. Cleanest starter scraper. Disciplinary orders are the AZ Republic's source — capture them. |
-| **D.C. Rule 5.4** | D.C. Bar | **[S]** | No discrete "roster"; mostly a program-level row + manual entity notes. Low priority for v1. |
+| **D.C. Rule 5.4** | D.C. Bar | **[S]** | No discrete "roster"; mostly a program-level row + manual entity notes. Low priority for v1. **Outcome:** built as `prog_dc_rule54` in v1.0.0, then removed 2026-07-06 — "no discrete roster" turned out to mean *no roster ever possible* (self-executing rule, no application step), not just low scraping priority. See `docs/sampling_frame.md §4` and `validation/dc_rule54.md`. |
 
 ### Allied legal professional / paraprofessional licenses
 | program | source(s) | format | notes / gotchas |

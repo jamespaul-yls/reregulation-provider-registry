@@ -4,7 +4,7 @@ An open, reproducible, longitudinal dataset of every authorized provider operati
 a U.S. legal-services reregulation program: Alternative Business Structures (ABS),
 regulatory sandboxes, and allied-legal-professional / paraprofessional licenses.
 
-**v1.0.0 · 11 programs · 7 states + DC · 708 providers · 20 roster snapshots**
+**v1.0.2 · 10 programs · 7 states · 708 providers · 19 roster snapshots**
 
 ## Purpose
 
@@ -18,7 +18,7 @@ Reproducibility and provenance are the product. Every row carries `source_url`,
 `retrieved_at`, and `scraper_version`. Raw HTML/PDF captures are content-hashed and stored
 in `data/raw/`; all derived tables are fully re-derivable from them.
 
-## Coverage (v1.0.0)
+## Coverage (v1.0.2)
 
 | Program | State | Type | Providers (total) | Active | Snapshots | Earliest snapshot |
 |---|---|---|---:|---:|---:|---|
@@ -30,17 +30,22 @@ in `data/raw/`; all derived tables are fully re-derivable from them.
 | Utah Sandbox | UT | sandbox | 70 | 8 | 9 | 2025-06-12 |
 | Washington LLLT | WA | alp_license | 95 | 68 | 1 | 2026-06-29 |
 | California LDA | CA | document_preparer | 0† | — | 1 | 2026-06-29 |
-| DC Rule 5.4(b) | DC | abs | 0† | — | 1 | 2026-07-04 |
 | Texas ALP | TX | alp_license | 0† | — | 1 | 2026-07-04 |
 | WA Entity Pilot | WA | sandbox | 0† | — | 1 | 2026-07-04 |
-| **Total** | | | **708** | **569** | **20** | |
+| **Total** | | | **708** | **569** | **19** | |
 
 † Program correctly zero-provider: CA LDA is county-fragmented with no statewide roster;
-DC Rule 5.4(b) is a permissive ethics rule with no registration or roster; TX ALP's
-licensing category is not yet effective; WA Entity Pilot has 4 applicants but none
+TX ALP's licensing category is not yet effective; WA Entity Pilot has 4 applicants but none
 authorized yet. Each program's evidentiary source page is still snapshotted for
 provenance. See `docs/sampling_frame.md §3` for the full reasoning per
 program — none of these zeros are "not yet checked."
+
+**D.C. Rule 5.4(b)** was modeled as a fourth zero-provider program (`prog_dc_rule54`)
+through v1.0.1 and removed 2026-07-06: it's a self-executing ethics rule with no
+application or registration step, so unlike the three zeros above there is no roster
+that could ever come to exist for it. See `docs/sampling_frame.md §4` and
+`validation/dc_rule54.md` for the full reasoning, and `CHANGELOG.md [1.0.2]` for the
+removal itself.
 
 `current_status` is **computed** from the `provider_status_event` log, never scraped
 directly. `disappeared_from_roster` ≠ `revoked` — see `docs/methodology.md §4c`.
@@ -52,8 +57,8 @@ constraints, and foreign keys is at `data/release/datapackage.json`.
 
 | File | Rows | Description |
 |---|---:|---|
-| `program.csv` / `.parquet` | 11 | One row per reregulation program |
-| `source_snapshot.csv` / `.parquet` | 20 | Immutable raw-capture provenance records |
+| `program.csv` / `.parquet` | 10 | One row per reregulation program |
+| `source_snapshot.csv` / `.parquet` | 19 | Immutable raw-capture provenance records |
 | `provider.csv` / `.parquet` | 708 | One row per unique authorized provider |
 | `provider_status_event.csv` / `.parquet` | 748 | Entry/exit/discipline events |
 | `provider_alias.csv` / `.parquet` | 0 | DBA / former names (populated in v1.1) |
@@ -144,7 +149,7 @@ events |>
 ## How to cite
 
 ```
-Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.0)
+Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.2)
 [Data set]. Yale Law School. https://github.com/jamespaul-yls/reregulation-provider-registry
 ```
 
@@ -154,7 +159,7 @@ BibTeX:
   author    = {Paul, James},
   title     = {U.S. Legal Services Reregulation Provider Registry},
   year      = {2026},
-  version   = {1.0.0},
+  version   = {1.0.2},
   publisher = {Yale Law School},
   url       = {https://github.com/jamespaul-yls/reregulation-provider-registry},
 }
@@ -169,10 +174,10 @@ principal ones:
    exited weeks before the snapshot that records their absence.
 2. **Observation ≠ ground truth.** `disappeared_from_roster` is an observation; only
    the regulator knows if it reflects revocation, voluntary exit, or a website error.
-3. **Single initial snapshots.** Most programs have one snapshot (v1.0.0). Longitudinal
+3. **Single initial snapshots.** Most programs have one snapshot (v1.0.2). Longitudinal
    entry/exit tracking becomes meaningful only as additional snapshots accumulate.
 4. **Practice area sparsity.** Most rosters do not publish practice areas. The
-   `practice_areas_raw` and `practice_areas_list` columns are mostly empty in v1.0.0.
+   `practice_areas_raw` and `practice_areas_list` columns are mostly empty in v1.0.2.
 5. **Scope boundary.** This dataset covers reregulation programs only — not the full
    population of legal service providers. Do not use the denominator from this dataset
    to compute market-share statistics.

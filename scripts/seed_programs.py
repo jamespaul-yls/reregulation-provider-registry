@@ -2,7 +2,7 @@
 
 Idempotent: safe to re-run. Upserts all programs, then prints the full table.
 
-Programs in scope (11 total):
+Programs in scope (10 total):
   prog_ut_sandbox      — Utah Legal Services Innovation Sandbox
   prog_az_abs          — Arizona Alternative Business Structures
   prog_az_lp           — Arizona Legal Paraprofessional Program
@@ -12,9 +12,13 @@ Programs in scope (11 total):
   prog_wa_lllt         — Washington Limited License Legal Technician Program (sunset)
   prog_tx_alp          — Texas Licensed Legal Paraprofessionals and LCCAs (paused)
   prog_ca_lda          — California Legal Document Assistant Program
-  prog_dc_rule54       — D.C. Rule 5.4(b) Nonlawyer Ownership
   prog_wa_entity_pilot — Washington Entity Regulation Pilot Project (resolves both
                          IAALS's "WA ABS" and "WA sandbox" listings — one program)
+
+D.C. Rule 5.4(b) (prog_dc_rule54) was removed from scope 2026-07-06 — a permissive
+ethics rule with no registration requirement has no roster or providers to ever track,
+structurally, unlike the other zero-provider programs. See docs/sampling_frame.md §4
+and validation/dc_rule54.md for the full reasoning.
 
 Usage:
     uv run python scripts/seed_programs.py
@@ -255,38 +259,7 @@ PROGRAMS: list[Program] = [
         retrieved_at=_SEED_TS,
         scraper_version=_V,
     ),
-    # ── 10. D.C. Rule 5.4(b) ─────────────────────────────────────────────────
-    Program(
-        program_id="prog_dc_rule54",
-        jurisdiction="DC",
-        program_name="D.C. Rule 5.4(b) Nonlawyer Ownership of Law Firms",
-        program_type=ProgramType.abs,
-        regulator="D.C. Court of Appeals",
-        regulator_url=(
-            "https://www.dcbar.org/For-Lawyers/Legal-Ethics/Rules-of-Professional-Conduct"
-            "/Law-Firms-and-Associations/Professional-Independence-of-a-Lawyer"
-        ),
-        authorizing_rule=(
-            "D.C. Rules of Professional Conduct Rule 5.4(b)"
-            " (D.C. Ct. App., eff. Jan. 1, 1991); permits nonlawyer financial interest"
-            " or managerial authority in firms whose sole purpose is providing legal"
-            " services, subject to four conditions (RPC sole-purpose; all owners bound"
-            " by RPC; lawyer accountability under Rule 5.1; written conditions)"
-        ),
-        launch_date=datetime.date(1991, 1, 1),
-        program_status=ProgramStatus.active,
-        sunset_date=None,
-        allows_nonlawyer_ownership=True,
-        allows_upl_waiver=False,
-        allows_software_provider=True,
-        source_url=(
-            "https://www.dcbar.org/For-Lawyers/Legal-Ethics/Rules-of-Professional-Conduct"
-            "/Law-Firms-and-Associations/Professional-Independence-of-a-Lawyer"
-        ),
-        retrieved_at=_SEED_TS,
-        scraper_version=_V,
-    ),
-    # ── 11. Washington Entity Regulation Pilot Project ───────────────────────
+    # ── 10. Washington Entity Regulation Pilot Project ───────────────────────
     # Resolves BOTH the IAALS "WA ABS" and "WA sandbox" listings as one program
     # (docs/sampling_frame.md §6) — same precedent as prog_ut_sandbox absorbing
     # UT's ABS listing. Do not add a second WA program row for either model type.

@@ -56,7 +56,6 @@ _SCRAPER_MAP: dict[str, str] = {
     "prog_az_lp": "scrapers.arizona_lp.ArizonaLpScraper",
     "prog_ca_lda": "scrapers.california_lda.CaliforniaLdaScraper",
     "prog_co_llp": "scrapers.colorado_llp.ColoradoLlpScraper",
-    "prog_dc_rule54": "scrapers.dc_rule54.DcRule54Scraper",
     "prog_mn_lp": "scrapers.minnesota_lp.MinnesotaLpScraper",
     "prog_tx_alp": "scrapers.texas_alp.TexasAlpScraper",
     "prog_ut_lpp": "scrapers.utah_lpp.UtahLppScraper",

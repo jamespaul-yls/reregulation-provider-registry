@@ -30,7 +30,6 @@ _ZERO_ROSTER_PROGRAMS: dict[str, str] = {
     # program_id → validation file path (relative to repo root)
     "prog_tx_alp": "validation/texas_alp.md",
     "prog_ca_lda": "validation/california_lda.md",
-    "prog_dc_rule54": "validation/dc_rule54.md",
     "prog_wa_entity_pilot": "validation/washington_entity_pilot.md",
 }
 

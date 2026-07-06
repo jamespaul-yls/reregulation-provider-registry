@@ -3,7 +3,7 @@
 _A statistic without a documented method is a bug._ Every inference in this dataset
 is written here. Version this document alongside the code.
 
-**Version:** 1 · **Last updated:** 2026-07-04
+**Version:** 1 · **Last updated:** 2026-07-06
 
 ---
 
@@ -42,11 +42,12 @@ Column names measure proxies (`formal_complaint_count`, not `harm`); analysts ap
 own harm definitions to the spine.
 
 **Frame document:** `docs/sampling_frame.md` is the authoritative statement of exactly
-which 11 programs are in scope for v1, why four of them are correctly zero-provider, the
+which 10 programs are in scope for v1, why three of them are correctly zero-provider, the
 territory-scope decision, the one candidate program researched and deferred with no
-`program` row at all (§3a), and the disposition of every residual gap surfaced by the
-completeness audit (§10e). This section states the scope in prose; `sampling_frame.md`
-states it as an enumerated, reconciled list.
+`program` row at all (§3a), the one program removed from scope after initially being
+modeled as a documented zero (§4 — D.C. Rule 5.4(b), removed 2026-07-06), and the
+disposition of every residual gap surfaced by the completeness audit (§10e). This section
+states the scope in prose; `sampling_frame.md` states it as an enumerated, reconciled list.
 
 ---
 
@@ -82,7 +83,6 @@ Every program's primary source, canonical fetch strategy, and scraper module. Se
 | AZ LP | `[S]` static HTML | `azcourts.gov/cld/Legal-Paraprofessional/Directory` | `scrapers/arizona_lp.py` |
 | CA LDA | `[S]` static HTML (statute page only — no roster; see §1) | `leginfo.legislature.ca.gov` Bus. & Prof. Code §6400 | `scrapers/california_lda.py` |
 | CO LLP | `[P]` static PDF download | `coloradolegalregulation.com` Admitted LLP Roster PDF | `scrapers/colorado_llp.py` |
-| DC Rule 5.4(b) | `[S]` static HTML (rule page only — no roster; see §1) | `dcbar.org` Rule 5.4(b) ethics rule page | `scrapers/dc_rule54.py` |
 | MN LP | `[P]` static PDF download | `mncourts.gov` Roster of Approved Legal Paraprofessionals | `scrapers/minnesota_lp.py` |
 | TX ALP | `[S]` static HTML (program-status page only — no roster; see §1) | `texasbar.com/paraprofessionals/` | `scrapers/texas_alp.py` |
 | UT LPP | `[S]` static HTML (custom fetcher; site redirects to a vendor directory endpoint) | `licensedlawyer.org/Find-a-Lawyer/Licensed-Paralegal-Practitioners` | `scrapers/utah_lpp.py` |
@@ -100,7 +100,6 @@ Every program's primary source, canonical fetch strategy, and scraper module. Se
 | CO LLP | No direct PDF export API — parse errors possible on layout changes |
 | MN LP | Roster only exists inside PDFs; OCR/layout errors possible |
 | CA LDA | County-level filings; highly fragmented; no statewide consolidated roster (see §1) |
-| DC Rule 5.4(b) | No roster exists at all — structural, not a scraping gap (see §1) |
 | WA Entity Pilot | No applicant authorized yet as of 2026-07-04 (see §1); `_AUTHORIZED_TOKENS` (token-based match) in the scraper is an educated guess since no authorized-status label has ever appeared on the live page; an unrecognized status now logs a warning instead of failing silently (`docs/audit/adversarial_review.md` S4) |
 | TX ALP | No roster exists yet — program not effective as of 2026-07 (see §1) |
 
@@ -604,12 +603,20 @@ candidate programs not yet built — IN sandbox, MN sandbox, PR ABS — and 8
 Community-Based Justice Worker Model jurisdictions, since `community_justice_worker` exists
 in the v1 `program_type` enum for forward compatibility but no v1 scraper covers it).
 
-`validation/residual_gaps.csv` carries one further row (15 total) beyond what this automated
-check can surface: Oregon LP (`alp_license`), which is out of scope for the check above (it
-only covers sandbox/abs/community_justice_worker — bullet 2 of this section) and was
-identified and deferred by direct manual research instead
-(`detected_by=manual-oregon-research`; see `docs/sampling_frame.md §3a` and
-`validation/oregon_lp.md`).
+`validation/residual_gaps.csv` carries two further rows (16 total) beyond what this
+automated check surfaced on its one real 2026-07-01 run:
+
+- Oregon LP (`alp_license`), out of scope for the check above (it only covers
+  sandbox/abs/community_justice_worker — bullet 2 of this section) and identified and
+  deferred by direct manual research instead (`detected_by=manual-oregon-research`; see
+  `docs/sampling_frame.md §3a` and `validation/oregon_lp.md`).
+- Alternative Business Structures — Washington, D.C., `intentionally_excluded`
+  (`detected_by=manual-dc-rule54-removal`). This *was* matched by `prog_dc_rule54` during
+  the 2026-07-01 run — that program was removed from scope 2026-07-06
+  (`docs/sampling_frame.md §4`: it's a self-executing rule with no application or
+  registration step, unlike the other zero-provider programs), which means the automated
+  check would surface this listing as a fresh gap if re-run today. This row records that
+  disposition pre-emptively rather than leaving the ledger stale until the next live run.
 
 Full disposition table and reasoning: `docs/sampling_frame.md §6`. The territory-scope decision
 (v1 does not independently survey U.S. territories beyond what IAALS surfaced) is in

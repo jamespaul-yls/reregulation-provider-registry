@@ -156,13 +156,16 @@ class TestResolveUsps:
 class TestReconcile:
     def test_gap_detection_against_seeded_programs(self, iaals_rows):
         # Mirrors the real seeded program table (scripts/seed_programs.py) as
-        # of 2026-07-01: prog_ut_sandbox (UT/sandbox), prog_az_abs (AZ/abs),
-        # prog_dc_rule54 (DC/abs) are the only rows IAALS's Implemented-Programs
-        # buckets can match against for the three in-scope model types.
+        # of 2026-07-06: prog_ut_sandbox (UT/sandbox) and prog_az_abs (AZ/abs)
+        # are the only rows IAALS's Implemented-Programs buckets can match
+        # against for the three in-scope model types. prog_dc_rule54 (DC/abs)
+        # was removed from scope 2026-07-06 (docs/sampling_frame.md §4) — its
+        # IAALS listing ("Alternative Business Structures — Washington, D.C.")
+        # is therefore now a genuine, expected gap, not a matched program; see
+        # the `intentionally_excluded` row for it in validation/residual_gaps.csv.
         programs = [
             _fake_program("prog_ut_sandbox", "UT", ProgramType.sandbox),
             _fake_program("prog_az_abs", "AZ", ProgramType.abs),
-            _fake_program("prog_dc_rule54", "DC", ProgramType.abs),
             # Out of scope for this source — must not affect the mine-not-theirs check.
             _fake_program("prog_az_lp", "AZ", ProgramType.alp_license),
             _fake_program("prog_ca_lda", "CA", ProgramType.document_preparer),
@@ -173,6 +176,7 @@ class TestReconcile:
         # theirs-not-ours: real candidates that should surface.
         assert ("WA", "Regulatory Sandbox") in gap_keys
         assert ("WA", "Alternative Business Structures") in gap_keys
+        assert ("DC", "Alternative Business Structures") in gap_keys
         assert ("PR", "Alternative Business Structures") in gap_keys
         assert ("IN", "Regulatory Sandbox") in gap_keys
         assert ("AK", "Community-Based Justice Worker Models") in gap_keys
@@ -180,7 +184,6 @@ class TestReconcile:
         # Matched programs must NOT appear as gaps.
         assert not any(g.item == "Regulatory Sandbox — Utah" for g in gaps)
         assert not any(g.item == "Alternative Business Structures — Arizona" for g in gaps)
-        assert not any(g.item == "Alternative Business Structures — Washington, D.C." for g in gaps)
         assert all(g.classification == "unresolved" for g in gaps)
         assert all(g.detected_by == "frame_reconcile" for g in gaps)
 

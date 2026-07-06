@@ -1,8 +1,8 @@
 # Longitudinal Validity Report
 
-**Date produced:** 2026-06-30 · **Updated:** 2026-07-04
+**Date produced:** 2026-06-30 · **Updated:** 2026-07-06
 **Analyst:** pipeline/wayback.py + manual reconciliation
-**Status:** v1.0.0 close-out. One Wayback capture is now persisted for AZ ABS
+**Status:** v1.0.2 close-out. One Wayback capture is now persisted for AZ ABS
 (2024-11-08) and UT Sandbox (2025-06-12) — enough to seed each program's
 `first_seen_snapshot_id` earlier than the first own-scrape and produce real
 `disappeared_from_roster`/`status_change` events for UT Sandbox (8 own-scrape
@@ -15,7 +15,7 @@ for the consolidated, current-as-of-release view.
 
 ---
 
-## 1. Summary table (current DB state, 2026-07-04)
+## 1. Summary table (current DB state, 2026-07-06)
 
 | Program | Latest snapshot | Our count | Published benchmark | Divergence | Diagnosis |
 |---------|----------------|-----------|---------------------|------------|-----------|
@@ -24,12 +24,15 @@ for the consolidated, current-as-of-release view.
 | AZ LP | 2026-06-29 | 120 total (113 active, 7 exited) | — | — | No published benchmark located |
 | CA LDA | 2026-06-29 | 0 (structural; see `docs/sampling_frame.md §3`) | — | — | No statewide roster exists |
 | CO LLP | 2026-06-29 | 126 total (all active) | — | — | No published benchmark located |
-| DC Rule 5.4(b) | 2026-07-04 | 0 (structural; see `docs/sampling_frame.md §3`) | — | — | No roster exists — permissive ethics rule |
 | MN LP | 2026-06-29 | 42 total (all active) | — | — | No published benchmark located |
 | TX ALP | 2026-07-04 | 0 (temporal; see `docs/sampling_frame.md §3`) | — | — | Program not yet effective |
 | UT LPP | 2026-06-29 | 52 total (all active) | — | — | No published benchmark located |
 | WA Entity Pilot | 2026-07-04 | 0 (temporal; see `docs/sampling_frame.md §3`) | — | — | 4 applicants, all "Under Review" — none authorized yet |
 | WA LLLT | 2026-06-29 | 95 total (68 active, 13 unknown, 10 exited, 4 suspended) | — | — | Sunset 2021; deeper Wayback backfill would refine pre-sunset peak |
+
+`prog_dc_rule54` appeared in this table through v1.0.1 (0, structural, same treatment as
+CA LDA above). It was removed from scope 2026-07-06 — see `docs/sampling_frame.md §4` —
+rather than kept as a documented zero, so it no longer has a DB row to report here at all.
 
 ---
 
@@ -41,7 +44,6 @@ prog_az_abs            203          2            203 / 36 / 0
 prog_az_lp             120          1            120 / 0 / 0
 prog_ca_lda              0          1            0 / 0 / 0
 prog_co_llp            126          1            126 / 0 / 0
-prog_dc_rule54           0          1            0 / 0 / 0
 prog_mn_lp              42          1            42 / 0 / 0
 prog_tx_alp              0          1            0 / 0 / 0
 prog_ut_lpp             52          1            52 / 0 / 0
@@ -50,7 +52,7 @@ prog_wa_entity_pilot     0          1            0 / 0 / 0
 prog_wa_lllt            95          1            95 / 0 / 0
 ```
 
-Total: 708 providers, 748 events, 20 snapshots across 11 programs. AZ ABS's 43
+Total: 708 providers, 748 events, 19 snapshots across 10 programs. AZ ABS's 43
 exited providers break down as 36 explicit `disappeared_from_roster` events
 (from diffing the two snapshots) plus 7 seeded `exited` at bootstrap from the
 roster's own status field (§4b of `docs/methodology.md`) — not a

@@ -291,12 +291,6 @@ _PROGRAM_CONFIGS: dict[str, ProgramConfig] = {
         queries=["legal document assistant"],
         known_bills=[],
     ),
-    # DC Rule 54 — D.C. Court of Appeals Rule 5.4 amendment; not legislative.
-    "prog_dc_rule54": ProgramConfig(
-        jurisdiction="dc",
-        queries=["alternative business structure", "nonlawyer ownership", "Rule 5.4"],
-        known_bills=[],
-    ),
 }
 
 

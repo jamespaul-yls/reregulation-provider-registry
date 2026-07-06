@@ -5,6 +5,80 @@ follows [Keep a Changelog](https://keepachangelog.com/); versioning applies to t
 release as a whole (schema + data + pipeline), not to individual scrapers, which carry
 their own `scraper_version` in every row's provenance fields.
 
+## [1.0.2] — 2026-07-06
+
+Removes `prog_dc_rule54` (D.C. Rule of Professional Conduct 5.4(b)) from scope. **10
+programs, 7 states, 708 providers, 748 events, 19 snapshots** (was 11 programs, 7 states +
+DC, 708 providers, 748 events, 20 snapshots — DC contributed zero providers/events either
+way, so only the program/snapshot counts change). 466 tests collected (464 passed, 2
+skipped), down from 472 (470 passed, 2 skipped) — the 6 tests in the deleted
+`tests/test_dc_rule54.py`.
+
+### Why
+
+D.C. Rule 5.4(b) is a self-executing ethics rule: no application, registration, or
+regulator notice of any kind is ever required for a firm to organize under it. Every
+other zero-provider program in this dataset (CA LDA, TX ALP, WA Entity Pilot) is zero
+*for a reason that could resolve* — a county scraper gets built, an effective date gets
+set, an applicant gets authorized. D.C. Rule 5.4(b) has no comparable path to a nonzero
+count: there is no administrative act for any future scraper to ever observe. Keeping it
+as a `program` row misrepresented what "zero providers" means for every other row in the
+table. Full reasoning: `docs/sampling_frame.md §4` and `validation/dc_rule54.md`.
+
+### Removed
+
+- `scrapers/dc_rule54.py`, `scripts/run_dc_rule54.py`, `tests/test_dc_rule54.py`,
+  `tests/fixtures/dc_rule54_snap1.html`.
+- `prog_dc_rule54` from `scripts/seed_programs.py`, `pipeline/reproduce.py`'s
+  `_SCRAPER_MAP`, `pipeline/scrape.py`/`pipeline/orchestrate.py`/`pipeline/wayback.py`'s
+  scraper registries, and `resolve/program_status.py`'s legislative-resolver config.
+- The `prog_dc_rule54` `program` and `source_snapshot` rows from `data/db/registry.duckdb`
+  (via a fresh `make reproduce` — no manual DB surgery) and its raw blob
+  (`data/raw/d33cf...145a.html`) from `data/raw/`.
+
+### Added
+
+- A new, expected consequence of the removal: `prog_dc_rule54` had been silently
+  satisfying IAALS's "Alternative Business Structures — Washington, D.C." listing
+  (confirmed against the real captured completeness snapshot — it's filed under
+  "Implemented Programs"). Removing the program turns that into a genuine
+  completeness-audit gap. Recorded pre-emptively as `intentionally_excluded` in
+  `validation/residual_gaps.csv` (`detected_by=manual-dc-rule54-removal`) rather than
+  left for the next live `make completeness` run to rediscover. Ledger is now 16 rows
+  (14 from the one real 2026-07-01 automated run, plus this row and the Oregon LP row
+  added in the same manner in `[1.0.1]`).
+- `docs/sampling_frame.md §1`'s in-scope test now states a third criterion explicitly:
+  the authorizing instrument must require *some* administrative act that could in
+  principle produce a roster. A named regulator alone isn't sufficient, which is exactly
+  the distinction that was missing when `prog_dc_rule54` was first built.
+
+### Changed
+
+- Version bumped to 1.0.2 everywhere it's stated as the current release: `README.md`,
+  `docs/data_note.md`, `docs/sampling_frame.md`, `validation/summary.md`, `.zenodo.json`,
+  and `scripts/build_datapackage.py` (which generates `data/release/datapackage.json` —
+  its program/state counts and D.C. suffix are computed dynamically from the release
+  data, so those self-corrected on the next `make export`; only the hardcoded version
+  string needed a manual bump).
+- `tests/test_frame_reconcile.py::test_gap_detection_against_seeded_programs` updated:
+  the fake program list no longer includes a DC/abs row, and "Alternative Business
+  Structures — Washington, D.C." moved from the "must not appear as a gap" assertions to
+  the "must surface as a gap" assertions, matching the real table's new shape.
+- `tests/test_program_coverage.py`'s `_ZERO_ROSTER_PROGRAMS` no longer lists
+  `prog_dc_rule54` — this test would otherwise fail on the next DB rebuild (it asserts
+  every zero-provider program in the DB has a documented reason on file).
+- Every prose reference to "11 programs" / "8 jurisdictions" / "four zero-provider
+  programs" / "20 snapshots" updated to "10" / "7" / "three" / "19" across `README.md`,
+  `docs/data_note.md`, `docs/methodology.md`, `docs/sampling_frame.md`,
+  `validation/summary.md`, `validation/coverage_report.md`, and
+  `validation/longitudinal_validity.md`.
+- `validation/dc_rule54.md` kept (not deleted) as the research record, with a notice at
+  the top pointing to the removal and a new closing section explaining why the same
+  reasoning that justified building the program later justified un-building it.
+- `reregulation-registry-v1-spec.md`'s original D.C. Rule 5.4 planning entry annotated
+  with the eventual outcome, rather than left to silently describe a program that no
+  longer exists.
+
 ## [1.0.1] — 2026-07-05
 
 Fixes every finding from the pre-publication adversarial review

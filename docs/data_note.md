@@ -1,9 +1,9 @@
-# Data Note: U.S. Legal Services Reregulation Provider Registry, v1.0.0
+# Data Note: U.S. Legal Services Reregulation Provider Registry, v1.0.2
 
 **Author:** James Paul, Yale Law School  
 **Contact:** james.paul@yale.edu  
-**Date:** July 4, 2026  
-**Version:** 1.0.0 · Data: `data/release/` · Code: `github.com/jamespaul-yls/reregulation-provider-registry`  
+**Date:** July 6, 2026  
+**Version:** 1.0.2 · Data: `data/release/` · Code: `github.com/jamespaul-yls/reregulation-provider-registry`  
 **Intended audience:** IAALS, the Deborah L. Rhode Center on the Legal Profession, and other
 researchers evaluating U.S. legal-services reregulation programs
 
@@ -35,7 +35,7 @@ provenance audit that fails the build on any orphan row.
 
 ## Coverage
 
-Version 1.0.0 covers 11 programs in 7 states plus D.C., spanning three program types.
+Version 1.0.2 covers 10 programs in 7 states, spanning three program types.
 
 ### Current-roster counts (latest snapshot per program)
 
@@ -49,7 +49,6 @@ Version 1.0.0 covers 11 programs in 7 states plus D.C., spanning three program t
 | Utah Sandbox | UT | sandbox | 8 | 62 | **70** | 100% of public roster | 2026-06-29 |
 | Washington LLLT | WA | alp_license | 68 | 27 | **95** | 100% | 2026-06-29 |
 | California LDA | CA | document_preparer | 0 | — | 0 | N/A ¶ | 2026-06-29 |
-| D.C. Rule 5.4(b) | DC | abs | 0 | — | 0 | N/A # | 2026-07-04 |
 | Texas ALP | TX | alp_license | 0 | — | 0 | N/A ** | 2026-07-04 |
 | WA Entity Pilot | WA | sandbox | 0 | — | 0 | 0/4 applicants authorized †† | 2026-07-04 |
 | **Total** | | | **569** | **139** | **708** | | |
@@ -70,9 +69,6 @@ lower bound.
 central aggregator. County-level scrapers are planned for v1.1, starting with L.A., S.F.,
 and San Diego.
 
-\# D.C. Rule 5.4(b) is a permissive ethics rule; no registration requirement exists and
-no roster is maintained.
-
 \*\* The Texas ALP program was paused by Misc. Docket 24-9095 (November 4, 2024). No
 effective launch date had been set as of June 2026; no licensees have been issued.
 
@@ -83,29 +79,47 @@ authorized yet, so zero are loaded as providers. This one program covers both th
 and "sandbox" classifications a cross-jurisdiction inventory (IAALS) separately lists for
 Washington — see the completeness check below.
 
-For all four zero-provider programs, the "Snapshot date" above is the capture of the
+For all three zero-provider programs, the "Snapshot date" above is the capture of the
 *evidentiary source page* (the statute, rule text, program-status page, or full applicant
 list that documents why the count is zero) — not a roster capture, since no roster exists
-for any of the four. This means the "why it's zero" claim is itself backed by an
+for any of the three. This means the "why it's zero" claim is itself backed by an
 immutable, content-hashed snapshot, not only asserted in the program row. See
 `docs/sampling_frame.md §3` for the full reasoning per program.
+
+D.C. Rule 5.4(b) was modeled as a fourth zero-provider program (`prog_dc_rule54`) through
+v1.0.1. It was removed 2026-07-06: unlike the three programs above, Rule 5.4(b) is a
+self-executing ethics rule with no application or registration step, so there is no
+roster that could ever come to exist for it — a structural, permanent exclusion rather
+than a documented zero. See `docs/sampling_frame.md §4` and `validation/dc_rule54.md` for
+the full reasoning.
 
 ### Completeness check (frame reconciliation)
 
 Beyond reconciling parsed counts against each source's own stated total (below), we ran
 an independent check: does an external inventory of reregulation programs (the IAALS
 Unlocking Legal Regulation knowledge center) list anything our program table doesn't have,
-or vice versa? This surfaced 14 candidate gaps — 5 candidate programs we hadn't built a
-scraper for yet (Washington sandbox and ABS, Indiana sandbox, Minnesota sandbox, Puerto
-Rico ABS) and 8 Community-Based Justice Worker Model jurisdictions (a program type defined
-in our schema for forward compatibility but not yet built for v1). All 14 are resolved:
-the Washington sandbox/ABS pair is now covered by the newly built
-`prog_wa_entity_pilot` (one pilot resolves both classifications, the same pattern already
-used for Utah's sandbox/ABS overlap); 2 total are intentionally excluded for that reason
-(Utah and Washington); the remaining 3 candidate programs (Indiana sandbox, Minnesota
-sandbox, Puerto Rico ABS) and all 8 CJW jurisdictions are explicitly deferred to v2. None
-are open questions. Full detail: `docs/sampling_frame.md §6` and
-`validation/residual_gaps.csv`.
+or vice versa? This surfaced 14 candidate gaps on its one real run (2026-07-01) — 5
+candidate programs we hadn't built a scraper for yet (Washington sandbox and ABS, Indiana
+sandbox, Minnesota sandbox, Puerto Rico ABS) and 8 Community-Based Justice Worker Model
+jurisdictions (a program type defined in our schema for forward compatibility but not yet
+built for v1). All 14 are resolved: the Washington sandbox/ABS pair is now covered by the
+newly built `prog_wa_entity_pilot` (one pilot resolves both classifications, the same
+pattern already used for Utah's sandbox/ABS overlap); 2 total are intentionally excluded
+for that reason (Utah and Washington); the remaining 3 candidate programs (Indiana
+sandbox, Minnesota sandbox, Puerto Rico ABS) and all 8 CJW jurisdictions are explicitly
+deferred to v2.
+
+Two more rows were added by hand afterward: Oregon LP (`alp_license` programs are outside
+this check's scope by design, so the automated tool would never surface it — see
+`validation/oregon_lp.md`), and Alternative Business Structures — Washington, D.C.
+IAALS lists a D.C. ABS program as "Implemented," which was matched by our own
+`prog_dc_rule54` row at the time of the 2026-07-01 run — that program was removed from
+scope 2026-07-06 (structurally, no roster can ever exist for a self-executing ethics
+rule with no application step; see the "Coverage" section above), which means a fresh run
+of the check would surface this listing as a gap today. We recorded that disposition
+(`intentionally_excluded`) immediately rather than waiting for the next live run to
+rediscover it. None of the 16 total ledger rows are open questions. Full detail:
+`docs/sampling_frame.md §6` and `validation/residual_gaps.csv`.
 
 ### Reconciliation
 
@@ -198,7 +212,7 @@ voluntary withdrawal, a website update, or a data error. Only the regulator know
 The registry preserves this ambiguity deliberately (`disappeared_from_roster ≠ revoked`).
 
 **3. Single initial snapshots for most programs.** Five of seven programs with data have
-one snapshot at v1.0.0. Entry and exit tracking becomes meaningful as successive snapshots
+one snapshot at v1.0.2. Entry and exit tracking becomes meaningful as successive snapshots
 accumulate. The AZ ABS and UT Sandbox longitudinal comparisons are the only mature examples.
 
 **4. Authorization-date sparsity.** Most rosters do not publish the date a provider was
@@ -223,10 +237,15 @@ the full universe of legal service providers, pro se assistance programs, or doc
 preparers operating outside formal reregulation frameworks. Market-share computations
 using this dataset as the denominator will be wrong.
 
-**8. California and D.C.** are included as program records to document their legal
-frameworks (Cal. BPC § 6400; D.C. RPC 5.4(b)) but contribute zero provider rows at
-v1.0.0. Both are programmatically important for research comparisons and are retained as
-stubs.
+**8. California** is included as a program record to document its legal framework (Cal.
+BPC § 6400) but contributes zero provider rows at v1.0.2. It's retained as a stub because
+county-level scraping is a plausible, plannable path to a nonzero count (v1.1).
+
+**D.C. Rule 5.4(b)** was included the same way through v1.0.1 and removed 2026-07-06 —
+unlike California LDA, there is no roster of any kind that could ever come to exist for
+a self-executing ethics rule with no application or registration step, so keeping it as
+a program stub misrepresented what "zero providers, for now" means for every other row in
+this table. See `docs/sampling_frame.md §4` and `validation/dc_rule54.md`.
 
 ---
 
@@ -272,7 +291,7 @@ share will be incorporated with attribution.
 ## How to cite
 
 ```
-Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.0)
+Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.2)
 [Data set]. Yale Law School. https://github.com/jamespaul-yls/reregulation-provider-registry
 ```
 
