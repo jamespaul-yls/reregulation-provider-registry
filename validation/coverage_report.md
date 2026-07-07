@@ -129,8 +129,11 @@ to exist for a self-executing rule with no application step. See `docs/sampling_
 
 ### prog\_mn\_lp — Minnesota LP (✅ full)
 
-PDF updated June 25, 2026 (PDF header). IDs run 1001–1046 with two confirmed gaps
-(1009 and 1028, IDs not issued), yielding exactly 42 entries. Row count matches the
+PDF updated June 25, 2026 (PDF header). IDs run 1001–1044 with two confirmed gaps
+(1009 and 1028, IDs not issued), yielding exactly 42 entries (44 IDs in range − 2 gaps = 42,
+confirmed against the scraper's own parsed output — see `docs/audit/coverage_confidence.md
+§2` for the live re-verification that caught this range being mis-stated as 1001–1046
+previously). Row count matches the
 named count in the PDF.
 
 ### prog\_tx\_alp — Texas ALP (✅ zero\_documented)
