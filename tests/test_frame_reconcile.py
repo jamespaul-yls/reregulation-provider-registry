@@ -265,3 +265,51 @@ class TestMergeLedger:
         )
         count = merge_ledger(path, [other])
         assert count == 2
+
+    def test_different_detected_by_does_not_duplicate_a_resolved_gap(self, tmp_path):
+        """Regression test for a real bug: a manually-resolved gap re-appeared as a
+        fresh `unresolved` row the next time frame_reconcile ran live, because the old
+        keying (item, jurisdiction, detected_by) treated a different detected_by as a
+        different row. See docs/audit/coverage_confidence.md §1 and
+        docs/sampling_frame.md §6 — this happened twice in production before the fix.
+        """
+        path = tmp_path / "residual_gaps.csv"
+
+        # A human resolves this gap by hand, found via direct research rather than
+        # the automated detector.
+        manual_row = self._candidate(
+            item="Alternative Business Structures — Washington, D.C.", jurisdiction="DC"
+        )
+        manual_row = manual_row.model_copy(
+            update={
+                "classification": "intentionally_excluded",
+                "resolved": True,
+                "detected_by": "manual-dc-rule54-removal",
+            }
+        )
+        merge_ledger(path, [manual_row])
+
+        # A later live frame_reconcile run proposes the *same* real-world gap, found
+        # the automated way (different detected_by, same item + jurisdiction).
+        auto_candidate = self._candidate(
+            item="Alternative Business Structures — Washington, D.C.", jurisdiction="DC"
+        )
+        assert auto_candidate.detected_by == "frame_reconcile"
+        count = merge_ledger(path, [auto_candidate])
+
+        # Must NOT create a second, unresolved row for the same gap.
+        assert count == 1
+        rows = list(csv.DictReader(path.open()))
+        assert len(rows) == 1
+        assert rows[0]["classification"] == "intentionally_excluded"
+        assert rows[0]["resolved"] == "True"
+        assert rows[0]["detected_by"] == "manual-dc-rule54-removal"
+
+    def test_different_jurisdiction_same_item_text_still_appended(self, tmp_path):
+        """The (item, jurisdiction) check must not over-suppress: a genuinely different
+        jurisdiction for the same item text is a different gap."""
+        path = tmp_path / "residual_gaps.csv"
+        merge_ledger(path, [self._candidate(item="Regulatory Sandbox", jurisdiction="WA")])
+        other = self._candidate(item="Regulatory Sandbox", jurisdiction="IN")
+        count = merge_ledger(path, [other])
+        assert count == 2
