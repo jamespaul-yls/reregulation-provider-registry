@@ -4,7 +4,7 @@ This document is the frame: what population of programs v1 claims to cover, what
 excluded and why, and the residual gaps surfaced by the completeness audit and their
 disposition. It is the companion to `docs/methodology.md §1` (Scope) and
 `docs/methodology.md §10e` (completeness-audit method) — read together they answer
-"what should be in this dataset, and how do we know we didn't miss anything obvious."
+"what should be in this dataset, and how do I know I didn't miss anything obvious."
 
 **Version:** 1.0.2 · **Last updated:** 2026-07-06
 

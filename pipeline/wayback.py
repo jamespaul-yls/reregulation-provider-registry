@@ -21,7 +21,7 @@ Known limitations
   unchanged via PdfFetcher media type.
 - Rate limit: 1.5 s between IA requests (per robots.txt guidance).
 - CDX collapse=digest deduplicates captures with identical content server-side;
-  we still check sha256 locally to guard against any CDX quirks.
+  I still check sha256 locally to guard against any CDX quirks.
 
 Usage
 -----

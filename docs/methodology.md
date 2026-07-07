@@ -241,7 +241,7 @@ Do not conflate the two in any analysis without explicit disclosure.
 
 ### 4d. Temporal ambiguity
 
-`event_date` is set to the **snapshot date** — when we observed the change — not to when
+`event_date` is set to the **snapshot date** — when I observed the change — not to when
 the change actually happened. A provider who exited on, say, January 5 may not appear in a
 `disappeared_from_roster` event until the next scrape on February 1. All status dates in
 this dataset are observation dates, not occurrence dates, unless a specific event date is
@@ -321,7 +321,7 @@ any regularity in the snapshot interval.
 ### 6c. No grace window for roster absences
 
 The diff algorithm does not implement a grace window (i.e., "a provider must be absent
-from N consecutive snapshots before we record a disappearance"). Every absence triggers a
+from N consecutive snapshots before I record a disappearance"). Every absence triggers a
 `disappeared_from_roster` event dated to the first snapshot in which the provider is
 absent. This is a deliberate choice: a grace window would require us to decide what "N"
 means, which is a policy judgment that varies by program. Analysts who want a grace window
@@ -373,7 +373,7 @@ provider_id = "prov_az_abs_f1a68aed73dd"
 
 **Limitation:** if the regulator changes how it renders a name (e.g., removes a comma,
 adds "Inc."), the hash changes and a spurious exit + entry pair is produced. The mitigation
-is to normalize `legal_name` before hashing — but we hash `legal_name` (the raw form), not
+is to normalize `legal_name` before hashing — but I hash `legal_name` (the raw form), not
 `normalized_name`, because the raw legal identity is more stable as a key. Any name drift
 observed in practice should be added to `provider_alias`.
 
@@ -408,7 +408,7 @@ Each unique capture is fetched via the Wayback `id_` modifier:
 `http://web.archive.org/web/{timestamp}id_/{url}`
 
 The `id_` modifier returns the **original page content** without Wayback's JS toolbar
-injection. This ensures the bytes we parse are the same as the original server sent —
+injection. This ensures the bytes I parse are the same as the original server sent —
 important for SHA-256 deduplication integrity.
 
 ### 8c. Local SHA-256 deduplication
@@ -423,7 +423,7 @@ is written for a content-identical capture.
 Wayback captures are ingested with `retrieved_at = capture.retrieved_at` — the archive
 timestamp, not the time the backfill script ran. This is what makes the longitudinal
 reconstruction accurate: each `provider_status_event.event_date` reflects when the
-capture was taken, not when we processed it.
+capture was taken, not when I processed it.
 
 Wayback snapshots carry `scraper_version = "wayback-{version}"` to distinguish them from
 own-scrape snapshots.
@@ -600,8 +600,8 @@ genuine coverage gap. All explanations are documented in `validation/longitudina
 
 ### 10e. Completeness audit (frame reconciliation)
 
-The checks in §10b–§10d ask "did we parse everything a *known* source publishes?" They
-cannot catch a program we never built a scraper for at all. `completeness/frame_reconcile.py`
+The checks in §10b–§10d ask "did I parse everything a *known* source publishes?" They
+cannot catch a program I never built a scraper for at all. `completeness/frame_reconcile.py`
 (`make completeness`) answers a different question: "does an *independent, external*
 inventory of reregulation programs list anything our `program` table doesn't have, or vice
 versa?"

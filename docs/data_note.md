@@ -21,7 +21,7 @@ The registry tracks **who was authorized, when, and for how long**. It does not 
 harm or benefit determinations. Column names are deliberately neutral proxies
 (`formal_complaint_count` is planned; `harm` is not a column name). The intent is a
 reproducible spine that IAALS, the Rhode Center, and other researchers evaluating these
-programs can link their own outcome data to — we are not aware of the current state of
+programs can link their own outcome data to — I am not aware of the current state of
 IAALS's or the Rhode Center's own project pipelines and don't mean to imply otherwise;
 this is an offer of a shared foundation, not a claim about what anyone else is already
 doing with it.
@@ -95,11 +95,11 @@ the full reasoning.
 
 ### Completeness check (frame reconciliation)
 
-Beyond reconciling parsed counts against each source's own stated total (below), we ran
+Beyond reconciling parsed counts against each source's own stated total (below), I ran
 an independent check: does an external inventory of reregulation programs (the IAALS
 Unlocking Legal Regulation knowledge center) list anything our program table doesn't have,
 or vice versa? This surfaced 14 candidate gaps on its one real run (2026-07-01) — 5
-candidate programs we hadn't built a scraper for yet (Washington sandbox and ABS, Indiana
+candidate programs I hadn't built a scraper for yet (Washington sandbox and ABS, Indiana
 sandbox, Minnesota sandbox, Puerto Rico ABS) and 8 Community-Based Justice Worker Model
 jurisdictions (a program type defined in our schema for forward compatibility but not yet
 built for v1). All 14 are resolved: the Washington sandbox/ABS pair is now covered by the
@@ -115,11 +115,11 @@ this check's scope by design, so the automated tool would never surface it — s
 **twice**. IAALS lists a D.C. ABS program as "Implemented," which was matched by our own
 `prog_dc_rule54` row at the time of the 2026-07-01 run — that program was removed from
 scope 2026-07-06 (structurally, no roster can ever exist for a self-executing ethics
-rule with no application step; see the "Coverage" section above). We recorded that
+rule with no application step; see the "Coverage" section above). I recorded that
 disposition (`intentionally_excluded`) immediately, then confirmed the concern was real:
 a live re-run of the check on 2026-07-06 did surface this same listing again as a fresh
 candidate (the ledger keys on `detected_by`, and the automated tool's key doesn't match
-the one we'd added by hand), so a second row exists for the same item, resolved the same
+the one I'd added by hand), so a second row exists for the same item, resolved the same
 way. It will keep resurfacing on every future live run until that keying gap is fixed.
 None of the 17 total ledger rows are open questions. Full detail:
 `docs/sampling_frame.md §6` and `validation/residual_gaps.csv`.
@@ -149,7 +149,7 @@ dated 2024-11-08 (77 authorized entities, `snap_a6e3d292014fceaf`) and the own s
 and diffing them is what actually produced the entry/exit events below — this comparison
 is fully re-derivable from committed data via `make reproduce`.
 
-**Context only — not reproducible from committed data.** During v1.0.0 close-out we also
+**Context only — not reproducible from committed data.** During v1.0.0 close-out I also
 ran an exploratory Wayback CDX scan covering 2025-04-04, 2025-12-15, and 2026-06-16. That
 scan was a dry run: Internet Archive access was intermittent that session, and the
 resulting captures were never persisted to `source_snapshot` (see
@@ -256,8 +256,8 @@ this table. See `docs/sampling_frame.md §4` and `validation/dc_rule54.md`.
 
 ## Invitation for correction
 
-This dataset will be wrong in ways the authors cannot detect from the rosters alone. We
-are specifically looking for:
+This dataset will be wrong in ways the authors cannot detect from the rosters alone. I
+am specifically looking for:
 
 - **Providers who are authorized but not appearing** in this registry — including entities
   whose names differ between the regulatory record and the public directory, or who were
@@ -265,28 +265,28 @@ are specifically looking for:
 
 - **Providers listed as active who have since exited** — if you know of an entity or
   individual who resigned, was revoked, or otherwise left a program after our last snapshot
-  date, please let us know. We will add a `disappeared_from_roster` or `revoked` event as
+  date, please let us know. I will add a `disappeared_from_roster` or `revoked` event as
   appropriate, with your contact as provenance.
 
-- **Authorization dates** we could not recover from the public roster — particularly for
+- **Authorization dates** I could not recover from the public roster — particularly for
   early AZ ABS cohorts (pre-2024) and Utah Sandbox participants.
 
 - **Practice area or description errors** — especially for Utah Sandbox entities whose
   service-model descriptions have changed since the June 2026 snapshot.
 
-- **Any program we have wrong in scope or structure** — if a program is miscategorized
-  (e.g., a sandbox we coded as `alp_license`, or a program with non-lawyer ownership
-  rights we coded as `allows_nonlawyer_ownership = false`), the error propagates to every
+- **Any program I have wrong in scope or structure** — if a program is miscategorized
+  (e.g., a sandbox I coded as `alp_license`, or a program with non-lawyer ownership
+  rights I coded as `allows_nonlawyer_ownership = false`), the error propagates to every
   downstream analysis.
 
 Corrections can be submitted via GitHub issue at
 `github.com/jamespaul-yls/reregulation-provider-registry/issues` or by email to
-james.paul@yale.edu. We will document the source of every correction in the
+james.paul@yale.edu. I will document the source of every correction in the
 `provider_alias` or `provider_status_event` tables with your name or organization as
 `scraper_version` (e.g., `manual-iaals-2026-07`), so the provenance of corrections is
 traceable in the published data.
 
-We view the registry as an ongoing contribution to — not a replacement for — the
+I view the registry as an ongoing contribution to — not a replacement for — the
 qualitative and institutional knowledge that IAALS, the Rhode Center, and the programs'
 regulators themselves hold. Any corrections, additions, or annotations you are willing to
 share will be incorporated with attribution.

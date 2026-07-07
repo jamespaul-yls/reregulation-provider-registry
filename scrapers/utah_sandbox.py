@@ -52,7 +52,7 @@ _ACTIVITY_REPORT_URLS: list[str] = [
     "https://utahinnovationoffice.org/wp-content/uploads/2024/01/2021_Jan_IO_Monthly-Report.pdf",
 ]
 
-# Minimum cards we expect in the Currently Authorized section.
+# Minimum cards I expect in the Currently Authorized section.
 _MIN_ACTIVE_CARDS = 5
 
 # AI keyword pattern — word-boundary on "ai" prevents matching "mail", "trail", etc.

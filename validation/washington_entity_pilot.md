@@ -77,7 +77,7 @@ genuinely new label is surfaced rather than silently misclassified either way �
 
 ## ⚑ Flagged for a v2 scope decision — do NOT extend the enum now
 
-The applicant list includes a real, useful signal we are **not** capturing as structured data:
+The applicant list includes a real, useful signal I am **not** capturing as structured data:
 each applicant's pre-authorization pipeline status ("Under Review," and potentially others
 such as "Denied" or "Withdrawn" as the pilot matures). Our `current_status` enum
 (`models/enums.py::CurrentStatus`) has exactly five values — `active`, `exited`, `suspended`,

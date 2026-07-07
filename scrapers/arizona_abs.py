@@ -24,7 +24,7 @@ from models.schema import Provider, SourceSnapshot
 from resolve.normalize import normalize_name
 from scrapers.base import BaseScraper
 
-# Minimum rows we expect; raise if the page structure has changed.
+# Minimum rows I expect; raise if the page structure has changed.
 _MIN_EXPECTED_ROWS = 50
 
 

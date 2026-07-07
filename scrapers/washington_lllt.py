@@ -119,7 +119,7 @@ def _check_page_cap(pg_num: int, rows_so_far: int) -> None:
     """Raise if pagination has run past the safety cap instead of breaking silently.
 
     Extracted as a standalone function so this decision is unit-testable without a
-    live Playwright session — the loop itself requires a browser, but "should we stop
+    live Playwright session — the loop itself requires a browser, but "should I stop
     now" does not. See docs/audit/pagination_audit.md §1.
     """
     if pg_num >= _MAX_PAGES:

@@ -56,7 +56,7 @@ def backfill(db_path: Path = _DB, *, dry_run: bool = False) -> dict:
     """
     with RegistryStore(db_path) as store:
         # ── all providers + their first-snapshot provenance + actual status ────
-        # JOIN to source_snapshot so we get the exact retrieved_at, source_url,
+        # JOIN to source_snapshot so I get the exact retrieved_at, source_url,
         # and scraper_version that belong to the observation — not today's values.
         # Include current_status so the event accurately records the status as
         # observed (not always 'active' — a revoked provider appears revoked).

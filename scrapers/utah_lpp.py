@@ -164,7 +164,7 @@ class UtahLppScraper(BaseScraper):
 
         raw_rows = tree.css("tr.nqCustContainer")
 
-        # Verify we got data rows, not a Cloudflare block page.
+        # Verify I got data rows, not a Cloudflare block page.
         if not raw_rows:
             page_text = tree.body.text(strip=True)[:200] if tree.body else ""
             raise ValueError(

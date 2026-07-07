@@ -59,7 +59,7 @@ def ingest(
     is_new = not blob_path.exists()
     if is_new:
         # Atomic write: stage in a .tmp file then rename into place.
-        # If we crash mid-write the partial bytes stay in .tmp, not at the
+        # If I crash mid-write the partial bytes stay in .tmp, not at the
         # canonical hash path.  On POSIX, rename is atomic.
         tmp = blob_path.with_suffix(".tmp")
         try:

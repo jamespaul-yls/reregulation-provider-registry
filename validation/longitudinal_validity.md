@@ -82,7 +82,7 @@ Roster URL: `https://www.azcourts.gov/admissions/Alternative-Business-Structures
 
 2. **Wayback capture timing:** Our April 2025 Wayback capture (2025-04-04) predates the exact date of the published benchmark. If the published figure is from late April 2025, additional authorizations in mid-to-late April would account for the gap.
 
-3. **Coverage gap:** The public roster is paginated (we capture all pages in our own scraper, but Wayback captures only page 1 for the Wayback backfill — however AZ ABS is not headless/paginated in the same way as WA LLLT, so this should not apply here).
+3. **Coverage gap:** The public roster is paginated (I capture all pages in my own scraper, but Wayback captures only page 1 for the Wayback backfill — however AZ ABS is not headless/paginated in the same way as WA LLLT, so this should not apply here).
 
 **Target accuracy status:** the 5.9% divergence figure itself is **not independently verifiable** — it depends on the 2025-04-04 dry-run capture, which (per the notice at the top of this document) was never persisted to `source_snapshot`. Treat it as context for why a gap of this size is plausible, not as a validated reconciliation; there is no snapshot in `data/raw/` to check it against. What *is* verified, and what actually supports "no indication of a scraper bug," is the AZ ABS accuracy sample: zero errors on identity fields across 17 sampled rows (see `validation/arizona_abs.md`) — that conclusion rests on the accuracy sample, not on the unpersisted trajectory numbers above.
 
@@ -150,7 +150,7 @@ historical depth, not a correctness gap in what's published.
 
 ### DuckDB 1.5.x FK constraint bug (resolved)
 
-During this session, we discovered that DuckDB 1.5.x enforces FK constraints during `ON CONFLICT DO UPDATE` (internally delete+reinsert) even when the referenced column is not being changed. Additionally, updating `VARCHAR[]` columns on FK-referenced rows triggers the same error. Fixed by:
+During this session, I discovered that DuckDB 1.5.x enforces FK constraints during `ON CONFLICT DO UPDATE` (internally delete+reinsert) even when the referenced column is not being changed. Additionally, updating `VARCHAR[]` columns on FK-referenced rows triggers the same error. Fixed by:
 
 1. Removing FK constraint declarations from the `provider` table DDL (Python-layer enforcement via `_require_program()` / `_require_snapshot()` guards is retained).
 2. Excluding `practice_areas_raw` and `practice_areas_list` (`VARCHAR[]` types) from the `ON CONFLICT DO UPDATE SET` clause — they are set on first insert and not updated on re-scrape.
