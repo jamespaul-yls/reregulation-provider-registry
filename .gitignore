@@ -52,3 +52,8 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# INTERNAL
+docs/audit/
+docs/v2_readiness.md
+CLAUDE.md
