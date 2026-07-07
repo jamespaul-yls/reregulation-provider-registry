@@ -1,7 +1,5 @@
 """DuckDB-backed dev store for the registry.
 
-Three-layer separation (CLAUDE.md rule 5):
-  raw/  →  this store  →  release/
 
 Design:
 - Single persistent DuckDB connection per RegistryStore instance.

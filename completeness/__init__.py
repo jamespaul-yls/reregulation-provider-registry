@@ -5,5 +5,5 @@ Turns the manual adversarial-coverage pass into provenance-backed code:
   legislative_scan.py  — Open States keyword probe for undetected program activity (TODO)
   within_program.py     — consolidated per-source coverage reconciliation (TODO)
 
-Dev-only: nothing here writes to data/release/. See CLAUDE.md golden rule 5.
+Dev-only: nothing here writes to data/release/.
 """

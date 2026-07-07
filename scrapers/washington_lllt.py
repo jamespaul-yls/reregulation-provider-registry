@@ -18,6 +18,13 @@ Snapshot format:
   run() collects all 5 pages via Playwright, builds a single combined HTML document
   (id="wsba-lllt-combined-roster"), and snapshots that. parse() works offline from it.
 
+Pagination safety (docs/audit/pagination_audit.md §1):
+  _fetch_all_pages() raises instead of silently truncating in two cases: (1) the
+  "Next Page >" link is still present after _MAX_PAGES pages (_check_page_cap), and
+  (2) the final parsed row count disagrees with the source's own '.results-count'
+  total, read once before pagination starts (_check_source_total). No snapshot is
+  taken in either case.
+
 License number format:
   Directory displays "101LLLT", "102LLLT", etc. Provider IDs use the stripped number:
   prov_wa_lllt_101.
@@ -43,6 +50,7 @@ Status mapping (directory string → CurrentStatus enum):
 
 from __future__ import annotations
 
+import logging
 import re
 import time
 
@@ -54,6 +62,8 @@ from models.schema import Provider, SourceSnapshot
 from resolve.normalize import normalize_name
 from scrapers.base import BaseScraper
 from scrapers.fetchers import HeadlessFetcher
+
+logger = logging.getLogger(__name__)
 
 _RESULTS_URL = (
     "https://www.mywsba.org/PersonifyEbusiness/LegalDirectory.aspx"
@@ -69,6 +79,12 @@ _BROWSER_UA = (
 )
 _TELERIK_INIT_WAIT = 6.0  # seconds for __doPostBack to be defined after page load
 _PAGE_TURN_WAIT = 4.0  # seconds after clicking "Next Page >"
+
+# Safety cap on pagination. A real scrape terminates in 5 pages (~95 rows); reaching
+# this many means the "Next Page >" link never disappeared — a stuck postback or a
+# WSBA markup change, not a genuinely larger roster. Raise loudly rather than silently
+# stopping (docs/audit/pagination_audit.md §1).
+_MAX_PAGES = 20
 
 _LIC_RE = re.compile(r"^(\d+)LLLT$")
 _COUNT_RE = re.compile(r"(\d+)")
@@ -99,6 +115,48 @@ def _esc(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+def _check_page_cap(pg_num: int, rows_so_far: int) -> None:
+    """Raise if pagination has run past the safety cap instead of breaking silently.
+
+    Extracted as a standalone function so this decision is unit-testable without a
+    live Playwright session — the loop itself requires a browser, but "should we stop
+    now" does not. See docs/audit/pagination_audit.md §1.
+    """
+    if pg_num >= _MAX_PAGES:
+        raise ValueError(
+            f"WA LLLT: pagination did not terminate within {_MAX_PAGES} pages "
+            f"({rows_so_far} rows collected) — the 'Next Page >' link never disappeared. "
+            "This is the safety cap failing loudly rather than silently truncating the "
+            "roster; investigate the live page structure before re-running."
+        )
+
+
+def _check_source_total(parsed_count: int, source_total: int | None, pg_num: int) -> None:
+    """Raise if the parsed row count disagrees with the source's own stated total.
+
+    source_total is read once from the page's own '.results-count' span before any
+    pagination happens. If pagination stops early for any reason — a page silently
+    failing to load, a premature "no next page" read — this catches the undercount
+    instead of shipping it. If the count element itself couldn't be read, that's logged
+    (not fatal): there's no independent total to check against, but that's a distinct,
+    already-documented situation, not a pagination failure. See
+    docs/audit/pagination_audit.md §1.
+    """
+    if source_total is not None and parsed_count != source_total:
+        raise ValueError(
+            f"WA LLLT: parsed {parsed_count} rows across {pg_num} page(s), but the "
+            f"source's own '.results-count' element states {source_total} — pagination "
+            "may have stopped early, or the roster changed mid-scrape. Refusing to build "
+            "a snapshot from a count that disagrees with the source's own total."
+        )
+    if source_total is None:
+        logger.warning(
+            "WA LLLT: could not read a row count from '.results-count' — proceeding "
+            "with %d parsed rows with no independent total to verify completeness against.",
+            parsed_count,
+        )
+
+
 class WashingtonLlltScraper(BaseScraper):
     version = "0.1.0"
     program_id = "prog_wa_lllt"
@@ -117,41 +175,43 @@ class WashingtonLlltScraper(BaseScraper):
         all_data_rows: list[list[str]] = []
         source_total: int | None = None
 
+        pg_num = 0
         with sync_playwright() as pw:
             browser = pw.chromium.launch(
                 headless=True,
                 args=["--disable-blink-features=AutomationControlled"],
             )
-            context = browser.new_context(user_agent=_BROWSER_UA)
-            page = context.new_page()
+            try:
+                context = browser.new_context(user_agent=_BROWSER_UA)
+                page = context.new_page()
 
-            page.goto(self.source_url, wait_until="networkidle", timeout=60000)
-            time.sleep(_TELERIK_INIT_WAIT)
+                page.goto(self.source_url, wait_until="networkidle", timeout=60000)
+                time.sleep(_TELERIK_INIT_WAIT)
 
-            # Parse source-stated total from results-count span
-            count_el = page.locator(".results-count")
-            if count_el.count():
-                m = _COUNT_RE.search(count_el.inner_text())
-                if m:
-                    source_total = int(m.group(1))
+                # Parse source-stated total from results-count span
+                count_el = page.locator(".results-count")
+                if count_el.count():
+                    m = _COUNT_RE.search(count_el.inner_text())
+                    if m:
+                        source_total = int(m.group(1))
 
-            pg_num = 0
-            while True:
-                pg_num += 1
-                rows = _extract_rows_from_html(page.content())
-                all_data_rows.extend(rows)
+                while True:
+                    pg_num += 1
+                    rows = _extract_rows_from_html(page.content())
+                    all_data_rows.extend(rows)
 
-                next_btn = page.locator('a:has-text("Next Page >")')
-                if next_btn.count() == 0:
-                    break
-                next_btn.click()
-                time.sleep(_PAGE_TURN_WAIT)
+                    next_btn = page.locator('a:has-text("Next Page >")')
+                    if next_btn.count() == 0:
+                        break
 
-                if pg_num > 20:  # safety limit
-                    break
+                    _check_page_cap(pg_num, len(all_data_rows))
 
-            browser.close()
+                    next_btn.click()
+                    time.sleep(_PAGE_TURN_WAIT)
+            finally:
+                browser.close()
 
+        _check_source_total(len(all_data_rows), source_total, pg_num)
         return _build_combined_html(all_data_rows, source_total)
 
     def _parse_providers_from_table(self, tbl, snapshot: SourceSnapshot) -> list[Provider]:

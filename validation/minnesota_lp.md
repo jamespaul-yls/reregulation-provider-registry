@@ -14,7 +14,7 @@
 ### Source totals
 
 The PDF header says "Updated June 25, 2026" and lists 42 named individuals.
-LP IDs run from 1001 through 1046, with two gaps at 1009 and 1028.
+LP IDs run from 1001 through 1044, with two gaps at 1009 and 1028.
 
 | Category | Count |
 |---|---|
@@ -47,8 +47,15 @@ computed from this source carry strong inferential weight (removal = loss of app
 ### Source totals reconciliation
 
 The PDF does not state a numbered total separately from the roster rows. Reconciliation
-is by count of named rows: 42 individuals listed, 42 parsed. LP IDs 1001–1046 with
+is by count of named rows: 42 individuals listed, 42 parsed. LP IDs 1001–1044 with
 gaps at 1009 and 1028 account for all 44 issued IDs minus the 2 gaps = 42. ✓
+
+**Correction (2026-07-07):** this section previously stated the range as "1001 through
+1046" — that didn't even reconcile against its own math (46 IDs − 2 gaps = 44, not 42).
+The correct range is 1001–1044 (44 IDs − 2 gaps = 42), matching `validation/coverage_report.md`
+and the live re-verification in `docs/audit/coverage_confidence.md §2`, which caught this
+same stale figure in `coverage_report.md` on 2026-07-06 but didn't catch that this file
+carried the identical error. See `docs/audit/pagination_audit.md §4` for how this was found.
 
 ---
 

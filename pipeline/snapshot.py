@@ -3,7 +3,7 @@
 Single entry point for converting raw fetched bytes into an immutable blob
 on disk plus a validated SourceSnapshot record.
 
-Design constraints (see CLAUDE.md golden rules 1–2):
+Design constraints:
 - Raw blobs are content-addressed by sha256 and never mutated after first write.
 - Dedup is by content hash: same bytes from any URL → same blob file, no duplicate.
 - Writes are atomic (tmp→rename) so a crash never leaves a partial file at the

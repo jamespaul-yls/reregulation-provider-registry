@@ -1,6 +1,6 @@
 # Completeness Audit
 
-Reproducible adversarial coverage checks for the reregulation provider registry — turns the manual coverage pass into provenance-backed, re-runnable code (`make completeness`). See `completeness/` and the CLAUDE.md working agreement.
+Reproducible adversarial coverage checks for the reregulation provider registry — turns the manual coverage pass into provenance-backed, re-runnable code (`make completeness`). See `completeness/`.
 
 <!-- BEGIN frame_reconcile -->
 

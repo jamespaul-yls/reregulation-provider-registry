@@ -2,7 +2,6 @@
 
 Reads the dev DuckDB → writes data/release/ as CSV + Parquet + datapackage.json.
 
-Never hand-edit anything in release/ (CLAUDE.md rule 5).
 """
 
 from __future__ import annotations

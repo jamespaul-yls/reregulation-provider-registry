@@ -67,7 +67,7 @@ has no application or registration step at all.
 
 The three programs in §3 at least have a `program` row (zero providers, but the program's own
 authorizing source is captured). One candidate program doesn't even get that: **Oregon
-Licensed Paralegal Program (OR, `alp_license`)**, named as a source to verify in `CLAUDE.md`
+Licensed Paralegal Program (OR, `alp_license`)**.
 and `reregulation-registry-v1-spec.md`, was researched on 2026-06-29
 (`validation/oregon_lp.md`) and found to have issued **zero licenses** — the Rules for
 Licensing Paralegals took effect 2025-01-01, but the first subject-matter exams aren't until

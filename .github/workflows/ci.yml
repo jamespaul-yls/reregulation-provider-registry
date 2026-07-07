@@ -49,8 +49,7 @@ jobs:
       # The reproduce step above regenerates data/release/ in place. If the
       # regenerated files differ from what's committed, the checked-in
       # release/ is out of sync with data/raw/ — someone re-exported without
-      # committing the result, or hand-edited a release file (never do this —
-      # see CLAUDE.md golden rule 5).
+      # committing the result, or hand-edited a release file
       - name: Verify data/release/ matches what data/raw/ reproduces
         run: |
           if ! git diff --exit-code -- data/release/; then

@@ -192,7 +192,7 @@ indicates active licensure, not a practice restriction. Mapped to `CurrentStatus
 
 ### 8. Post-sunset note
 
-The CLAUDE.md notes this source for a future Wayback Machine backfill (step 3.3) to
+I this source for a future Wayback Machine backfill (step 3.3) to
 reconstruct the historical roster during the pilot and sunset periods. The current scraper
 captures only the present-state directory. Historical LLLTs who resigned before or
 immediately after sunset will appear with "Voluntarily Resigned" status in the current

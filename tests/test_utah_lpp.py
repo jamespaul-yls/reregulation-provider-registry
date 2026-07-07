@@ -24,7 +24,13 @@ import pytest
 
 from models.enums import CurrentStatus, MediaType, ProviderType
 from models.schema import SourceSnapshot
-from scrapers.utah_lpp import UtahLppScraper, _last_first_to_first_last, _provider_id
+from scrapers.utah_lpp import (
+    _RANGE_CEILING,
+    UtahLppScraper,
+    _check_not_at_ceiling,
+    _last_first_to_first_last,
+    _provider_id,
+)
 
 # ── fixture metadata ──────────────────────────────────────────────────────────
 
@@ -288,3 +294,87 @@ def test_first_seen_snapshot_id_none_from_parse(providers) -> None:
 
 def test_last_seen_snapshot_id_none_before_stamp(providers) -> None:
     assert all(p.last_seen_snapshot_id is None for p in providers)
+
+
+# ── pagination safety (docs/audit/pagination_audit.md §2) ────────────────────
+#
+# _LppFetcher collapses pagination into a single RANGE=1/{_RANGE_CEILING} request. These
+# exercise the truncation guard directly — no live Cloudflare/iframe request needed —
+# closing the "silently truncates past the ceiling" gap the audit flagged.
+
+
+def test_check_not_at_ceiling_silent_below_ceiling(providers) -> None:
+    # The real fixture (53 raw rows, 52 after test-account filtering) must not trip this.
+    _check_not_at_ceiling(53)
+
+
+def test_check_not_at_ceiling_raises_at_ceiling() -> None:
+    with pytest.raises(ValueError, match="RANGE"):
+        _check_not_at_ceiling(_RANGE_CEILING)
+
+
+def test_check_not_at_ceiling_raises_above_ceiling() -> None:
+    with pytest.raises(ValueError, match="RANGE"):
+        _check_not_at_ceiling(_RANGE_CEILING + 50)
+
+
+def test_check_not_at_ceiling_silent_well_below_ceiling() -> None:
+    _check_not_at_ceiling(1)
+    _check_not_at_ceiling(_RANGE_CEILING - 1)
+
+
+def test_fixture_does_not_trip_ceiling_guard(fixture_raw) -> None:
+    """End-to-end: parsing the real fixture through parse() must not raise."""
+    from selectolax.parser import HTMLParser
+
+    tree = HTMLParser(fixture_raw)
+    raw_row_count = len(tree.css("tr.nqCustContainer"))
+    assert raw_row_count < _RANGE_CEILING
+    _check_not_at_ceiling(raw_row_count)  # must not raise
+
+
+def _synthetic_directory_html(n_rows: int) -> bytes:
+    """Build a minimal but structurally valid directory page with *n_rows* member rows."""
+    rows = "".join(
+        f'<tr class="nqCustContainer"><td data-label="Name">Person{i}, Test</td></tr>'
+        for i in range(n_rows)
+    )
+    return f"<html><body><table>{rows}</table></body></html>".encode()
+
+
+def test_parse_raises_when_response_hits_the_ceiling(tmp_path) -> None:
+    """Integration-level: parse() itself must refuse a response sized exactly at the ceiling.
+
+    Not just the extracted _check_not_at_ceiling() helper in isolation — this drives the
+    real entry point a live scrape would call, with a synthetic response shaped like what
+    _LppFetcher would actually hand it if the directory ever grew past _RANGE_CEILING.
+    """
+    scraper = UtahLppScraper(raw_dir=tmp_path)
+    snap = SourceSnapshot(
+        snapshot_id="snap_test0000000000000000",
+        program_id="prog_ut_lpp",
+        source_url=_IFRAME_URL,
+        retrieved_at=_RETRIEVED_AT,
+        content_sha256="0" * 64,
+        storage_path="unused",
+        media_type=MediaType.html,
+        scraper_version="0.1.0",
+    )
+    with pytest.raises(ValueError, match="RANGE"):
+        scraper.parse(snap, _synthetic_directory_html(_RANGE_CEILING))
+
+
+def test_parse_does_not_raise_just_below_the_ceiling(tmp_path) -> None:
+    scraper = UtahLppScraper(raw_dir=tmp_path)
+    snap = SourceSnapshot(
+        snapshot_id="snap_test0000000000000001",
+        program_id="prog_ut_lpp",
+        source_url=_IFRAME_URL,
+        retrieved_at=_RETRIEVED_AT,
+        content_sha256="1" * 64,
+        storage_path="unused",
+        media_type=MediaType.html,
+        scraper_version="0.1.0",
+    )
+    providers = scraper.parse(snap, _synthetic_directory_html(_RANGE_CEILING - 1))
+    assert len(providers) == _RANGE_CEILING - 1

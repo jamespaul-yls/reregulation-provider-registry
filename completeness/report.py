@@ -20,8 +20,7 @@ _HEADER = (
     "# Completeness Audit\n\n"
     "Reproducible adversarial coverage checks for the reregulation provider "
     "registry — turns the manual coverage pass into provenance-backed, "
-    "re-runnable code (`make completeness`). See `completeness/` and the "
-    "CLAUDE.md working agreement.\n\n"
+    "re-runnable code (`make completeness`). See `completeness/`\n\n"
 )
 
 _FOOTER = (

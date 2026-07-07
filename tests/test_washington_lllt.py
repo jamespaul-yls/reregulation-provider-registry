@@ -29,7 +29,13 @@ import pytest
 
 from models.enums import CurrentStatus, MediaType, ProviderType
 from models.schema import SourceSnapshot
-from scrapers.washington_lllt import WashingtonLlltScraper, _provider_id
+from scrapers.washington_lllt import (
+    _MAX_PAGES,
+    WashingtonLlltScraper,
+    _check_page_cap,
+    _check_source_total,
+    _provider_id,
+)
 
 # ── fixture metadata ──────────────────────────────────────────────────────────
 
@@ -211,3 +217,48 @@ def test_provenance_fields(providers, fixture_snapshot: SourceSnapshot):
         assert p.source_url == _RESULTS_URL
         assert p.retrieved_at == _RETRIEVED_AT
         assert p.scraper_version == "0.1.0"
+
+
+# ── pagination safety (docs/audit/pagination_audit.md §1) ────────────────────
+#
+# These exercise the pure decision functions extracted from _fetch_all_pages() so the
+# termination/verification logic is testable without a live Playwright session — closing
+# the "zero automated test coverage" gap the audit flagged for the page-turn loop itself.
+
+
+def test_check_page_cap_raises_at_cap():
+    with pytest.raises(ValueError, match="did not terminate"):
+        _check_page_cap(_MAX_PAGES, 400)
+
+
+def test_check_page_cap_raises_past_cap():
+    with pytest.raises(ValueError, match="did not terminate"):
+        _check_page_cap(_MAX_PAGES + 5, 500)
+
+
+def test_check_page_cap_silent_below_cap():
+    # A real scrape is 5 pages; anything short of the cap must not raise.
+    _check_page_cap(5, 95)
+    _check_page_cap(_MAX_PAGES - 1, 380)
+
+
+def test_check_source_total_raises_on_mismatch():
+    with pytest.raises(ValueError, match="disagrees|source's"):
+        _check_source_total(parsed_count=60, source_total=95, pg_num=3)
+
+
+def test_check_source_total_silent_on_match():
+    _check_source_total(parsed_count=95, source_total=95, pg_num=5)
+
+
+def test_check_source_total_warns_when_total_unreadable(caplog):
+    import logging
+
+    with caplog.at_level(logging.WARNING, logger="scrapers.washington_lllt"):
+        _check_source_total(parsed_count=95, source_total=None, pg_num=5)
+    assert "could not read a row count" in caplog.text
+
+
+def test_check_source_total_does_not_raise_when_total_unreadable():
+    # No independent total to check against — proceed (with the warning above), don't fail.
+    _check_source_total(parsed_count=1, source_total=None, pg_num=1)

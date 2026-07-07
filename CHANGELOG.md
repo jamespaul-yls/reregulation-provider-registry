@@ -137,7 +137,7 @@ added covering every code change below, 2 pre-existing skips unchanged.
   exception's actual scale** (S3): as of v1.0.0, only `prog_az_abs` and `prog_ut_sandbox`
   have any event that came from a real cross-snapshot diff; the other five populated
   programs' status values are 100% bootstrap-seeded from the source's own status column.
-  Clarified in `CLAUDE.md` golden rule 3, `docs/data_dictionary.md`, and
+  Clarified in `docs/data_dictionary.md`, and
   `docs/methodology.md §4b`.
 - **WA Entity Pilot's authorized-status matching is now token-based with a negative-token
   guard, and logs a warning for any unrecognized status** (S4,

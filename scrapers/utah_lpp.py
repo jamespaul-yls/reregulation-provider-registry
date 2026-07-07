@@ -33,6 +33,7 @@ Fields NOT available:
 from __future__ import annotations
 
 import hashlib
+import logging
 import re
 import time
 
@@ -45,6 +46,8 @@ from resolve.normalize import normalize_name
 from scrapers.base import BaseScraper
 from scrapers.fetchers import _USER_AGENT, FetchResult  # noqa: PLC2701
 
+logger = logging.getLogger(__name__)
+
 _PARENT_URL = "https://www.licensedlawyer.org/Find-a-Lawyer/Licensed-Paralegal-Practitioners"
 
 # Minimum real rows expected; guards against silent scraping failure.
@@ -55,6 +58,14 @@ _IFRAME_RENDER_WAIT = 8
 
 # Row is a test / system account — drop from output.
 _TEST_ACCOUNT_NAMES = frozenset({"testacct"})
+
+# Requested page size in the RANGE=1/{N} rewrite _LppFetcher applies (see below). If the
+# directory ever returns this many raw rows or more, a single request is no longer
+# guaranteed to capture everything — see _check_not_at_ceiling() and
+# docs/audit/pagination_audit.md §2. Keep this the single source of truth: _LppFetcher
+# builds its rewritten URL from this constant rather than a second hardcoded literal, so
+# raising the ceiling can't drift out of sync with the check.
+_RANGE_CEILING = 100
 
 
 def _provider_id(legal_name: str) -> str:
@@ -70,10 +81,31 @@ def _last_first_to_first_last(name: str) -> str:
     return f"{first.strip()} {last.strip()}".strip()
 
 
+def _check_not_at_ceiling(raw_row_count: int) -> None:
+    """Raise if the source returned at or above the RANGE ceiling _LppFetcher requests.
+
+    _LppFetcher rewrites the iframe request to RANGE=1/{_RANGE_CEILING} to fetch every
+    record in a single Cloudflare-tolerated request (see its docstring). If the directory
+    ever grows to _RANGE_CEILING or more real entries, that single request would silently
+    truncate at the ceiling with no error — the exact failure mode
+    docs/audit/pagination_audit.md §2 flagged. Raising here converts that into a hard
+    stop: a human must raise _RANGE_CEILING and re-verify against the live source before
+    trusting the scrape.
+    """
+    if raw_row_count >= _RANGE_CEILING:
+        raise ValueError(
+            f"Utah LPP: source returned {raw_row_count} raw rows, at or above the "
+            f"RANGE={_RANGE_CEILING} request ceiling in _LppFetcher — this may mean the "
+            "directory has grown past what a single request captures and results are "
+            "being silently truncated. Raise _RANGE_CEILING in scrapers/utah_lpp.py and "
+            "re-verify coverage against the live source before trusting this scrape."
+        )
+
+
 class _LppFetcher:
     """Custom Playwright fetcher for the LPP iframe directory.
 
-    Intercepts the initial iframe request and rewrites RANGE=1/10 → RANGE=1/100
+    Intercepts the initial iframe request and rewrites RANGE=1/10 → RANGE=1/{_RANGE_CEILING}
     so all records load in a single request, bypassing Cloudflare pagination blocks.
     Returns the iframe's rendered HTML (not the parent shell page).
     """
@@ -93,7 +125,9 @@ class _LppFetcher:
                 def _on_route(route, request):
                     req_url = request.url
                     if "CustomList" in req_url and "RANGE=1%2f10" in req_url:
-                        route.continue_(url=req_url.replace("RANGE=1%2f10", "RANGE=1%2f100"))
+                        route.continue_(
+                            url=req_url.replace("RANGE=1%2f10", f"RANGE=1%2f{_RANGE_CEILING}")
+                        )
                     else:
                         route.continue_()
 
@@ -128,8 +162,10 @@ class UtahLppScraper(BaseScraper):
     def parse(self, snapshot: SourceSnapshot, raw: bytes) -> list[Provider]:
         tree = HTMLParser(raw)
 
+        raw_rows = tree.css("tr.nqCustContainer")
+
         # Verify we got data rows, not a Cloudflare block page.
-        if tree.css_first("tr.nqCustContainer") is None:
+        if not raw_rows:
             page_text = tree.body.text(strip=True)[:200] if tree.body else ""
             raise ValueError(
                 f"Utah LPP: no member rows found in snapshot — "
@@ -137,9 +173,14 @@ class UtahLppScraper(BaseScraper):
                 f"Page text preview: {page_text!r}"
             )
 
+        # Checked on the raw (pre-test-account-filter) row count: a truncated response
+        # would still contain exactly _RANGE_CEILING raw rows even if one of them is the
+        # test account, so filtering first could mask the signal.
+        _check_not_at_ceiling(len(raw_rows))
+
         providers: list[Provider] = []
 
-        for row in tree.css("tr.nqCustContainer"):
+        for row in raw_rows:
             # ── name ──────────────────────────────────────────────────────────
             name_td = row.css_first("td[data-label='Name']")
             if name_td is None:
