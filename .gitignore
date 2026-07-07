@@ -58,3 +58,6 @@ docs/audit/
 docs/v2_readiness.md
 CLAUDE.md
 reregulation-registry-v1-spec.md
+
+# Claude Code local state (worktrees, session settings) — never publish
+.claude/
