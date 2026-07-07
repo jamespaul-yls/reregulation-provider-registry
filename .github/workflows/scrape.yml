@@ -77,18 +77,23 @@ jobs:
             data/raw/
           key: registry-data-${{ github.ref_name }}-run-${{ github.run_id }}
 
-      # ── Commit release/ if changed (skip on dry run) ──────────────────────
-      # Only data/release/ is committed to git.  The DB and raw blobs live in
-      # the Actions cache and are never committed (too large, binary, redundant
-      # given raw/ reproducibility).
-      - name: Commit release/ changes
+      # ── Commit release/ + raw/ if changed (skip on dry run) ────────────────
+      # data/raw/ is committed alongside data/release/ — golden rule 2 requires
+      # immutable raw captures to actually live in the repo, not just the
+      # Actions cache (see docs/audit/adversarial_review.md B1). Committing
+      # only data/release/ would mean a fresh clone (or the very next CI run,
+      # which reproduces from a clean checkout with no cache) can't rebuild
+      # the newly-scraped rows, and the CI drift gate would fail on this run's
+      # own push. data/db/ stays cache-only — it's a derived dev artifact,
+      # 100% rebuildable from data/raw/ + scripts/seed_programs.py.
+      - name: Commit release/ + raw/ changes
         if: ${{ !inputs.dry_run }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/release/
+          git add data/release/ data/raw/
           if git diff --cached --quiet; then
-            echo "No release/ changes — nothing to commit."
+            echo "No release/ or raw/ changes — nothing to commit."
           else
             git commit -m "data: automated roster scrape $(date -u +%Y-%m-%dT%H:%M)Z [skip ci]"
             git push
