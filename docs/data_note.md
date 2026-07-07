@@ -109,16 +109,19 @@ for that reason (Utah and Washington); the remaining 3 candidate programs (India
 sandbox, Minnesota sandbox, Puerto Rico ABS) and all 8 CJW jurisdictions are explicitly
 deferred to v2.
 
-Two more rows were added by hand afterward: Oregon LP (`alp_license` programs are outside
+Three more rows were added afterward: Oregon LP (`alp_license` programs are outside
 this check's scope by design, so the automated tool would never surface it — see
-`validation/oregon_lp.md`), and Alternative Business Structures — Washington, D.C.
-IAALS lists a D.C. ABS program as "Implemented," which was matched by our own
+`validation/oregon_lp.md`), and Alternative Business Structures — Washington, D.C.,
+**twice**. IAALS lists a D.C. ABS program as "Implemented," which was matched by our own
 `prog_dc_rule54` row at the time of the 2026-07-01 run — that program was removed from
 scope 2026-07-06 (structurally, no roster can ever exist for a self-executing ethics
-rule with no application step; see the "Coverage" section above), which means a fresh run
-of the check would surface this listing as a gap today. We recorded that disposition
-(`intentionally_excluded`) immediately rather than waiting for the next live run to
-rediscover it. None of the 16 total ledger rows are open questions. Full detail:
+rule with no application step; see the "Coverage" section above). We recorded that
+disposition (`intentionally_excluded`) immediately, then confirmed the concern was real:
+a live re-run of the check on 2026-07-06 did surface this same listing again as a fresh
+candidate (the ledger keys on `detected_by`, and the automated tool's key doesn't match
+the one we'd added by hand), so a second row exists for the same item, resolved the same
+way. It will keep resurfacing on every future live run until that keying gap is fixed.
+None of the 17 total ledger rows are open questions. Full detail:
 `docs/sampling_frame.md §6` and `validation/residual_gaps.csv`.
 
 ### Reconciliation
@@ -222,10 +225,12 @@ CO LLP, UT LPP, UT Sandbox, WA LLLT all have `authorization_date = NULL` for eve
 this is an all-or-nothing split per program, not a partial one. Entry dates are instead
 inferred from the first snapshot in which a provider appears.
 
-**5. Practice-area sparsity.** Most individual-practitioner rosters (AZ LP, CO LLP, MN
-LP, UT LPP) do not publish practice areas per provider. The `practice_areas_raw` column is
-populated only for Utah Sandbox active entities. JusticeBench LIST taxonomy mapping is not
-yet applied.
+**5. Practice-area sparsity.** Population of `practice_areas_raw` varies by program, not
+uniformly sparse: AZ LP, CO LLP, MN LP, and WA LLLT are fully populated (100%); AZ ABS is
+partially populated (18%); UT Sandbox is partially populated (16%); UT LPP is not populated
+at all (0% — the source directory has no practice-area column in its list view). See
+`docs/methodology.md §12e` for verified per-program counts. JusticeBench LIST taxonomy
+mapping is not yet applied to any program.
 
 **6. Opt-in directories undercount.** The UT LPP count (52) is a lower bound. Practitioners
 who have not opted into the licensedlawyer.org directory are invisible to the scraper. A

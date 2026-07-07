@@ -6,6 +6,12 @@ regulatory sandboxes, and allied-legal-professional / paraprofessional licenses.
 
 **v1.0.2 · 10 programs · 7 states · 708 providers · 19 roster snapshots**
 
+**This dataset publishes only public-record information.** Every provider record is drawn
+from public regulatory rosters and official program-status pages published by each
+program's own regulator — not from private, non-public, or interaction-derived data of any
+kind. See `docs/methodology.md` (public-records commitment) for the full substantiation,
+field-by-field.
+
 ## Purpose
 
 This dataset provides the empirical spine for research on whether loosening unauthorized

@@ -1,10 +1,10 @@
 # v2 Readiness — Forward-Compatibility Hooks
 
-This document confirms what v1.0.0 already carries so v2 (the outcomes layer — see
+This document confirms what v1 already carries so v2 (the outcomes layer — see
 `docs/methodology.md §12i`) can build on it without a breaking migration, and flags the one
 piece of v1 data v2's AI-policy cut will need backfilled first.
 
-**Version:** 1.0.0 · **Last updated:** 2026-07-04
+**Version:** 1.0.2 · **Last updated:** 2026-07-06
 
 ---
 
@@ -53,7 +53,7 @@ DuckDB, so old rows keep validating.
 ## 3. `crosswalk_courtlistener` (v3 stub, present now)
 
 Full schema defined in `models/schema.py` and `models/enums.py::MatchMethod`, exported
-(empty) in every v1.0.0 release, and documented in `docs/data_dictionary.md` and
+(empty) in every v1 release, and documented in `docs/data_dictionary.md` and
 `docs/methodology.md §11`. The design (offline blocking → `rapidfuzz` scoring →
 confidence-threshold auto-accept/human-review split → immutable verified rows) is written
 but unimplemented. This is a v3 (litigation-linkage) deliverable, but publishing the empty
@@ -99,20 +99,23 @@ the backfill scope is explicit rather than discovered mid-analysis.
 ## 6. Branch and tag structure
 
 The repository is currently a single `main` branch with no tags. The recommended
-structure so v2 can branch cleanly off a frozen v1.0.0:
+structure so v2 can branch cleanly off a frozen v1:
 
-1. Tag the commit that ships this release as `v1.0.0` on `main` (manual step — see the
-   release checklist; not done by this pass).
-2. Branch v2 development off the `v1.0.0` tag (`git switch -c v2 v1.0.0`), not off the
+1. Tag the commit that ships the public release as `v1.0.2` on `main` (manual step — see
+   the release checklist; not done by this pass). Note this is `v1.0.2`, not `v1.0.0`:
+   two patch releases (`1.0.1` — reproducibility/documentation fixes; `1.0.2` — the D.C.
+   Rule 5.4(b) scope removal) have landed on `main` since `1.0.0`, and `1.0.0`'s actual
+   content is no longer what ships — tagging it today would tag a superseded state.
+2. Branch v2 development off the `v1.0.2` tag (`git switch -c v2 v1.0.2`), not off the
    tip of `main`, so v2 work is insulated from any v1.x patch commits that land on `main`
    afterward.
 3. If a v1.x bugfix is needed after v2 work has started, patch it on `main` (or a
-   `v1.x` maintenance branch cut from the `v1.0.0` tag) and cherry-pick into `v2` as
+   `v1.x` maintenance branch cut from the `v1.0.2` tag) and cherry-pick into `v2` as
    needed, rather than merging `main` wholesale into `v2`.
 4. Keep `data/raw/` and the release schema additive-only across the v1→v2 boundary — no
    v1 table, column, or ID scheme should be renamed or removed in v2; only new tables
    (outcomes) and new nullable columns should be added. This is what makes "branch off
    the tag" safe: v2 is a superset, not a fork, of v1's data model.
 
-No tag exists yet; this section describes the structure to adopt once §Group 3's manual
-tagging step is done.
+No tag exists yet; this section describes the structure to adopt once step 1 above (the
+manual `v1.0.2` tagging step) is done.

@@ -10,6 +10,7 @@ is written here. Version this document alongside the code.
 ## Contents
 
 1. [Scope](#1-scope)
+   - [1a. Public-records commitment](#1a-public-records-commitment)
 2. [Source selection and priority](#2-source-selection-and-priority)
 3. [Name normalization](#3-name-normalization)
 4. [Status inference (`current_status`)](#4-status-inference-current_status)
@@ -48,6 +49,41 @@ territory-scope decision, the one candidate program researched and deferred with
 modeled as a documented zero (§4 — D.C. Rule 5.4(b), removed 2026-07-06), and the
 disposition of every residual gap surfaced by the completeness audit (§10e). This section
 states the scope in prose; `sampling_frame.md` states it as an enumerated, reconciled list.
+
+### 1a. Public-records commitment
+
+**This dataset publishes only public-record information.** Every provider record is drawn
+from public regulatory rosters and official program-status pages published by each
+program's own regulator — not from private, non-public, or interaction-derived data of any
+kind. A future outcomes layer (v2) will add formal discipline records; those, too, will be
+sourced exclusively from public disciplinary orders, never populated from this dataset's
+current sources.
+
+Concretely, the categories of public record v1 actually draws on are:
+
+- **Licensure/registration rosters** — the official list a regulator publishes of who
+  currently holds (or has held) an authorization under a reregulation program: e.g. the
+  Arizona Supreme Court's ABS/LP directories, the Colorado and Minnesota court/regulator
+  roster PDFs, the WSBA Legal Directory. This is where every `provider.legal_name` value
+  comes from.
+- **Official program-status pages** — statute text, court rules, and regulator
+  program-status pages that establish a program's legal basis, even for the three
+  programs that are correctly zero-provider (CA LDA's statute page, TX ALP's program-status
+  page, WA Entity Pilot's public applicant list).
+- **A cross-jurisdiction program inventory** — the IAALS Unlocking Legal Regulation
+  knowledge center, used only to check whether our own `program` table is complete
+  against an independent external survey (`§10e`), never as a source of provider-level data.
+
+**Verified before this statement was written, not just asserted:** every personally-
+identifying field in the schema was inventoried against the live data. The only field that
+identifies a natural person is `provider.legal_name`, and only for the 435 rows where
+`provider_type = individual` (AZ LP, CO LLP, MN LP, UT LPP, WA LLLT) — each traceable via
+its own `source_url` to the regulator's public roster. No email, phone number, home
+address, date of birth, or government ID number exists anywhere in the schema. Zero
+disciplinary or discipline-adjacent records exist in v1 at all — `disciplined` and
+`reinstated` are defined enum values with no populated rows (`§12d`), which is why this
+statement names discipline as a stated future addition rather than a current source. Full
+per-field inventory: `docs/audit/validity_and_safety.md §3`.
 
 ---
 
@@ -603,8 +639,8 @@ candidate programs not yet built — IN sandbox, MN sandbox, PR ABS — and 8
 Community-Based Justice Worker Model jurisdictions, since `community_justice_worker` exists
 in the v1 `program_type` enum for forward compatibility but no v1 scraper covers it).
 
-`validation/residual_gaps.csv` carries two further rows (16 total) beyond what this
-automated check surfaced on its one real 2026-07-01 run:
+`validation/residual_gaps.csv` carries three further rows (17 total) beyond what this
+automated check surfaced on its first real 2026-07-01 run:
 
 - Oregon LP (`alp_license`), out of scope for the check above (it only covers
   sandbox/abs/community_justice_worker — bullet 2 of this section) and identified and
@@ -614,9 +650,16 @@ automated check surfaced on its one real 2026-07-01 run:
   (`detected_by=manual-dc-rule54-removal`). This *was* matched by `prog_dc_rule54` during
   the 2026-07-01 run — that program was removed from scope 2026-07-06
   (`docs/sampling_frame.md §4`: it's a self-executing rule with no application or
-  registration step, unlike the other zero-provider programs), which means the automated
-  check would surface this listing as a fresh gap if re-run today. This row records that
-  disposition pre-emptively rather than leaving the ledger stale until the next live run.
+  registration step, unlike the other zero-provider programs). Added the day of the
+  removal, pre-empting the gap that removal would create.
+- **The same item again**, `detected_by=frame_reconcile` this time: a live
+  `make completeness` run on 2026-07-06 confirmed the prediction in the row above — the
+  automated check surfaced this listing as a fresh `unresolved` candidate, since its key
+  doesn't match the manually-added row's `detected_by`. Resolved the same way
+  (`intentionally_excluded`) the same day. This will recur on every future live run until
+  the ledger's keying scheme is fixed to recognize an existing disposition for the same
+  `(item, jurisdiction)` regardless of `detected_by` — see `docs/sampling_frame.md §6` for
+  the full account; not fixed in this pass.
 
 Full disposition table and reasoning: `docs/sampling_frame.md §6`. The territory-scope decision
 (v1 does not independently survey U.S. territories beyond what IAALS surfaced) is in
@@ -701,17 +744,37 @@ rate.** This assumption must be disclosed and justified.
 ### 12e. Practice area data is sparse and non-standardized
 
 `practice_areas_raw` captures the terminology each program uses. These terms vary
-substantially across programs and are not comparable without additional mapping:
+substantially across programs and are not comparable without additional mapping. Population
+is also uneven — verified directly against the live DB while fixing this section
+(2026-07-07), not assumed. The UT LPP finding below was previously caught and logged in
+`docs/audit/coverage_confidence.md` finding 3; the AZ ABS and UT Sandbox population rates
+are newly verified here and were not previously documented anywhere:
 
-- AZ ABS: no practice area restriction by entity; the column is empty.
-- AZ LP: categories are `family law`, `limited civil`, `criminal`, `administrative`.
-- WA LLLT: `family law` only (the program's single authorized practice area).
-- UT LPP: `family law`, `debt collection`, `landlord-tenant`.
-- CO LLP: `domestic relations` only.
+- AZ ABS: **37/203 (18%) populated.** Free-text entity self-descriptions of practice focus
+  (e.g. `"Personal Injury"`, `"Immigration, Documentation"`, `"Estate Planning"`), not a
+  fixed category list — the directory does not restrict entities to a practice area, and
+  most simply leave the field blank.
+- AZ LP: **120/120 (100%) populated.** Single-value categories, e.g. `"Family"`.
+- CO LLP: **126/126 (100%) populated.** `"Domestic Relations"` only — the program's single
+  authorized practice area.
+- MN LP: **42/42 (100%) populated.** Multi-value lists (e.g. `"Housing Law"`,
+  `"Family Law"`, `"Conciliation Court"`, `"Probate & Estate Administration"`).
+- UT LPP: **0/52 (0%) populated.** The licensedlawyer.org directory's list view has no
+  practice-area column at all; that data, if it exists, would only be on individual profile
+  pages, which are not scraped. An earlier version of this document claimed UT LPP practice
+  areas were populated with `family law`, `debt collection`, `landlord-tenant` — that was
+  never true of the live or committed data. Caught during the coverage-confidence stress
+  test; see `docs/audit/coverage_confidence.md` finding 3.
+- UT Sandbox: **11/70 (16%) populated.** Multi-value lists where present (e.g.
+  `"Accident / Injury, Business, ... Real Estate"`); most entities' roster entries omit it.
+- WA LLLT: **95/95 (100%) populated.** `"Family Law"` only (the program's single authorized
+  practice area).
 
 `practice_areas_list` (JusticeBench LIST codes) is intended to normalize these across
 programs, but the mapping is not yet implemented. Cross-program practice-area comparisons
-are not valid until this mapping exists.
+are not valid until this mapping exists — and for AZ ABS, UT LPP, and UT Sandbox, any
+comparison must also account for the field being sparse (or entirely absent) rather than
+uniformly reported.
 
 ### 12f. Technology and AI flags are unreliable in v1
 

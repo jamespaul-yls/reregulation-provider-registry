@@ -108,7 +108,7 @@ against the IAALS external inventory on its one real run (2026-07-01), **14/14 r
   Community-Based Justice Worker Model jurisdictions — `community_justice_worker` exists
   in the v1 taxonomy but no v1 scraper covers it)
 
-Plus **2 more rows added by hand, outside/after this automated check's one real run**:
+Plus **3 more rows added outside/after this automated check's first real run**:
 
 - Oregon LP (`deferred_to_v2`, `detected_by=manual-oregon-research`) — the IAALS
   cross-check above is scoped to sandbox/abs/community_justice_worker only, so it can
@@ -117,9 +117,17 @@ Plus **2 more rows added by hand, outside/after this automated check's one real 
 - Alternative Business Structures — Washington, D.C. (`intentionally_excluded`,
   `detected_by=manual-dc-rule54-removal`) — matched by `prog_dc_rule54` at the time of the
   2026-07-01 run; that program was removed from scope 2026-07-06 (`docs/sampling_frame.md
-  §4`), so a fresh run would surface this listing as a gap today. Recorded pre-emptively.
+  §4`). Added the day of the removal, pre-empting the gap it would create.
+- **The same D.C. ABS item a second time** (`intentionally_excluded`,
+  `detected_by=frame_reconcile`) — a live `make completeness` run on 2026-07-06 (during the
+  pre-publication finalize pass) confirmed the prediction above: the automated check
+  surfaced this listing as a fresh `unresolved` candidate, since `(item, jurisdiction,
+  detected_by)` keying means a different `detected_by` for the same item is a different
+  ledger row. Resolved the same way, same day. **This will recur on every future live run**
+  until the keying scheme is fixed — see `docs/sampling_frame.md §6` for the full account.
 
-**16 rows total in the ledger, 16/16 resolved, 0 open.**
+**17 rows total in the ledger, 17/17 resolved, 0 open** — as of the live re-run during this
+finalize pass, not merely asserted from the earlier close-out.
 
 Full disposition table and reasoning: `docs/sampling_frame.md §6`. Raw ledger:
 `validation/residual_gaps.csv`. Narrative report: `validation/completeness.md`.
@@ -139,5 +147,5 @@ make reproduce
 
 ## 6. Residual gaps
 
-See §4 above and `validation/residual_gaps.csv` — all 16 rows resolved, none open. No
+See §4 above and `validation/residual_gaps.csv` — all 17 rows resolved, none open. No
 outstanding coverage or scope question remains unresolved for v1.0.2.

@@ -135,7 +135,7 @@ program there); it is deferred to v2 (§6). Guam, American Samoa, the Northern M
 Islands, and the U.S. Virgin Islands were not checked against any external inventory in
 v1 — this is a known residual gap, not a finding of "no programs exist" there.
 
-## 6. Completeness-audit residual gaps (16 items in the ledger, 100% resolved)
+## 6. Completeness-audit residual gaps (17 items in the ledger, 100% resolved)
 
 `make completeness` (`completeness/frame_reconcile.py`) cross-checks the `program` table
 against the IAALS Unlocking Legal Regulation knowledge center — the closest thing to an
@@ -147,39 +147,53 @@ every row is now resolved:
 
 | Disposition | Count | Items |
 |---|---|---|
-| `intentionally_excluded` | 3 | UT ABS — covered by `prog_ut_sandbox`; WA ABS — covered by `prog_wa_entity_pilot` (in both cases, one sandbox-type pilot grants ABS-style relief too, so a separate ABS program row would double-count the same providers); **DC ABS** — was covered by `prog_dc_rule54` until it was removed from scope 2026-07-06 (§4); no roster can ever exist for it, so it stays excluded rather than being rebuilt |
+| `intentionally_excluded` | 4 | UT ABS — covered by `prog_ut_sandbox`; WA ABS — covered by `prog_wa_entity_pilot` (in both cases, one sandbox-type pilot grants ABS-style relief too, so a separate ABS program row would double-count the same providers); **DC ABS — 2 rows** — was covered by `prog_dc_rule54` until it was removed from scope 2026-07-06 (§4); no roster can ever exist for it, so it stays excluded rather than being rebuilt. Two ledger rows exist for this one real-world item (see note below) |
 | `resolved_built` | 1 | WA sandbox — `prog_wa_entity_pilot` was built 2026-07-04 (`scrapers/washington_entity_pilot.py`), matching this listing directly; the completeness check no longer even surfaces it as a fresh candidate |
 | `deferred_to_v2` — new-program backlog | 3 | IN sandbox, MN sandbox (distinct from the existing `prog_mn_lp` paraprofessional pilot) — both IAALS "Programs Being Implemented" (pre-launch by the source's own classification, so no roster can exist yet); PR ABS — IAALS "Implemented Programs" (unlike IN/MN, a program plausibly already operates — the open question is whether a public registry exists to scrape, not whether it has launched) |
 | `deferred_to_v2` — CJW taxonomy gap | 8 | Community-Based Justice Worker Models in AK, AZ, DC, DE, HI, IL, MT, and UT (via its sandbox) — `community_justice_worker` exists in the v1 `program_type` enum for forward compatibility, but no v1 scraper covers any CJW program |
 
 That's 14 rows, all surfaced by the automated IAALS cross-check (`detected_by=frame_reconcile`)
-during the one real run on 2026-07-01. Two more rows were added by hand afterward, since the
-automated check either can't see them or hadn't been re-run since the decision that created
-them:
+during the first real run on 2026-07-01. Three more rows were added afterward:
 
 - **Oregon LP** (`deferred_to_v2`, `detected_by=manual-oregon-research`) — `alp_license`
   programs are outside this check's scope by design (bullet 2 of `docs/methodology.md §10e`),
   so this row was added from direct manual research instead. See §3a above and
   `validation/oregon_lp.md`.
 - **Alternative Business Structures — Washington, D.C.** (`intentionally_excluded`,
-  `detected_by=manual-dc-rule54-removal`) — this listing *was* matched by `prog_dc_rule54`
-  during the 2026-07-01 run, so it never appeared as a gap. Removing that program 2026-07-06
-  (§4) means a fresh run would surface it now; this row pre-empts that rather than leaving
-  the ledger stale until someone happens to re-run the live check.
+  `detected_by=manual-dc-rule54-removal`) — added 2026-07-06, the day `prog_dc_rule54` was
+  removed from scope, pre-empting the gap that removal would create.
+- **Alternative Business Structures — Washington, D.C.** — **a second row for the same
+  real-world item** (`intentionally_excluded`, `detected_by=frame_reconcile`). A live
+  `make completeness` run on 2026-07-06 (part of the pre-publication finalize pass) proved
+  the prediction above correct: the automated check surfaced this listing as a fresh
+  `unresolved` candidate, because its key (`detected_by=frame_reconcile`) doesn't match the
+  manually-added row's key (`detected_by=manual-dc-rule54-removal`) — the ledger's dedup is
+  keyed on `(item, jurisdiction, detected_by)`, so two different `detected_by` values for
+  the same item are two different rows, not one. Resolved identically
+  (`intentionally_excluded`) the same day it appeared. This is a real, confirmed gap in the
+  ledger's keying scheme, not a hypothetical — first identified in
+  `docs/audit/coverage_confidence.md §1`, then reproduced and resolved here. **It will
+  recur**: every future live `make completeness` run will keep surfacing a fresh
+  `unresolved` row for this one item, needing the same one-line manual resolution each
+  time, until the keying scheme itself is fixed (e.g., by having `frame_reconcile` check
+  for an existing resolved row on the same `(item, jurisdiction)` regardless of
+  `detected_by`, or by re-keying the manual row to match). Not fixed in this pass.
 
-**None of the 16 are open.** The WA rows were resolved 2026-07-04 by building
+**None of the 17 are open.** The WA rows were resolved 2026-07-04 by building
 `prog_wa_entity_pilot`; the CJW/new-program-backlog rows were resolved 2026-07-04 by James
 Paul as an explicit v1 scope decision, not a default of the audit tool
 (`completeness/frame_reconcile.py` always writes new candidates as `unresolved` — it
 proposes, it does not decide; see the module docstring and `completeness/ledger.py`); the
 Oregon row was resolved 2026-06-29, the date of the research in `validation/oregon_lp.md`;
-the DC ABS row was resolved 2026-07-06, the date `prog_dc_rule54` was removed.
+both DC ABS rows were resolved 2026-07-06.
 
-Re-running `make completeness` will not re-open any of these: the ledger merge is keyed on
-`(item, jurisdiction, detected_by)` and never overwrites a row that already exists,
-mirroring the `crosswalk_courtlistener` "verified rows are immutable" rule. Both manually
-added rows use a `detected_by` the automated tool never writes, so neither can ever collide
-with — or be silently regenerated by — a future `frame_reconcile` run.
+Re-running `make completeness` will not re-open any row that already exists under its exact
+`(item, jurisdiction, detected_by)` key — the ledger merge never overwrites a match,
+mirroring the `crosswalk_courtlistener` "verified rows are immutable" rule. But as the
+second DC ABS row above demonstrates, a *different* `detected_by` for the same real-world
+item is a different key, and will keep surfacing as a fresh candidate. This is the one
+place "re-running never re-opens anything" does not fully hold, and is worth fixing before
+it needs manual resolution a third time.
 
 ---
 

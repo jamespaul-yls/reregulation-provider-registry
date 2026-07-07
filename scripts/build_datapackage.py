@@ -551,7 +551,11 @@ def build(release_dir: Path = _RELEASE) -> dict:
             "Business Structures (ABS), regulatory sandboxes, and allied-legal-professional "
             f"/ paraprofessional licenses. v1.0.2 covers {n_programs} programs across "
             f"{n_states} states{dc_suffix} with {n_providers} providers, entry/exit event "
-            "tracking, and full provenance. No harm analysis — just the spine."
+            "tracking, and full provenance. No harm analysis — just the spine. "
+            "This dataset publishes only public-record information: every provider record "
+            "is drawn from public regulatory rosters and official program-status pages "
+            "published by each program's own regulator, never from private, non-public, "
+            "or interaction-derived data."
         ),
         "sources": [
             {

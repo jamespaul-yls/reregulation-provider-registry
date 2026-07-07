@@ -2,7 +2,7 @@
 
 **Generated from:** `models/schema.py`, `models/enums.py`, `pipeline/db.py`
 **Schema version:** 1 (Pydantic v2; DuckDB dev store)
-**Last updated:** 2026-07-04
+**Last updated:** 2026-07-06
 
 This document is authoritative for the field-level schema. The Pydantic models in
 `models/schema.py` are the single source of truth; this document is derived from them and
