@@ -31,5 +31,5 @@
   ],
   "version": "1.0.2",
   "language": "eng",
-  "notes": "Code is MIT licensed; the dataset (data/release/) is CC BY 4.0. See LICENSE and data/release/LICENSE respectively. Development used AI-assisted coding (Claude Code) under human-authored specifications, review, and validation; see docs/ai_use.md in the source repository."
+  "notes": "Code is MIT licensed; the dataset (data/release/) is CC BY 4.0. See LICENSE and data/release/LICENSE respectively. Development used AI-assisted coding (Claude Code) under human-authored specifications, review, and validation."
 }
