@@ -149,8 +149,6 @@ events |>
 - `validation/<source>.md` — per-source coverage and accuracy logs (reconciled row counts
   vs source totals; stratified hand-verification samples)
 - `validation/longitudinal_validity.md` — Wayback-backed trajectory reconstruction detail
-- `docs/ai_use.md` — what AI tooling was and wasn't used for, and the controls (fixture
-  tests, validation logs, adversarial review) that keep the process auditable
 - `CHANGELOG.md` — release history
 - `reregulation-registry-v1-spec.md` — full design specification
 
@@ -159,7 +157,7 @@ events |>
 Scrapers, pipeline, and documentation were built with AI-assisted coding (Claude Code)
 against specifications and rules I authored, with fixture-based tests, per-source
 coverage/accuracy validation, and adversarial review passes as checks — not AI-asserted
-correctness. See `docs/ai_use.md` for what that did and didn't involve.
+correctness.
 
 ## How to cite
 
