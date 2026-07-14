@@ -1,4 +1,4 @@
-.PHONY: lint test scrape export reproduce audit install sync completeness
+.PHONY: lint test scrape export reproduce audit install sync completeness viz
 
 # ── dev setup ────────────────────────────────────────────────────────────────
 
@@ -57,3 +57,14 @@ audit:
 # Writes validation/completeness.md and validation/residual_gaps.csv.
 completeness:
 	uv run python -m completeness.frame_reconcile
+
+# ── analyst viewer ───────────────────────────────────────────────────────────
+
+# Read-only visualization layered on data/release/. Regenerates viz/data/
+# bundle.json from the published parquet tables, then serves viz/ on
+# http://localhost:8765 — open that URL in a browser once it starts.
+# Never modifies data/release/ or data/db/.
+viz:
+	uv run python scripts/export_viz.py
+	@echo "Serving viz/ at http://localhost:8765 — Ctrl-C to stop"
+	cd viz && python3 -m http.server 8765

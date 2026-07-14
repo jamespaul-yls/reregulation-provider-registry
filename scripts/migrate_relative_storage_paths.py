@@ -6,7 +6,7 @@ pipeline/snapshot.py::ingest() always returns an absolute blob_path (it's a
 generic content-addressed store, tested against tmp_path fixtures outside the
 repo, so it can't assume a repo root). Every row written before this migration
 has storage_path baked in as the absolute path on the machine that ran the
-scraper (e.g. /Users/jamespaul/Desktop/database/data/raw/<hash>.html).
+scraper (e.g. /Users/jamespaul/Desktop/code_prjcts/database/data/raw/<hash>.html).
 
 pipeline/db.py::RegistryStore.upsert_snapshot() now normalizes storage_path to
 a repo-relative POSIX string on write (_normalize_storage_path()), and

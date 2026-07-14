@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reregulation Provider Registry — Viewer</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="map-tooltip"></div>
+
+<div class="shell">
+
+  <header class="topbar">
+    <div>
+      <h1>U.S. Legal Services Reregulation Provider Registry<span class="subtitle">read-only analyst viewer, generated from <code>data/release/</code></span></h1>
+    </div>
+    <div class="stat-strip" id="stat-strip"></div>
+  </header>
+
+  <div class="filterbar" id="filterbar">
+    <span class="label">Filters</span>
+    <span id="filter-chips"></span>
+    <button class="clear-all" id="clear-all" style="display:none">clear all</button>
+  </div>
+
+  <div id="app" class="loading-state">Loading registry data…</div>
+
+  <template id="tpl-main">
+
+    <section id="sec-overview">
+      <h2>National overview <span class="sec-note">providers by jurisdiction, program type, and current status</span></h2>
+      <div class="overview-grid">
+        <div class="map-panel">
+          <svg id="map-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div class="map-legend">
+            <span>fewer providers</span>
+            <span class="legend-ramp" id="legend-ramp"></span>
+            <span>more providers</span>
+            <span style="margin-left:18px"><span class="legend-swatch" style="background:var(--none-fill);border:1px solid var(--none-stroke)"></span>no reregulation program in scope</span>
+            <span><span class="legend-swatch zero-badge" style="width:10px;height:10px;padding:0;margin-right:5px;border-radius:0"></span>program exists, documented zero providers</span>
+          </div>
+        </div>
+        <div class="bars-col">
+          <div class="barchart">
+            <h3>By program type</h3>
+            <div id="bars-type"></div>
+          </div>
+          <div class="barchart">
+            <h3>By current status</h3>
+            <div id="bars-status"></div>
+          </div>
+        </div>
+      </div>
+      <div class="expected-zero-note" id="expected-zero-note"></div>
+    </section>
+
+    <section id="sec-longitudinal">
+      <h2>Longitudinal — provider counts over time <span class="sec-note">built from provider_status_event; only programs with ≥2 snapshots have a real trend</span></h2>
+      <p class="lede">Each panel is a running net roster size for one program, computed by walking its <code>authorized</code> / <code>disappeared_from_roster</code> events in date order. Most programs currently have exactly one snapshot — their line is a single flat step, marked as such rather than implied to be a trend. Click a panel to focus that program below.</p>
+      <div class="multiples-grid" id="multiples-grid"></div>
+    </section>
+
+    <section id="sec-program-detail" style="display:none">
+      <div class="program-panel" id="program-panel"></div>
+    </section>
+
+    <section id="sec-table">
+      <h2>Provider drill-down <span class="sec-note" id="table-sec-note"></span></h2>
+      <div class="table-toolbar">
+        <input type="search" id="search-box" placeholder="Search legal name, normalized name, or website…" />
+        <select id="filter-jurisdiction"><option value="">Jurisdiction — all</option></select>
+        <select id="filter-program"><option value="">Program — all</option></select>
+        <select id="filter-type"><option value="">Provider type — all</option></select>
+        <select id="filter-status"><option value="">Status — all</option></select>
+        <span class="result-count" id="result-count"></span>
+      </div>
+      <div class="table-scroll">
+        <table class="provider-table" id="provider-table">
+          <thead>
+            <tr>
+              <th data-sort="legal_name">Legal name</th>
+              <th data-sort="program_id">Program</th>
+              <th data-sort="jurisdiction">Jur.</th>
+              <th data-sort="provider_type">Type</th>
+              <th data-sort="current_status">Status</th>
+              <th data-sort="authorization_date" class="num">Authorized</th>
+              <th data-sort="practice_areas_raw">Practice areas</th>
+            </tr>
+          </thead>
+          <tbody id="provider-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      Generated <span id="gen-at"></span> from <code>data/release/*.parquet</code> via <code>scripts/export_viz.py</code> —
+      a read-only view; nothing here is hand-edited or written back to the release layer.
+      Full methodology: <code>docs/methodology.md</code>. Per-source coverage/accuracy logs: <code>validation/&lt;source&gt;.md</code>.
+    </footer>
+
+  </template>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
