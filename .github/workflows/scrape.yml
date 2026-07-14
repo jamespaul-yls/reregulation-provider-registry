@@ -38,26 +38,28 @@ jobs:
       - name: Install Playwright browsers
         run: uv run playwright install --with-deps chromium
 
-      # ── Restore persistent store ──────────────────────────────────────────
-      # DuckDB file + content-addressed raw blobs persist between weekly runs.
-      # Restore key matches branch + any previous run; save key is unique per run
-      # so the latest cache always wins on restore.
-      - name: Restore data cache
-        id: cache-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            data/db/
-            data/raw/
-          key: registry-data-${{ github.ref_name }}-run-${{ github.run_id }}
-          restore-keys: |
-            registry-data-${{ github.ref_name }}-run-
-            registry-data-
-
-      - name: Log cache status
-        run: |
-          echo "cache-hit: ${{ steps.cache-restore.outputs.cache-hit }}"
-          echo "snapshots in DB: $(ls data/raw/ 2>/dev/null | wc -l) blobs"
+      # ── Rebuild dev DB from durable state ───────────────────────────────────
+      # data/db/registry.duckdb is NOT git-tracked — it's a derived artifact.
+      # It used to be persisted only via actions/cache, keyed off run id with
+      # branch-prefix restore-keys. That cache is evicted after ~7 days of no
+      # access, and this workflow runs weekly — right at the eviction edge. A
+      # miss silently handed orchestrate.py an empty DB, which made every
+      # source look unseen; sources whose scraper didn't succeed that run
+      # (transient failure, site change) then got NO snapshot row at all, and
+      # the subsequent export silently overwrote data/release/ with a much
+      # smaller dataset (see 2026-07-13 incident: prog_co_llp went from 126
+      # providers to 0, plus wholesale loss of prog_mn_lp/prog_tx_alp/
+      # prog_wa_entity_pilot history — nothing was actually lost, since
+      # data/raw/ + data/release/source_snapshot.csv are git-tracked and
+      # survived, but the derived tables briefly went out with the bad state).
+      #
+      # Fix: always rebuild data/db/registry.duckdb from the git-tracked,
+      # durable source of truth (data/raw/ blobs + the committed
+      # source_snapshot.csv manifest) before running the live scrapers. This
+      # is network-free and deterministic, so cache hit/miss can no longer
+      # affect correctness — at worst a miss costs a few seconds of rebuild.
+      - name: Rebuild dev DB from raw snapshots (reproduce)
+        run: uv run python -m pipeline.reproduce
 
       # ── Main pipeline ─────────────────────────────────────────────────────
       - name: Run orchestrator${{ inputs.dry_run && ' (dry run)' || '' }}
@@ -67,25 +69,14 @@ jobs:
           # Playwright needs a writable home for browser state
           PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
 
-      # ── Persist updated store (skip on dry run — nothing changed) ─────────
-      - name: Save data cache
-        if: ${{ !inputs.dry_run }}
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            data/db/
-            data/raw/
-          key: registry-data-${{ github.ref_name }}-run-${{ github.run_id }}
-
       # ── Commit release/ + raw/ if changed (skip on dry run) ────────────────
       # data/raw/ is committed alongside data/release/ — golden rule 2 requires
-      # immutable raw captures to actually live in the repo, not just the
-      # Actions cache (see docs/audit/adversarial_review.md B1). Committing
-      # only data/release/ would mean a fresh clone (or the very next CI run,
-      # which reproduces from a clean checkout with no cache) can't rebuild
-      # the newly-scraped rows, and the CI drift gate would fail on this run's
-      # own push. data/db/ stays cache-only — it's a derived dev artifact,
-      # 100% rebuildable from data/raw/ + scripts/seed_programs.py.
+      # immutable raw captures to actually live in the repo, not just ephemeral
+      # CI storage (see docs/audit/adversarial_review.md B1). Committing only
+      # data/release/ would mean a fresh clone (or the very next CI run) can't
+      # rebuild the newly-scraped rows, and the CI drift gate would fail on
+      # this run's own push. data/db/ is never committed — it's a derived dev
+      # artifact, rebuilt fresh every run by the reproduce step above.
       - name: Commit release/ + raw/ changes
         if: ${{ !inputs.dry_run }}
         run: |
