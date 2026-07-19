@@ -30,7 +30,7 @@
     "longitudinal",
     "open data"
   ],
-  "description": "Open, reproducible, longitudinal registry of every authorized provider operating under a U.S. legal-services reregulation program: Alternative Business Structures (ABS), regulatory sandboxes, and allied-legal-professional / paraprofessional licenses. v1.0.2 covers 10 programs across 7 states with 708 providers, entry/exit event tracking, and full provenance. No harm analysis — just the spine. This dataset publishes only public-record information: every provider record is drawn from public regulatory rosters and official program-status pages published by each program's own regulator, never from private, non-public, or interaction-derived data.",
+  "description": "Open, reproducible, longitudinal registry of every authorized provider operating under a U.S. legal-services reregulation program: Alternative Business Structures (ABS), regulatory sandboxes, and allied-legal-professional / paraprofessional licenses. v1.0.2 covers 10 programs across 7 states with 711 providers, entry/exit event tracking, and full provenance. No harm analysis — just the spine. This dataset publishes only public-record information: every provider record is drawn from public regulatory rosters and official program-status pages published by each program's own regulator, never from private, non-public, or interaction-derived data.",
   "sources": [
     {
       "title": "Arizona Supreme Court — ABS/LP rosters",
@@ -218,7 +218,7 @@
       "path": "source_snapshot.csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "rowcount": 19,
+      "rowcount": 24,
       "parquet": "source_snapshot.parquet",
       "schema": {
         "fields": [
@@ -318,7 +318,7 @@
       "path": "provider.csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "rowcount": 708,
+      "rowcount": 711,
       "parquet": "provider.parquet",
       "schema": {
         "fields": [
@@ -507,7 +507,7 @@
       "path": "provider_status_event.csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "rowcount": 748,
+      "rowcount": 826,
       "parquet": "provider_status_event.parquet",
       "schema": {
         "fields": [
