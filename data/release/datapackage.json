@@ -218,7 +218,7 @@
       "path": "source_snapshot.csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "rowcount": 24,
+      "rowcount": 29,
       "parquet": "source_snapshot.parquet",
       "schema": {
         "fields": [
@@ -507,7 +507,7 @@
       "path": "provider_status_event.csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "rowcount": 826,
+      "rowcount": 757,
       "parquet": "provider_status_event.parquet",
       "schema": {
         "fields": [
