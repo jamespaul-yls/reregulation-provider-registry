@@ -8,6 +8,13 @@ disposition. It is the companion to `docs/methodology.md §1` (Scope) and
 
 **Version:** 1.0.2 · **Last updated:** 2026-07-06
 
+> **Note (2026-07-24):** The program list and jurisdiction count below are still current
+> as of v1.0.3 (no programs added or removed since 2026-07-06). Provider/snapshot counts
+> have moved via routine automated re-scrapes since this pass — see `README.md` and
+> `CHANGELOG.md [1.0.3]` for current totals. The completeness-audit ledger (§6) has not
+> been re-run since 2026-07-06; treat it as the historical record of the last live
+> `make completeness` pass, not a current-state guarantee.
+
 ---
 
 ## 1. What is in scope

@@ -8,6 +8,15 @@ authoritative and this document has drifted and should be regenerated from it.
 
 **Version:** 1.0.2 · **Last updated:** 2026-07-06
 
+> **Note (2026-07-24):** The coverage/accuracy samples and the `make audit` /
+> `make completeness` figures below are the 2026-07-06 pass. Routine automated
+> re-scrapes since then moved published totals to 698 providers / 731 events / 53
+> snapshots (v1.0.3 — see `README.md` and `CHANGELOG.md`); `make audit` was re-run
+> 2026-07-24 against the new data and is still 100% clean, but the per-program
+> accuracy samples and the completeness ledger have **not** been refreshed against
+> the newer snapshots. Treat this document as the historical record of the last full
+> validation pass.
+
 ---
 
 ## 1. Per-program coverage and accuracy

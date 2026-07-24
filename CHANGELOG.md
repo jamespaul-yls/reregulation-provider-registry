@@ -5,6 +5,73 @@ follows [Keep a Changelog](https://keepachangelog.com/); versioning applies to t
 release as a whole (schema + data + pipeline), not to individual scrapers, which carry
 their own `scraper_version` in every row's provenance fields.
 
+## [1.0.3] — 2026-07-24
+
+Reconciles `main` after two and a half weeks of routine automated maintenance plus one new
+tool. No schema change; no scope change (still 10 programs, 7 states). Published totals
+moved via genuine roster re-scraping, not a data-quality regression — `make reproduce` and
+`make audit` both pass clean against the new state. 487 tests collected (485 passed, 2
+skipped), up from 466 (464 passed, 2 skipped).
+
+### Why
+
+Several days' worth of `main` commits since `v1.0.2` had never been reconciled into a
+version bump, changelog entry, or tag — README, `.zenodo.json`, and the per-program
+validation docs still described the 2026-07-06 numbers while the actual repository had
+moved on. This entry catches everything up before v2 development branches off a frozen
+tag, per `docs/v2_readiness.md §6`.
+
+### Fixed
+
+- **CI cache-eviction bug that silently truncated a scrape run** (`3313f06`). The dev DB
+  (`data/db/registry.duckdb`) was persisted only via GitHub Actions' `actions/cache`,
+  which evicts after ~7 days of no access — right at the edge of this workflow's weekly
+  schedule. A cache miss handed `orchestrate.py` an empty DB, so every source looked
+  unseen; any source whose scraper didn't succeed that run got no snapshot row at all,
+  and `export` then overwrote `data/release/` with a much smaller dataset. The dev DB is
+  now rebuilt from durable state before every scrape run.
+- **The bad scrape this bug caused** (`data: automated roster scrape 2026-07-13T13:43Z`)
+  was reverted the same maintenance cycle it was noticed (`f8206a5`), before it was ever
+  described in a release.
+- Utah LPP and Washington LLLT scraper corrections, with expanded fixture-based test
+  coverage (`d86f2eb`); Minnesota LP validation notes updated to match.
+- A stray `.claude/` worktree directory was accidentally committed as a gitlink in one
+  commit (`.claude/` had never been gitignored). Untracked and `.claude/` gitignored
+  going forward (`de3032a`).
+- `.zenodo.json` was briefly lost to a filesystem sync-conflict rename between an edit
+  and its commit; restored with the intended content (`4d5e5bc`).
+
+### Added
+
+- `docs/ai_use.md` — explicit AI-use disclosure describing what Claude Code did and
+  didn't do, and the process controls (fixtures, validation logs, adversarial review)
+  that keep development auditable. Linked from `README.md` and `.zenodo.json` (`30dc886`).
+- A read-only analyst viewer: `viz/` (static HTML/JS dashboard), `scripts/export_viz.py`
+  (regenerates `viz/data/bundle.json` from the published parquet tables), and a `make viz`
+  target that serves it locally. Never modifies `data/release/` or `data/db/` (`c8da7e8`).
+- A new, real automated roster re-scrape landed after the CI fix above (`892fec8`),
+  producing the count changes below.
+
+### Changed
+
+- **Published totals:** 708 → **698** providers, 569 → **566** active, 748 → **731**
+  events, 19 → **53** snapshots, across the same 10 programs / 7 states. Notable
+  per-program movement: Arizona ABS 203 → 191 providers (net roster attrition since the
+  last capture), Arizona LP 120 → 122 (net growth); snapshot counts rose across most
+  programs as multiple weekly automated captures accumulated (e.g. Utah Sandbox 9 → 14,
+  Arizona ABS 2 → 10). Full current per-program table: `README.md`.
+- `README.md` and `.zenodo.json` updated to v1.0.3 with the figures above; two stale
+  "Known limitations" bullets in `README.md` corrected (the "most programs have one
+  snapshot" claim no longer holds for 7 of 10 programs; the practice-area sparsity
+  percentages were re-checked mechanically against the current data and confirmed
+  unchanged).
+- `docs/data_note.md`, `docs/sampling_frame.md`, and `validation/summary.md` each get a
+  dated note flagging that their per-program accuracy-sample and coverage-reconciliation
+  figures still reflect the 2026-07-06 validation pass and have **not** been re-verified
+  against the newer snapshots. A full re-validation pass (fresh stratified accuracy
+  samples, fresh source-total reconciliation per program) is deferred as explicit
+  follow-up work, not silently folded into this version bump.
+
 ## [1.0.2] — 2026-07-06
 
 Removes `prog_dc_rule54` (D.C. Rule of Professional Conduct 5.4(b)) from scope. **10

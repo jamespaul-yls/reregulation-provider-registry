@@ -4,7 +4,7 @@ An open, reproducible, longitudinal dataset of every authorized provider operati
 a U.S. legal-services reregulation program: Alternative Business Structures (ABS),
 regulatory sandboxes, and allied-legal-professional / paraprofessional licenses.
 
-**v1.0.2 · 10 programs · 7 states · 708 providers · 19 roster snapshots**
+**v1.0.3 · 10 programs · 7 states · 698 providers · 53 roster snapshots**
 
 **This dataset publishes only public-record information.** Every provider record is drawn
 from public regulatory rosters and official program-status pages published by each
@@ -24,21 +24,21 @@ Reproducibility and provenance are the product. Every row carries `source_url`,
 `retrieved_at`, and `scraper_version`. Raw HTML/PDF captures are content-hashed and stored
 in `data/raw/`; all derived tables are fully re-derivable from them.
 
-## Coverage (v1.0.2)
+## Coverage (v1.0.3)
 
 | Program | State | Type | Providers (total) | Active | Snapshots | Earliest snapshot |
 |---|---|---|---:|---:|---:|---|
-| Arizona ABS | AZ | abs | 203 | 160 | 2 | 2024-11-08 |
-| Arizona LP | AZ | alp_license | 120 | 113 | 1 | 2026-06-29 |
+| Arizona ABS | AZ | abs | 191 | 160 | 10 | 2024-11-08 |
+| Arizona LP | AZ | alp_license | 122 | 110 | 6 | 2026-06-29 |
 | Colorado LLP | CO | alp_license | 126 | 126 | 1 | 2026-06-29 |
 | Minnesota LP pilot | MN | alp_license | 42 | 42 | 1 | 2026-06-29 |
-| Utah LPP | UT | alp_license | 52 | 52 | 1 | 2026-06-29 |
-| Utah Sandbox | UT | sandbox | 70 | 8 | 9 | 2025-06-12 |
-| Washington LLLT | WA | alp_license | 95 | 68 | 1 | 2026-06-29 |
-| California LDA | CA | document_preparer | 0† | — | 1 | 2026-06-29 |
+| Utah LPP | UT | alp_license | 52 | 52 | 8 | 2026-06-29 |
+| Utah Sandbox | UT | sandbox | 70 | 8 | 14 | 2025-06-12 |
+| Washington LLLT | WA | alp_license | 95 | 68 | 2 | 2026-06-30 |
+| California LDA | CA | document_preparer | 0† | — | 5 | 2026-06-30 |
 | Texas ALP | TX | alp_license | 0† | — | 1 | 2026-07-04 |
-| WA Entity Pilot | WA | sandbox | 0† | — | 1 | 2026-07-04 |
-| **Total** | | | **708** | **569** | **19** | |
+| WA Entity Pilot | WA | sandbox | 0† | — | 5 | 2026-07-04 |
+| **Total** | | | **698** | **566** | **53** | |
 
 † Program correctly zero-provider: CA LDA is county-fragmented with no statewide roster;
 TX ALP's licensing category is not yet effective; WA Entity Pilot has 4 applicants but none
@@ -64,9 +64,9 @@ constraints, and foreign keys is at `data/release/datapackage.json`.
 | File | Rows | Description |
 |---|---:|---|
 | `program.csv` / `.parquet` | 10 | One row per reregulation program |
-| `source_snapshot.csv` / `.parquet` | 19 | Immutable raw-capture provenance records |
-| `provider.csv` / `.parquet` | 708 | One row per unique authorized provider |
-| `provider_status_event.csv` / `.parquet` | 748 | Entry/exit/discipline events |
+| `source_snapshot.csv` / `.parquet` | 53 | Immutable raw-capture provenance records |
+| `provider.csv` / `.parquet` | 698 | One row per unique authorized provider |
+| `provider_status_event.csv` / `.parquet` | 731 | Entry/exit/discipline events |
 | `provider_alias.csv` / `.parquet` | 0 | DBA / former names (populated in v1.1) |
 | `crosswalk_courtlistener.csv` / `.parquet` | 0 | Litigation linkage (v3 milestone) |
 
@@ -162,7 +162,7 @@ correctness.
 ## How to cite
 
 ```
-Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.2)
+Paul, James. (2026). U.S. Legal Services Reregulation Provider Registry (v1.0.3)
 [Data set]. Yale Law School. https://github.com/jamespaul-yls/reregulation-provider-registry
 ```
 
@@ -172,7 +172,7 @@ BibTeX:
   author    = {Paul, James},
   title     = {U.S. Legal Services Reregulation Provider Registry},
   year      = {2026},
-  version   = {1.0.2},
+  version   = {1.0.3},
   publisher = {Yale Law School},
   url       = {https://github.com/jamespaul-yls/reregulation-provider-registry},
 }
@@ -187,10 +187,12 @@ principal ones:
    exited weeks before the snapshot that records their absence.
 2. **Observation ≠ ground truth.** `disappeared_from_roster` is an observation; only
    the regulator knows if it reflects revocation, voluntary exit, or a website error.
-3. **Single initial snapshots.** Most programs have one snapshot (v1.0.2). Longitudinal
-   entry/exit tracking becomes meaningful only as additional snapshots accumulate.
+3. **Uneven snapshot depth.** Three programs (Colorado LLP, Minnesota LP, Texas ALP) still
+   have only one snapshot each; the rest have accumulated multiple weekly captures, so
+   longitudinal entry/exit tracking is meaningful for most programs now, most maturely
+   for Arizona ABS and Utah Sandbox (see `validation/longitudinal_validity.md`).
 4. **Practice area sparsity.** Most rosters do not publish practice areas. The
-   `practice_areas_raw` and `practice_areas_list` columns are mostly empty in v1.0.2.
+   `practice_areas_raw` and `practice_areas_list` columns are mostly empty in v1.0.3.
 5. **Scope boundary.** This dataset covers reregulation programs only — not the full
    population of legal service providers. Do not use the denominator from this dataset
    to compute market-share statistics.

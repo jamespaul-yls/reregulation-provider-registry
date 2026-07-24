@@ -7,6 +7,14 @@
 **Intended audience:** IAALS, the Deborah L. Rhode Center on the Legal Profession, and other
 researchers evaluating U.S. legal-services reregulation programs
 
+> **Note (2026-07-24):** The coverage, accuracy-sample, and reconciliation figures below
+> reflect the 2026-07-06 validation pass (v1.0.2). Routine automated re-scrapes since then
+> have moved the published totals to 698 providers / 566 active / 731 events / 53
+> snapshots as of v1.0.3 — see `README.md` and `CHANGELOG.md [1.0.3]` for current counts.
+> The per-program accuracy samples and source-total reconciliations below have **not**
+> been re-run against the newer snapshots; treat this document as the historical
+> record of the last full validation pass, not a live figure.
+
 ---
 
 ## What this registry is
