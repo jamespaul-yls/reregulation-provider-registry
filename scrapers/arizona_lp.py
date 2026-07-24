@@ -51,7 +51,7 @@ _AREA_ALIASES: dict[str, str] = {
 
 
 def _provider_id(legal_name: str) -> str:
-    digest = hashlib.sha256(f"prog_az_lp\x00{legal_name}".encode()).hexdigest()
+    digest = hashlib.sha256(f"prog_az_lp\x00{normalize_name(legal_name)}".encode()).hexdigest()
     return f"prov_az_lp_{digest[:12]}"
 
 

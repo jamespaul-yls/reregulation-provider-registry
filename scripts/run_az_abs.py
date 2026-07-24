@@ -73,7 +73,9 @@ def main() -> None:
     print(f"\nExported row counts: {counts}")
 
     # ── 10-row sample ──────────────────────────────────────────────────────────
-    df = pl.read_parquet(_RELEASE / "provider.parquet")
+    df = pl.read_parquet(_RELEASE / "provider.parquet").filter(
+        pl.col("program_id") == "prog_az_abs"
+    )
     sample = df.select(["legal_name", "current_status", "practice_areas_raw", "website"]).head(10)
     print("\n--- 10-row sample ---")
     for row in sample.to_dicts():

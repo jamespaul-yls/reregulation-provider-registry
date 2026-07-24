@@ -6,7 +6,7 @@ Reproducible adversarial coverage checks for the reregulation provider registry 
 
 ## 1. Frame reconciliation
 
-_Last run: 2026-07-06_
+_Last run: 2026-07-19_
 
 **Sources checked:**
 - `iaals`: <https://iaals.du.edu/projects/unlocking-legal-regulation/knowledge-center>

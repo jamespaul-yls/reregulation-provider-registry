@@ -24,6 +24,7 @@ _REGISTERED = [
     "scrapers.washington_lllt.WashingtonLlltScraper",
     "scrapers.texas_alp.TexasAlpScraper",
     "scrapers.california_lda.CaliforniaLdaScraper",
+    "scrapers.washington_entity_pilot.WashingtonEntityPilotScraper",
 ]
 
 

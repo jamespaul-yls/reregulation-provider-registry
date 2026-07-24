@@ -63,7 +63,7 @@ _AI_RE = re.compile(r"\bai\b|artificial intelligence|chatbot|machine learning", 
 
 
 def _provider_id(legal_name: str) -> str:
-    digest = hashlib.sha256(f"prog_ut_sandbox\x00{legal_name}".encode()).hexdigest()
+    digest = hashlib.sha256(f"prog_ut_sandbox\x00{normalize_name(legal_name)}".encode()).hexdigest()
     return f"prov_ut_sandbox_{digest[:12]}"
 
 

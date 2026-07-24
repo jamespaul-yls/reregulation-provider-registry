@@ -130,7 +130,9 @@ def _parse_date(raw: str) -> datetime.date | None:
 
 
 def _provider_id(legal_name: str) -> str:
-    digest = hashlib.sha256(f"prog_wa_entity_pilot\x00{legal_name}".encode()).hexdigest()
+    digest = hashlib.sha256(
+        f"prog_wa_entity_pilot\x00{normalize_name(legal_name)}".encode()
+    ).hexdigest()
     return f"prov_wa_entity_pilot_{digest[:12]}"
 
 

@@ -29,7 +29,7 @@ _MIN_EXPECTED_ROWS = 50
 
 
 def _provider_id(legal_name: str) -> str:
-    digest = hashlib.sha256(f"prog_az_abs\x00{legal_name}".encode()).hexdigest()
+    digest = hashlib.sha256(f"prog_az_abs\x00{normalize_name(legal_name)}".encode()).hexdigest()
     return f"prov_az_abs_{digest[:12]}"
 
 
