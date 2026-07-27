@@ -1,0 +1,63 @@
+name: Publish viz bundle
+
+# Regenerates viz/data/bundle.json from data/release/*.parquet and publishes it
+# to GitHub Pages, giving the standalone Vercel dashboard mirror
+# (reregulation-dashboard) a stable, always-current URL to fetch client-side.
+# Read-only: never touches data/db/ or data/release/ (see scripts/export_viz.py).
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "data/release/**"
+      - "scripts/export_viz.py"
+      - "viz/vendor/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Export bundle → GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.x"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Export viz bundle
+        run: uv run python scripts/export_viz.py
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p _site
+          cp viz/data/bundle.json _site/bundle.json
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
