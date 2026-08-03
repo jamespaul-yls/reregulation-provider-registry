@@ -218,7 +218,7 @@
       "path": "source_snapshot.csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "rowcount": 59,
+      "rowcount": 66,
       "parquet": "source_snapshot.parquet",
       "schema": {
         "fields": [
