@@ -1,4 +1,4 @@
-# Validation: Colorado Limited License Professional (LLP) Roster
+# Validation: Colorado Licensed Legal Paraprofessional (LLP) Roster
 
 **Source:** https://www.coloradolegalregulation.com/PDF/LLP/Admitted%20LLP%20Roster.pdf  
 **Scraper:** `scrapers/colorado_llp.py` v0.1.0  

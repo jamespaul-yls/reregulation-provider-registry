@@ -7,7 +7,7 @@ Programs in scope (10 total):
   prog_az_abs          — Arizona Alternative Business Structures
   prog_az_lp           — Arizona Legal Paraprofessional Program
   prog_ut_lpp          — Utah Licensed Paralegal Practitioner Program
-  prog_co_llp          — Colorado Limited License Professional Program
+  prog_co_llp          — Colorado Licensed Legal Paraprofessional Program
   prog_mn_lp           — Minnesota Legal Paraprofessional Program
   prog_wa_lllt         — Washington Limited License Legal Technician Program (sunset)
   prog_tx_alp          — Texas Licensed Legal Paraprofessionals and LCCAs (paused)
@@ -133,11 +133,11 @@ PROGRAMS: list[Program] = [
         retrieved_at=_SEED_TS,
         scraper_version=_V,
     ),
-    # ── 5. Colorado Limited Licensed Professional ─────────────────────────────
+    # ── 5. Colorado Licensed Legal Paraprofessional ───────────────────────────
     Program(
         program_id="prog_co_llp",
         jurisdiction="CO",
-        program_name="Colorado Limited Licensed Professional Program",
+        program_name="Colorado Licensed Legal Paraprofessional Program",
         program_type=ProgramType.alp_license,
         regulator="Colorado Office of Attorney Regulation Counsel",
         regulator_url="https://www.coloradolegalregulation.com/",

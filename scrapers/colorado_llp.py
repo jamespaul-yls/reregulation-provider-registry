@@ -1,4 +1,4 @@
-"""Scraper for the Colorado OARC Limited License Professional (LLP) admitted roster.
+"""Scraper for the Colorado OARC Licensed Legal Paraprofessional (LLP) admitted roster.
 
 Source: https://www.coloradolegalregulation.com/PDF/LLP/Admitted%20LLP%20Roster.pdf
 Fetch strategy: StaticFetcher (PdfFetcher) — direct PDF download, no JS rendering needed.

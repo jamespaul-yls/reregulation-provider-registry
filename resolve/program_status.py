@@ -276,7 +276,7 @@ _PROGRAM_CONFIGS: dict[str, ProgramConfig] = {
     # CO LLP — CO Supreme Court rule; no direct legislative bill.
     "prog_co_llp": ProgramConfig(
         jurisdiction="co",
-        queries=["limited licensed professional", "non-attorney"],
+        queries=["licensed legal paraprofessional", "non-attorney"],
         known_bills=[],
     ),
     # MN LP — MN Supreme Court pilot; no direct legislative bill.
